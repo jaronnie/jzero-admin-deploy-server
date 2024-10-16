@@ -33,7 +33,7 @@ func init() {
 	}
 
 	server = rest.MustNewServer(c.Rest.RestConf)
-	middleware.RegisterMiddlewares(server)
+	middleware.Register(server)
 
 	svcCtx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(server, svcCtx)
