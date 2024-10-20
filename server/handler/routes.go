@@ -4,9 +4,9 @@ import (
 	"net/http"
 	auth "server/server/handler/auth"
 	route "server/server/handler/route"
-	system_managemenu "server/server/handler/system_manage/menu"
-	system_managerole "server/server/handler/system_manage/role"
-	system_manageuser "server/server/handler/system_manage/user"
+	systemmenu "server/server/handler/system/menu"
+	systemrole "server/server/handler/system/role"
+	systemuser "server/server/handler/system/user"
 	version "server/server/handler/version"
 	"server/server/svc"
 	"time"
@@ -73,20 +73,19 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				{
 					Method:  http.MethodGet,
 					Path:    "/systemManage/getAllPages",
-					Handler: system_managemenu.GetAllPages(serverCtx),
+					Handler: systemmenu.GetAllPages(serverCtx),
 				},
 				{
 					Method:  http.MethodGet,
-					Path:    "/systemManage/getMenuList",
-					Handler: system_managemenu.List(serverCtx),
+					Path:    "/systemManage/getMenuList/v2",
+					Handler: systemmenu.List(serverCtx),
 				},
 				{
 					Method:  http.MethodGet,
 					Path:    "/systemManage/getMenuTree",
-					Handler: system_managemenu.Tree(serverCtx),
+					Handler: systemmenu.Tree(serverCtx),
 				},
 			},
-			rest.WithPrefix("/api/v1"),
 		)
 	}
 	{
@@ -95,15 +94,14 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				{
 					Method:  http.MethodGet,
 					Path:    "/systemManage/getAllRoles",
-					Handler: system_managerole.GetAll(serverCtx),
+					Handler: systemrole.GetAll(serverCtx),
 				},
 				{
 					Method:  http.MethodGet,
 					Path:    "/systemManage/getRoleList",
-					Handler: system_managerole.List(serverCtx),
+					Handler: systemrole.List(serverCtx),
 				},
 			},
-			rest.WithPrefix("/api/v1"),
 		)
 	}
 	{
@@ -112,10 +110,9 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				{
 					Method:  http.MethodGet,
 					Path:    "/systemManage/getUserList",
-					Handler: system_manageuser.List(serverCtx),
+					Handler: systemuser.List(serverCtx),
 				},
 			},
-			rest.WithPrefix("/api/v1"),
 		)
 	}
 	{
