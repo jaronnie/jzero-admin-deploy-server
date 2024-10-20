@@ -44,23 +44,24 @@ type (
 	}
 
 	SystemMenu struct {
-		Id         int64         `db:"id"`
-		CreateTime time.Time     `db:"create_time"`
-		UpdateTime time.Time     `db:"update_time"`
-		CreateBy   sql.NullInt64 `db:"create_by"`
-		UpdateBy   sql.NullInt64 `db:"update_by"`
-		Status     string        `db:"status"`
-		ParentId   int64         `db:"parent_id"`
-		MenuType   string        `db:"menu_type"`
-		Name       string        `db:"name"`
-		Hidden     int64         `db:"hidden"`
-		Order      int64         `db:"order"`
-		RouteName  string        `db:"route_name"`
-		RoutePath  string        `db:"route_path"`
-		Component  string        `db:"component"`
-		Icon       string        `db:"icon"`
-		IconType   string        `db:"icon_type"`
-		I18nKey    string        `db:"i18n_key"`
+		Id         int64          `db:"id"`
+		CreateTime time.Time      `db:"create_time"`
+		UpdateTime time.Time      `db:"update_time"`
+		CreateBy   sql.NullInt64  `db:"create_by"`
+		UpdateBy   sql.NullInt64  `db:"update_by"`
+		Status     string         `db:"status"`
+		ParentId   int64          `db:"parent_id"`
+		MenuType   string         `db:"menu_type"`
+		MenuName   string         `db:"menu_name"`
+		HideInMenu int64          `db:"hide_in_menu"`
+		ActiveMenu sql.NullString `db:"active_menu"`
+		Order      int64          `db:"order"`
+		RouteName  string         `db:"route_name"`
+		RoutePath  string         `db:"route_path"`
+		Component  string         `db:"component"`
+		Icon       string         `db:"icon"`
+		IconType   string         `db:"icon_type"`
+		I18nKey    string         `db:"i18n_key"`
 	}
 )
 
@@ -100,7 +101,7 @@ func (m *defaultSystemMenuModel) Insert(ctx context.Context, data *SystemMenu) (
 	sql, args := sqlbuilder.NewInsertBuilder().
 		InsertInto(m.table).
 		Cols(systemMenuRowsExpectAutoSet).
-		Values(data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.Status, data.ParentId, data.MenuType, data.Name, data.Hidden, data.Order, data.RouteName, data.RoutePath, data.Component, data.Icon, data.IconType, data.I18nKey).Build()
+		Values(data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.Status, data.ParentId, data.MenuType, data.MenuName, data.HideInMenu, data.ActiveMenu, data.Order, data.RouteName, data.RoutePath, data.Component, data.Icon, data.IconType, data.I18nKey).Build()
 	ret, err := m.conn.ExecCtx(ctx, sql, args...)
 	return ret, err
 }
@@ -115,7 +116,7 @@ func (m *defaultSystemMenuModel) Update(ctx context.Context, data *SystemMenu) e
 	sb.Set(assigns...)
 	sb.Where(sb.EQ("`id`", nil))
 	sql, _ := sb.Build()
-	_, err := m.conn.ExecCtx(ctx, sql, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.Status, data.ParentId, data.MenuType, data.Name, data.Hidden, data.Order, data.RouteName, data.RoutePath, data.Component, data.Icon, data.IconType, data.I18nKey, data.Id)
+	_, err := m.conn.ExecCtx(ctx, sql, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.Status, data.ParentId, data.MenuType, data.MenuName, data.HideInMenu, data.ActiveMenu, data.Order, data.RouteName, data.RoutePath, data.Component, data.Icon, data.IconType, data.I18nKey, data.Id)
 	return err
 }
 
@@ -127,7 +128,7 @@ func (m *customSystemMenuModel) BulkInsert(ctx context.Context, datas []*SystemM
 	sb := sqlbuilder.InsertInto(m.table)
 	sb.Cols(systemMenuRowsExpectAutoSet)
 	for _, data := range datas {
-		sb.Values(data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.Status, data.ParentId, data.MenuType, data.Name, data.Hidden, data.Order, data.RouteName, data.RoutePath, data.Component, data.Icon, data.IconType, data.I18nKey)
+		sb.Values(data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.Status, data.ParentId, data.MenuType, data.MenuName, data.HideInMenu, data.ActiveMenu, data.Order, data.RouteName, data.RoutePath, data.Component, data.Icon, data.IconType, data.I18nKey)
 	}
 	sql, args := sb.Build()
 	_, err := m.conn.ExecCtx(ctx, sql, args...)
