@@ -32,7 +32,7 @@ func init() {
 		logx.AddWriter(logx.NewWriter(os.Stdout))
 	}
 
-	server = rest.MustNewServer(c.Rest.RestConf)
+	server = rest.MustNewServer(c.Rest.RestConf, rest.WithCors("*"))
 	middleware.Register(server)
 
 	svcCtx := svc.NewServiceContext(c)
