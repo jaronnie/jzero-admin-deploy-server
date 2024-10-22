@@ -23,6 +23,8 @@ func NewLogin(ctx context.Context, svcCtx *svc.ServiceContext) *Login {
 }
 
 func (l *Login) Login(req *types.LoginRequest) (resp *types.LoginResponse, err error) {
-
-	return
+	return &types.LoginResponse{
+		Token:        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+		RefreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+	}, nil
 }
