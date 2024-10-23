@@ -1,12 +1,13 @@
 package api
 
 import (
+	"net/http"
+	"os"
+
 	"server/server/config"
 	"server/server/handler"
 	"server/server/middleware"
 	"server/server/svc"
-	"net/http"
-	"os"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -32,7 +33,11 @@ func init() {
 		logx.AddWriter(logx.NewWriter(os.Stdout))
 	}
 
-	server = rest.MustNewServer(c.Rest.RestConf, rest.WithCors("*"))
+	server = rest.MustNewServer(c.Rest.RestConf, rest.WithCustomCors(func(header http.Header) {
+		header.Set("Access-Control-Allow-Origin", "*")
+		header.Add("Access-Control-Allow-Headers", "X-Request-Id")
+		header.Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
+	}, nil, "*"))
 	middleware.Register(server)
 
 	svcCtx := svc.NewServiceContext(c)
