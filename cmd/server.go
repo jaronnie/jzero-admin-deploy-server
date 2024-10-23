@@ -11,10 +11,8 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/proc"
 	"github.com/zeromicro/go-zero/core/service"
 	"github.com/zeromicro/go-zero/rest"
-	"golang.org/x/sync/errgroup"
 )
 
 var serverCmd = &cobra.Command{
@@ -52,27 +50,11 @@ func start(svcCtx *svc.ServiceContext) {
 
 	group := service.NewServiceGroup()
 	group.Add(server)
+	group.Add(svcCtx.Custom)
 
-	waitExit := proc.AddShutdownListener(svcCtx.Custom.Stop)
-
-	eg := errgroup.Group{}
-	eg.Go(func() error {
-		printBanner(svcCtx.Config)
-		logx.Infof("Starting rest server at %s:%d...", svcCtx.Config.Rest.Host, svcCtx.Config.Rest.Port)
-		group.Start()
-		return nil
-	})
-
-	eg.Go(func() error {
-		svcCtx.Custom.Start()
-		return nil
-	})
-
-	if err := eg.Wait(); err != nil {
-		panic(err)
-	}
-
-	waitExit()
+	printBanner(svcCtx.Config)
+	logx.Infof("Starting rest server at %s:%d...", svcCtx.Config.Rest.Host, svcCtx.Config.Rest.Port)
+	group.Start()
 }
 
 func printBanner(c config.Config) {
