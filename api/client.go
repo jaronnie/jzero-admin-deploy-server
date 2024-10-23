@@ -1,6 +1,7 @@
 package api
 
 import (
+	"github.com/zeromicro/go-zero/core/service"
 	"net/http"
 	"os"
 
@@ -42,10 +43,11 @@ func init() {
 
 	svcCtx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(server, svcCtx)
-
 	svcCtx.Custom.AddRoutes(server)
 
-	logx.Infof("Starting rest server at %s:%d...", svcCtx.Config.Rest.Host, svcCtx.Config.Rest.Port)
+	group := service.NewServiceGroup()
+	group.Add(svcCtx.Custom)
+	group.Start()
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
