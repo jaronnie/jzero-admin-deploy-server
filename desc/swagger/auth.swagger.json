@@ -269,6 +269,9 @@
         "verificationUuid": {
           "type": "string"
         },
+        "verificationCode": {
+          "type": "string"
+        },
         "username": {
           "type": "string"
         },
@@ -280,6 +283,7 @@
       "required": [
         "email",
         "verificationUuid",
+        "verificationCode",
         "username",
         "password"
       ]

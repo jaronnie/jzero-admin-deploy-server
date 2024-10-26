@@ -44,6 +44,7 @@ type RefreshTokenResponse struct {
 type RegisterRequest struct {
 	Email            string `json:"email"`
 	VerificationUuid string `json:"verificationUuid"`
+	VerificationCode string `json:"verificationCode"`
 	Username         string `json:"username"`
 	Password         string `json:"password"`
 }

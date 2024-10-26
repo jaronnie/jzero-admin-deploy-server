@@ -17,6 +17,7 @@ type LoginResponse {
 type RegisterRequest {
 	email            string `json:"email"`
 	verificationUuid string `json:"verificationUuid"`
+	verificationCode string `json:"verificationCode"`
 	username         string `json:"username"`
 	password         string `json:"password"`
 }

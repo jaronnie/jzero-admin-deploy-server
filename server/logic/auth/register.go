@@ -2,6 +2,8 @@ package auth
 
 import (
 	"context"
+	"fmt"
+	"server/server/constant"
 	"server/server/model/system_user"
 	"server/server/svc"
 	types "server/server/types/auth"
@@ -10,6 +12,8 @@ import (
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 )
+
+var RegisterError = errors.New("注册失败")
 
 type Register struct {
 	logx.Logger
@@ -26,6 +30,15 @@ func NewRegister(ctx context.Context, svcCtx *svc.ServiceContext) *Register {
 }
 
 func (l *Register) Register(req *types.RegisterRequest) (resp *types.RegisterResponse, err error) {
+
+	var verificationUuidVal string
+	if err = l.svcCtx.Cache.Get(fmt.Sprintf("%s:%s", constant.CacheVerificationCodePrefix, req.VerificationUuid), &verificationUuidVal); err != nil {
+		return nil, RegisterError
+	}
+	if verificationUuidVal != req.VerificationCode {
+		return nil, errors.New("验证码错误")
+	}
+
 	_, err = l.svcCtx.Model.SystemUser.FindOneByUsername(l.ctx, req.Username)
 	if err == nil {
 		return nil, errors.New("用户名已存在")
