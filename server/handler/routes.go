@@ -140,6 +140,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				},
 				{
 					Method:  http.MethodPost,
+					Path:    "/system/deleteUser",
+					Handler: systemuser.Delete(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
 					Path:    "/system/editUser",
 					Handler: systemuser.Edit(serverCtx),
 				},

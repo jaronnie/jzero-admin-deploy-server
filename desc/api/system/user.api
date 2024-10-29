@@ -24,6 +24,12 @@ type SystemUser {
 
 type ListRequest {
 	PageRequest
+	username   string `form:"username,optional"`
+	userGender string `form:"userGender,optional"`
+	nickName   string `form:"nickName,optional"`
+	userPhone  string `form:"userPhone,optional"`
+	userEmail  string `form:"userEmail,optional"`
+	status     string `form:"status,optional"`
 }
 
 type ListResponse {
@@ -55,6 +61,12 @@ type EditRequest {
 
 type EditResponse {}
 
+type DeleteRequest {
+	ids []uint64 `json:"ids"`
+}
+
+type DeleteResponse {}
+
 @server (
 	group: system/user
 )
@@ -67,5 +79,8 @@ service server {
 
 	@handler Edit
 	post /system/editUser (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /system/deleteUser (DeleteRequest) returns (DeleteResponse)
 }
 

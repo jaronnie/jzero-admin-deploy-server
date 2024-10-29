@@ -32,6 +32,36 @@ func (l *List) List(req *types.ListRequest) (resp *types.ListResponse, err error
 	}, condition.Condition{
 		Operator: condition.Offset,
 		Value:    (req.Current - 1) * req.Size,
+	}, condition.Condition{
+		Skip:     req.Username == "",
+		Field:    "username",
+		Operator: condition.Like,
+		Value:    "%" + req.Username + "%",
+	}, condition.Condition{
+		Skip:     req.UserGender == "",
+		Field:    "gender",
+		Operator: condition.Equal,
+		Value:    req.UserGender,
+	}, condition.Condition{
+		Skip:     req.NickName == "",
+		Field:    "nickname",
+		Operator: condition.Like,
+		Value:    "%" + req.NickName + "%",
+	}, condition.Condition{
+		Skip:     req.UserPhone == "",
+		Field:    "phone",
+		Operator: condition.Like,
+		Value:    "%" + req.UserPhone + "%",
+	}, condition.Condition{
+		Skip:     req.UserEmail == "",
+		Field:    "email",
+		Operator: condition.Like,
+		Value:    "%" + req.UserEmail + "%",
+	}, condition.Condition{
+		Skip:     req.Status == "",
+		Field:    "status",
+		Operator: condition.Equal,
+		Value:    req.Status,
 	})
 
 	var records []types.SystemUser

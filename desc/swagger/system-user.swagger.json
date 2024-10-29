@@ -40,6 +40,32 @@
         ]
       }
     },
+    "/system/deleteUser": {
+      "post": {
+        "operationId": "Delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteRequest"
+            }
+          }
+        ],
+        "tags": [
+          "system/user"
+        ]
+      }
+    },
     "/system/editUser": {
       "post": {
         "operationId": "Edit",
@@ -91,10 +117,49 @@
             "required": true,
             "type": "integer",
             "format": "int32"
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "userGender",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "nickName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "userPhone",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "userEmail",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
           "system/user"
+        ],
+        "consumes": [
+          "multipart/form-data"
         ]
       }
     }
@@ -141,6 +206,26 @@
     "AddResponse": {
       "type": "object",
       "title": "AddResponse"
+    },
+    "DeleteRequest": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "title": "DeleteRequest",
+      "required": [
+        "ids"
+      ]
+    },
+    "DeleteResponse": {
+      "type": "object",
+      "title": "DeleteResponse"
     },
     "EditRequest": {
       "type": "object",
@@ -193,6 +278,24 @@
         "size": {
           "type": "integer",
           "format": "int32"
+        },
+        "username": {
+          "type": "string"
+        },
+        "userGender": {
+          "type": "string"
+        },
+        "nickName": {
+          "type": "string"
+        },
+        "userPhone": {
+          "type": "string"
+        },
+        "userEmail": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
         }
       },
       "title": "ListRequest"

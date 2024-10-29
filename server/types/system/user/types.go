@@ -22,6 +22,13 @@ type AddRequest struct {
 type AddResponse struct {
 }
 
+type DeleteRequest struct {
+	Ids []uint64 `json:"ids"`
+}
+
+type DeleteResponse struct {
+}
+
 type EditRequest struct {
 	Id         uint64 `json:"id"`
 	Username   string `json:"username"`
@@ -37,6 +44,12 @@ type EditResponse struct {
 
 type ListRequest struct {
 	PageRequest
+	Username   string `form:"username,optional"`
+	UserGender string `form:"userGender,optional"`
+	NickName   string `form:"nickName,optional"`
+	UserPhone  string `form:"userPhone,optional"`
+	UserEmail  string `form:"userEmail,optional"`
+	Status     string `form:"status,optional"`
 }
 
 type ListResponse struct {
