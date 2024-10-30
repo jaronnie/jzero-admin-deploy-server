@@ -10,11 +10,14 @@ type ListResponse {}
 
 type TreeRequest {}
 
-type TreeResponse {}
+type TreeResponse {
+	id       uint64         `json:"id"`
+	label    string         `json:"label"`
+	pId      uint64         `json:"pId"`
+	children []TreeResponse `json:"children"`
+}
 
 type GetAllPagesRequest {}
-
-type GetAllPagesResponse {}
 
 @server (
 	group: system/menu
@@ -25,9 +28,9 @@ service server {
 	get /systemManage/getMenuList/v2 (ListRequest) returns (ListResponse)
 
 	@handler Tree
-	get /systemManage/getMenuTree (TreeRequest) returns (TreeResponse)
+	get /systemManage/getMenuTree (TreeRequest) returns ([]TreeResponse)
 
 	@handler GetAllPages
-	get /systemManage/getAllPages (GetAllPagesRequest) returns (GetAllPagesResponse)
+	get /systemManage/getAllPages (GetAllPagesRequest) returns ([]string)
 }
 

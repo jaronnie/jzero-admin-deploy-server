@@ -22,7 +22,7 @@ func NewTree(ctx context.Context, svcCtx *svc.ServiceContext) *Tree {
 	}
 }
 
-func (l *Tree) Tree(req *types.TreeRequest) (resp *types.TreeResponse, err error) {
-
+func (l *Tree) Tree(req *types.TreeRequest) (resp []types.TreeResponse, err error) {
+	resp = []types.TreeResponse{}
 	return
 }
