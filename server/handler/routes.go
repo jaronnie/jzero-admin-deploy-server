@@ -91,6 +91,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: route.IsRouteExist(serverCtx),
 				},
 			},
+			rest.WithJwt(serverCtx.Config.Jwt.AccessSecret),
 		)
 	}
 	{
@@ -112,22 +113,29 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: systemmenu.Tree(serverCtx),
 				},
 			},
+			rest.WithJwt(serverCtx.Config.Jwt.AccessSecret),
 		)
 	}
 	{
 		server.AddRoutes(
 			[]rest.Route{
 				{
+					Method:  http.MethodPost,
+					Path:    "/system/addRole",
+					Handler: systemrole.Add(serverCtx),
+				},
+				{
 					Method:  http.MethodGet,
-					Path:    "/systemManage/getAllRoles",
+					Path:    "/system/getAllRoles",
 					Handler: systemrole.GetAll(serverCtx),
 				},
 				{
 					Method:  http.MethodGet,
-					Path:    "/systemManage/getRoleList",
+					Path:    "/system/getRoleList",
 					Handler: systemrole.List(serverCtx),
 				},
 			},
+			rest.WithJwt(serverCtx.Config.Jwt.AccessSecret),
 		)
 	}
 	{
@@ -154,6 +162,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: systemuser.List(serverCtx),
 				},
 			},
+			rest.WithJwt(serverCtx.Config.Jwt.AccessSecret),
 		)
 	}
 	{

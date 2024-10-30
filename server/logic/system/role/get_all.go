@@ -22,7 +22,22 @@ func NewGetAll(ctx context.Context, svcCtx *svc.ServiceContext) *GetAll {
 	}
 }
 
-func (l *GetAll) GetAll(req *types.GetAllRequest) (resp *types.GetAllResponse, err error) {
+func (l *GetAll) GetAll(req *types.GetAllRequest) (resp []types.GetAllResponse, err error) {
+	roles, err := l.svcCtx.Model.SystemRole.FindByCondition(l.ctx)
+	if err != nil {
+		return nil, err
+	}
+	var list []types.GetAllResponse
 
-	return
+	for _, role := range roles {
+		if role.Status == "1" {
+			list = append(list, types.GetAllResponse{
+				Id:       role.Id,
+				RoleCode: role.Code,
+				RoleName: role.Name,
+			})
+		}
+	}
+
+	return list, nil
 }

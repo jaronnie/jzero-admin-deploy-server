@@ -2,11 +2,13 @@ package user
 
 import (
 	"context"
+	"server/server/model/system_user_role"
 	"server/server/svc"
 	types "server/server/types/system/user"
 	"time"
 
 	"github.com/guregu/null/v5"
+	"github.com/jzero-io/jzero-contrib/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -37,6 +39,42 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 	user.Status = req.Status
 	user.UpdateTime = time.Now()
 
-	err = l.svcCtx.Model.SystemUser.Update(l.ctx, user)
+	if err = l.svcCtx.Model.SystemUser.Update(l.ctx, user); err != nil {
+		return nil, err
+	}
+
+	if err = l.svcCtx.Model.SystemUserRole.DeleteByCondition(l.ctx, condition.Condition{
+		Field:    "user_id",
+		Operator: condition.Equal,
+		Value:    req.Id,
+	}); err != nil {
+		return nil, err
+	}
+	var bulk []*system_user_role.SystemUserRole
+	var roleIds []uint64
+	roles, err := l.svcCtx.Model.SystemRole.FindByCondition(l.ctx, condition.Condition{
+		Field:    "code",
+		Operator: condition.In,
+		Value:    req.UserRoles,
+	})
+	if err != nil {
+		return nil, err
+	}
+	for _, v := range roles {
+		roleIds = append(roleIds, v.Id)
+	}
+	for _, v := range roleIds {
+		bulk = append(bulk, &system_user_role.SystemUserRole{
+			CreateTime: time.Now(),
+			UpdateTime: time.Now(),
+			UserId:     int64(user.Id),
+			RoleId:     int64(v),
+		})
+	}
+
+	if err = l.svcCtx.Model.SystemUserRole.BulkInsert(l.ctx, bulk); err != nil {
+		return nil, err
+	}
+
 	return
 }

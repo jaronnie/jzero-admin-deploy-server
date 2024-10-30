@@ -27,6 +27,11 @@
         },
         "tags": [
           "system/menu"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
@@ -43,6 +48,11 @@
         },
         "tags": [
           "system/menu"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
@@ -59,6 +69,11 @@
         },
         "tags": [
           "system/menu"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     }

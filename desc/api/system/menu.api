@@ -18,6 +18,7 @@ type GetAllPagesResponse {}
 
 @server (
 	group: system/menu
+	jwt:   Jwt
 )
 service server {
 	@handler List
