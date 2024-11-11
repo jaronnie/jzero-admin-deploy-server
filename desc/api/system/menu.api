@@ -32,7 +32,7 @@ type AddRequest {
 	i18nKey         string   `json:"i18nKey"`
 }
 
-type AddReponse {}
+type AddResponse {}
 
 type Button {
 	code string `json:"code"`
@@ -76,10 +76,23 @@ type TreeResponse {
 	id       uint64         `json:"id"`
 	label    string         `json:"label"`
 	pId      uint64         `json:"pId"`
+	order    uint64         `json:"-"`
 	children []TreeResponse `json:"children"`
 }
 
 type GetAllPagesRequest {}
+
+type DeleteRequest {
+	ids []uint64 `json:"ids"`
+}
+
+type DeleteResponse {}
+
+type EditRequest {
+	id uint64 `json:"id"`
+}
+
+type EditResponse {}
 
 @server (
 	group: system/menu
@@ -96,6 +109,12 @@ service server {
 	get /system/getAllPages (GetAllPagesRequest) returns ([]string)
 
 	@handler Add
-	post /system/addMenu (AddRequest) returns (AddReponse)
+	post /system/addMenu (AddRequest) returns (AddResponse)
+
+	@handler Delete
+	post /system/deleteMenu (DeleteRequest) returns (DeleteResponse)
+
+	@handler Edit
+	post /system/editMenu (EditRequest) returns (EditResponse)
 }
 

@@ -21,7 +21,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/AddReponse"
+              "$ref": "#/definitions/AddResponse"
             }
           }
         },
@@ -32,6 +32,68 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/AddRequest"
+            }
+          }
+        ],
+        "tags": [
+          "system/menu"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/system/deleteMenu": {
+      "post": {
+        "operationId": "Delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteRequest"
+            }
+          }
+        ],
+        "tags": [
+          "system/menu"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/system/editMenu": {
+      "post": {
+        "operationId": "Edit",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/EditResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EditRequest"
             }
           }
         ],
@@ -134,10 +196,6 @@
     }
   },
   "definitions": {
-    "AddReponse": {
-      "type": "object",
-      "title": "AddReponse"
-    },
     "AddRequest": {
       "type": "object",
       "properties": {
@@ -236,6 +294,10 @@
         "i18nKey"
       ]
     },
+    "AddResponse": {
+      "type": "object",
+      "title": "AddResponse"
+    },
     "Button": {
       "type": "object",
       "properties": {
@@ -251,6 +313,43 @@
         "code",
         "desc"
       ]
+    },
+    "DeleteRequest": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "title": "DeleteRequest",
+      "required": [
+        "ids"
+      ]
+    },
+    "DeleteResponse": {
+      "type": "object",
+      "title": "DeleteResponse"
+    },
+    "EditRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "EditRequest",
+      "required": [
+        "id"
+      ]
+    },
+    "EditResponse": {
+      "type": "object",
+      "title": "EditResponse"
     },
     "GetAllPagesRequest": {
       "type": "object",
@@ -445,6 +544,10 @@
           "type": "integer",
           "format": "int64"
         },
+        "order": {
+          "type": "integer",
+          "format": "int64"
+        },
         "children": {
           "type": "array",
           "items": {
@@ -457,6 +560,7 @@
         "id",
         "label",
         "pId",
+        "-",
         "children"
       ]
     }

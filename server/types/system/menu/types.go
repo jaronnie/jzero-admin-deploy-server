@@ -9,9 +9,6 @@ var (
 	_ = time.Now()
 )
 
-type AddReponse struct {
-}
-
 type AddRequest struct {
 	ActiveMenu      string   `json:"activeMenu,optional"`
 	MenuType        string   `json:"menuType"`
@@ -35,9 +32,26 @@ type AddRequest struct {
 	I18nKey         string   `json:"i18nKey"`
 }
 
+type AddResponse struct {
+}
+
 type Button struct {
 	Code string `json:"code"`
 	Desc string `json:"desc"`
+}
+
+type DeleteRequest struct {
+	Ids []uint64 `json:"ids"`
+}
+
+type DeleteResponse struct {
+}
+
+type EditRequest struct {
+	Id uint64 `json:"id"`
+}
+
+type EditResponse struct {
 }
 
 type GetAllPagesRequest struct {
@@ -92,5 +106,6 @@ type TreeResponse struct {
 	Id       uint64         `json:"id"`
 	Label    string         `json:"label"`
 	PId      uint64         `json:"pId"`
+	Order    uint64         `json:"-"`
 	Children []TreeResponse `json:"children"`
 }

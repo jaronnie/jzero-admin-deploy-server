@@ -103,6 +103,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: systemmenu.Add(serverCtx),
 				},
 				{
+					Method:  http.MethodPost,
+					Path:    "/system/deleteMenu",
+					Handler: systemmenu.Delete(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/system/editMenu",
+					Handler: systemmenu.Edit(serverCtx),
+				},
+				{
 					Method:  http.MethodGet,
 					Path:    "/system/getAllPages",
 					Handler: systemmenu.GetAllPages(serverCtx),
