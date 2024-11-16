@@ -27,7 +27,7 @@ func NewEdit(ctx context.Context, svcCtx *svc.ServiceContext) *Edit {
 }
 
 func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error) {
-	user, err := l.svcCtx.Model.SystemUser.FindOne(l.ctx, req.Id)
+	user, err := l.svcCtx.Model.SystemUser.FindOne(l.ctx, nil, req.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -39,11 +39,11 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 	user.Status = req.Status
 	user.UpdateTime = time.Now()
 
-	if err = l.svcCtx.Model.SystemUser.Update(l.ctx, user); err != nil {
+	if err = l.svcCtx.Model.SystemUser.Update(l.ctx, nil, user); err != nil {
 		return nil, err
 	}
 
-	if err = l.svcCtx.Model.SystemUserRole.DeleteByCondition(l.ctx, condition.Condition{
+	if err = l.svcCtx.Model.SystemUserRole.DeleteByCondition(l.ctx, nil, condition.Condition{
 		Field:    "user_id",
 		Operator: condition.Equal,
 		Value:    req.Id,
@@ -52,7 +52,7 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 	}
 	var bulk []*system_user_role.SystemUserRole
 	var roleIds []uint64
-	roles, err := l.svcCtx.Model.SystemRole.FindByCondition(l.ctx, condition.Condition{
+	roles, err := l.svcCtx.Model.SystemRole.FindByCondition(l.ctx, nil, condition.Condition{
 		Field:    "code",
 		Operator: condition.In,
 		Value:    req.UserRoles,
@@ -72,7 +72,7 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 		})
 	}
 
-	if err = l.svcCtx.Model.SystemUserRole.BulkInsert(l.ctx, bulk); err != nil {
+	if err = l.svcCtx.Model.SystemUserRole.BulkInsert(l.ctx, nil, bulk); err != nil {
 		return nil, err
 	}
 
