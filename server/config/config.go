@@ -19,7 +19,7 @@ type Config struct {
 	Sqlite       SqliteConf
 
 	CacheType string    `json:",default=local"`
-	Redis     RedisConf `json:","`
+	Redis     RedisConf `json:",optional"`
 
 	Jwt Jwt
 
