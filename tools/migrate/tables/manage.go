@@ -1,6 +1,6 @@
 package tables
 
-type SystemUser struct {
+type ManageUser struct {
 	BaseModel
 
 	Username string `gorm:"column:username;type:varchar(30);unique;not null"`
@@ -12,11 +12,11 @@ type SystemUser struct {
 	Status   string `gorm:"column:status;type:varchar(1);not null"`
 }
 
-func (SystemUser) TableName() string {
-	return "system_user"
+func (ManageUser) TableName() string {
+	return "manage_user"
 }
 
-type SystemRole struct {
+type ManageRole struct {
 	BaseModel
 
 	Name   string `gorm:"column:name;type:varchar(50);not null"`
@@ -25,22 +25,22 @@ type SystemRole struct {
 	Desc   string `gorm:"column:desc;not null"`
 }
 
-func (SystemRole) TableName() string {
-	return "system_role"
+func (ManageRole) TableName() string {
+	return "manage_role"
 }
 
-type SystemUserRole struct {
+type ManageUserRole struct {
 	BaseModel
 
 	UserId int `gorm:"column:user_id;not null"`
 	RoleId int `gorm:"column:role_id;not null"`
 }
 
-func (SystemUserRole) TableName() string {
-	return "system_user_role"
+func (ManageUserRole) TableName() string {
+	return "manage_user_role"
 }
 
-type SystemMenu struct {
+type ManageMenu struct {
 	BaseModel
 
 	Status          string `gorm:"column:status;type:varchar(1);not null"`
@@ -65,22 +65,22 @@ type SystemMenu struct {
 	Constant        bool   `gorm:"column:constant;not null"`
 }
 
-func (SystemMenu) TableName() string {
-	return "system_menu"
+func (ManageMenu) TableName() string {
+	return "manage_menu"
 }
 
-type SystemRoleMenu struct {
+type ManageRoleMenu struct {
 	BaseModel
 
 	RoleId int `gorm:"column:role_id;not null"`
 	MenuId int `gorm:"column:menu_id;not null"`
 }
 
-func (SystemRoleMenu) TableName() string {
-	return "system_role_menu"
+func (ManageRoleMenu) TableName() string {
+	return "manage_role_menu"
 }
 
-type SystemEmail struct {
+type ManageEmail struct {
 	BaseModel
 
 	From      string `gorm:"column:from;not null"`
@@ -92,6 +92,6 @@ type SystemEmail struct {
 	IsVerify  bool   `gorm:"column:is_verify;type:tinyint(1);not null"`
 }
 
-func (SystemEmail) TableName() string {
-	return "system_email"
+func (ManageEmail) TableName() string {
+	return "manage_email"
 }

@@ -2,9 +2,9 @@ package role
 
 import (
 	"net/http"
-	"server/server/logic/system/role"
+	"server/server/logic/manage/role"
 	"server/server/svc"
-	types "server/server/types/system/role"
+	types "server/server/types/manage/role"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )

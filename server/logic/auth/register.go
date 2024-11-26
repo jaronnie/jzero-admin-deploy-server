@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"server/server/constant"
-	"server/server/model/system_user"
+	"server/server/model/manage_user"
 	"server/server/svc"
 	types "server/server/types/auth"
 	"time"
@@ -40,12 +40,12 @@ func (l *Register) Register(req *types.RegisterRequest) (resp *types.RegisterRes
 		return nil, errors.New("验证码错误")
 	}
 
-	_, err = l.svcCtx.Model.SystemUser.FindOneByUsername(l.ctx, nil, req.Username)
+	_, err = l.svcCtx.Model.ManageUser.FindOneByUsername(l.ctx, nil, req.Username)
 	if err == nil {
 		return nil, errors.New("用户名已存在")
 	}
 
-	_, err = l.svcCtx.Model.SystemUser.Insert(l.ctx, nil, &system_user.SystemUser{
+	_, err = l.svcCtx.Model.ManageUser.Insert(l.ctx, nil, &manage_user.ManageUser{
 		Username:   req.Username,
 		Password:   req.Password,
 		CreateTime: time.Now(),

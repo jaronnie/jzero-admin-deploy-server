@@ -1,4 +1,4 @@
-CREATE TABLE `system_role_menu` (
+CREATE TABLE `manage_role_menu` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

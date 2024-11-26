@@ -14,7 +14,7 @@
     "application/json"
   ],
   "paths": {
-    "/manage/addUser": {
+    "/manage/addRole": {
       "post": {
         "operationId": "Add",
         "responses": {
@@ -36,7 +36,7 @@
           }
         ],
         "tags": [
-          "system/user"
+          "manage/role"
         ],
         "security": [
           {
@@ -45,7 +45,7 @@
         ]
       }
     },
-    "/manage/deleteUser": {
+    "/manage/deleteRole": {
       "post": {
         "operationId": "Delete",
         "responses": {
@@ -67,7 +67,7 @@
           }
         ],
         "tags": [
-          "system/user"
+          "manage/role"
         ],
         "security": [
           {
@@ -76,7 +76,7 @@
         ]
       }
     },
-    "/manage/editUser": {
+    "/manage/editRole": {
       "post": {
         "operationId": "Edit",
         "responses": {
@@ -98,7 +98,7 @@
           }
         ],
         "tags": [
-          "system/user"
+          "manage/role"
         ],
         "security": [
           {
@@ -107,7 +107,31 @@
         ]
       }
     },
-    "/manage/getUserList": {
+    "/manage/getAllRoles": {
+      "get": {
+        "operationId": "GetAll",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetAllResponse"
+              }
+            }
+          }
+        },
+        "tags": [
+          "manage/role"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/manage/getRoleList": {
       "get": {
         "operationId": "List",
         "responses": {
@@ -136,31 +160,13 @@
             "default": "10"
           },
           {
-            "name": "username",
+            "name": "roleName",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
-            "name": "userGender",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "nickName",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "userPhone",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "userEmail",
+            "name": "roleCode",
             "in": "query",
             "required": false,
             "type": "string"
@@ -173,10 +179,77 @@
           }
         ],
         "tags": [
-          "system/user"
+          "manage/role"
         ],
         "consumes": [
           "multipart/form-data"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/manage/getRoleMenus": {
+      "get": {
+        "operationId": "GetMenus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/uint64"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "manage/role"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/manage/setRoleMenus": {
+      "post": {
+        "operationId": "SetMenus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetMenusResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetMenusRequest"
+            }
+          }
+        ],
+        "tags": [
+          "manage/role"
         ],
         "security": [
           {
@@ -190,46 +263,25 @@
     "AddRequest": {
       "type": "object",
       "properties": {
-        "username": {
+        "roleName": {
           "type": "string"
         },
-        "userGender": {
-          "type": "string",
-          "default": "1"
-        },
-        "nickName": {
+        "roleCode": {
           "type": "string"
         },
-        "userPhone": {
-          "type": "string"
-        },
-        "userEmail": {
+        "roleDesc": {
           "type": "string"
         },
         "status": {
-          "type": "string",
-          "default": "1"
-        },
-        "password": {
           "type": "string"
-        },
-        "userRoles": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         }
       },
       "title": "AddRequest",
       "required": [
-        "username",
-        "userGender",
-        "nickName",
-        "userPhone",
-        "userEmail",
-        "status",
-        "password",
-        "userRoles"
+        "roleName",
+        "roleCode",
+        "roleDesc",
+        "status"
       ]
     },
     "AddResponse": {
@@ -263,46 +315,89 @@
           "type": "integer",
           "format": "int64"
         },
-        "username": {
+        "roleName": {
           "type": "string"
         },
-        "userGender": {
+        "roleCode": {
           "type": "string"
         },
-        "nickName": {
-          "type": "string"
-        },
-        "userPhone": {
-          "type": "string"
-        },
-        "userEmail": {
+        "roleDesc": {
           "type": "string"
         },
         "status": {
           "type": "string"
-        },
-        "userRoles": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         }
       },
       "title": "EditRequest",
       "required": [
         "id",
-        "username",
-        "userGender",
-        "nickName",
-        "userPhone",
-        "userEmail",
-        "status",
-        "userRoles"
+        "roleName",
+        "roleCode",
+        "roleDesc",
+        "status"
       ]
     },
     "EditResponse": {
       "type": "object",
       "title": "EditResponse"
+    },
+    "Empty": {
+      "type": "object",
+      "title": "Empty"
+    },
+    "GetAllRequest": {
+      "type": "object",
+      "title": "GetAllRequest"
+    },
+    "GetAllResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "roleName": {
+          "type": "string"
+        },
+        "roleCode": {
+          "type": "string"
+        }
+      },
+      "title": "GetAllResponse",
+      "required": [
+        "id",
+        "roleName",
+        "roleCode"
+      ]
+    },
+    "GetMenusRequest": {
+      "type": "object",
+      "properties": {
+        "roleId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GetMenusRequest",
+      "required": [
+        "roleId"
+      ]
+    },
+    "GetMenusResponse": {
+      "type": "object",
+      "properties": {
+        "menuIds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "title": "GetMenusResponse",
+      "required": [
+        "menuIds"
+      ]
     },
     "ListRequest": {
       "type": "object",
@@ -317,19 +412,10 @@
           "format": "int32",
           "default": "10"
         },
-        "username": {
+        "roleName": {
           "type": "string"
         },
-        "userGender": {
-          "type": "string"
-        },
-        "nickName": {
-          "type": "string"
-        },
-        "userPhone": {
-          "type": "string"
-        },
-        "userEmail": {
+        "roleCode": {
           "type": "string"
         },
         "status": {
@@ -356,7 +442,7 @@
         "records": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ManageUser"
+            "$ref": "#/definitions/ManageRole"
           }
         }
       },
@@ -365,33 +451,21 @@
         "records"
       ]
     },
-    "ManageUser": {
+    "ManageRole": {
       "type": "object",
       "properties": {
         "id": {
           "type": "integer",
           "format": "int64"
         },
-        "username": {
+        "roleName": {
           "type": "string"
         },
-        "userGender": {
+        "roleCode": {
           "type": "string"
         },
-        "nickName": {
+        "roleDesc": {
           "type": "string"
-        },
-        "userPhone": {
-          "type": "string"
-        },
-        "userEmail": {
-          "type": "string"
-        },
-        "userRoles": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         },
         "status": {
           "type": "string"
@@ -403,15 +477,12 @@
           "type": "string"
         }
       },
-      "title": "ManageUser",
+      "title": "ManageRole",
       "required": [
         "id",
-        "username",
-        "userGender",
-        "nickName",
-        "userPhone",
-        "userEmail",
-        "userRoles",
+        "roleName",
+        "roleCode",
+        "roleDesc",
         "status",
         "createTime",
         "updateTime"
@@ -455,6 +526,31 @@
         "size",
         "total"
       ]
+    },
+    "SetMenusRequest": {
+      "type": "object",
+      "properties": {
+        "roleId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "menuIds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "title": "SetMenusRequest",
+      "required": [
+        "roleId",
+        "menuIds"
+      ]
+    },
+    "SetMenusResponse": {
+      "type": "object",
+      "title": "SetMenusResponse"
     }
   },
   "securityDefinitions": {

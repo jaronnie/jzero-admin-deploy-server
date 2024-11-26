@@ -2,9 +2,9 @@ package menu
 
 import (
 	"net/http"
-	"server/server/logic/system/menu"
+	"server/server/logic/manage/menu"
 	"server/server/svc"
-	types "server/server/types/system/menu"
+	types "server/server/types/manage/menu"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )

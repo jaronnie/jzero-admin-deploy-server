@@ -3,10 +3,10 @@ package handler
 import (
 	"net/http"
 	auth "server/server/handler/auth"
+	managemenu "server/server/handler/manage/menu"
+	managerole "server/server/handler/manage/role"
+	manageuser "server/server/handler/manage/user"
 	route "server/server/handler/route"
-	systemmenu "server/server/handler/system/menu"
-	systemrole "server/server/handler/system/role"
-	systemuser "server/server/handler/system/user"
 	version "server/server/handler/version"
 	"server/server/svc"
 	"time"
@@ -99,33 +99,38 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			[]rest.Route{
 				{
 					Method:  http.MethodPost,
-					Path:    "/system/addMenu",
-					Handler: systemmenu.Add(serverCtx),
+					Path:    "/manage/addMenu",
+					Handler: managemenu.Add(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
-					Path:    "/system/deleteMenu",
-					Handler: systemmenu.Delete(serverCtx),
+					Path:    "/manage/deleteMenu",
+					Handler: managemenu.Delete(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
-					Path:    "/system/editMenu",
-					Handler: systemmenu.Edit(serverCtx),
+					Path:    "/manage/editMenu",
+					Handler: managemenu.Edit(serverCtx),
 				},
 				{
 					Method:  http.MethodGet,
-					Path:    "/system/getAllPages",
-					Handler: systemmenu.GetAllPages(serverCtx),
+					Path:    "/manage/getAllButtons",
+					Handler: managemenu.GetAllButtons(serverCtx),
 				},
 				{
 					Method:  http.MethodGet,
-					Path:    "/system/getMenuList/v2",
-					Handler: systemmenu.List(serverCtx),
+					Path:    "/manage/getAllPages",
+					Handler: managemenu.GetAllPages(serverCtx),
 				},
 				{
 					Method:  http.MethodGet,
-					Path:    "/system/getMenuTree",
-					Handler: systemmenu.Tree(serverCtx),
+					Path:    "/manage/getMenuList/v2",
+					Handler: managemenu.List(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/manage/getMenuTree",
+					Handler: managemenu.Tree(serverCtx),
 				},
 			},
 			rest.WithJwt(serverCtx.Config.Jwt.AccessSecret),
@@ -136,38 +141,38 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			[]rest.Route{
 				{
 					Method:  http.MethodPost,
-					Path:    "/system/addRole",
-					Handler: systemrole.Add(serverCtx),
+					Path:    "/manage/addRole",
+					Handler: managerole.Add(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
-					Path:    "/system/deleteRole",
-					Handler: systemrole.Delete(serverCtx),
+					Path:    "/manage/deleteRole",
+					Handler: managerole.Delete(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
-					Path:    "/system/editRole",
-					Handler: systemrole.Edit(serverCtx),
+					Path:    "/manage/editRole",
+					Handler: managerole.Edit(serverCtx),
 				},
 				{
 					Method:  http.MethodGet,
-					Path:    "/system/getAllRoles",
-					Handler: systemrole.GetAll(serverCtx),
+					Path:    "/manage/getAllRoles",
+					Handler: managerole.GetAll(serverCtx),
 				},
 				{
 					Method:  http.MethodGet,
-					Path:    "/system/getRoleList",
-					Handler: systemrole.List(serverCtx),
+					Path:    "/manage/getRoleList",
+					Handler: managerole.List(serverCtx),
 				},
 				{
 					Method:  http.MethodGet,
-					Path:    "/system/getRoleMenus",
-					Handler: systemrole.GetMenus(serverCtx),
+					Path:    "/manage/getRoleMenus",
+					Handler: managerole.GetMenus(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
-					Path:    "/system/setRoleMenus",
-					Handler: systemrole.SetMenus(serverCtx),
+					Path:    "/manage/setRoleMenus",
+					Handler: managerole.SetMenus(serverCtx),
 				},
 			},
 			rest.WithJwt(serverCtx.Config.Jwt.AccessSecret),
@@ -178,23 +183,23 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			[]rest.Route{
 				{
 					Method:  http.MethodPost,
-					Path:    "/system/addUser",
-					Handler: systemuser.Add(serverCtx),
+					Path:    "/manage/addUser",
+					Handler: manageuser.Add(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
-					Path:    "/system/deleteUser",
-					Handler: systemuser.Delete(serverCtx),
+					Path:    "/manage/deleteUser",
+					Handler: manageuser.Delete(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
-					Path:    "/system/editUser",
-					Handler: systemuser.Edit(serverCtx),
+					Path:    "/manage/editUser",
+					Handler: manageuser.Edit(serverCtx),
 				},
 				{
 					Method:  http.MethodGet,
-					Path:    "/system/getUserList",
-					Handler: systemuser.List(serverCtx),
+					Path:    "/manage/getUserList",
+					Handler: manageuser.List(serverCtx),
 				},
 			},
 			rest.WithJwt(serverCtx.Config.Jwt.AccessSecret),

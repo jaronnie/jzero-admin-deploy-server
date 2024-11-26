@@ -36,7 +36,7 @@
           }
         ],
         "tags": [
-          "system/user"
+          "manage/user"
         ],
         "security": [
           {
@@ -67,7 +67,7 @@
           }
         ],
         "tags": [
-          "system/user"
+          "manage/user"
         ],
         "security": [
           {
@@ -98,7 +98,7 @@
           }
         ],
         "tags": [
-          "system/user"
+          "manage/user"
         ],
         "security": [
           {
@@ -173,7 +173,7 @@
           }
         ],
         "tags": [
-          "system/user"
+          "manage/user"
         ],
         "consumes": [
           "multipart/form-data"
@@ -303,6 +303,10 @@
     "EditResponse": {
       "type": "object",
       "title": "EditResponse"
+    },
+    "Empty": {
+      "type": "object",
+      "title": "Empty"
     },
     "ListRequest": {
       "type": "object",

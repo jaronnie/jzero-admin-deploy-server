@@ -2,9 +2,9 @@ package user
 
 import (
 	"net/http"
-	"server/server/logic/system/user"
+	"server/server/logic/manage/user"
 	"server/server/svc"
-	types "server/server/types/system/user"
+	types "server/server/types/manage/user"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
