@@ -41,7 +41,7 @@ func init() {
 	}, nil, "*"))
 	middleware.Register(server)
 
-	svcCtx := svc.NewServiceContext(c)
+	svcCtx := svc.NewServiceContext(c, handler.Route2Code)
 	handler.RegisterHandlers(server, svcCtx)
 	svcCtx.Custom.AddRoutes(server)
 
