@@ -1,14 +1,16 @@
 package svc
 
 import (
-	"server/pkg/localcache"
 	"server/server/config"
 	"server/server/custom"
+	"server/server/middleware"
 	"server/server/model"
 
+	"github.com/jzero-io/jzero-contrib/cache"
+	"github.com/jzero-io/jzero-contrib/cache/sync"
 	"github.com/jzero-io/jzero-contrib/modelx"
 	"github.com/pkg/errors"
-	"github.com/zeromicro/go-zero/core/stores/cache"
+	zerocache "github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/redis"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
@@ -22,6 +24,7 @@ type ServiceContext struct {
 	Cache    cache.Cache
 
 	Custom *custom.Custom
+	middleware.Middleware
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -29,17 +32,16 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		Config:   c,
 		SqlxConn: MustSqlConn(c),
 
-		Custom: custom.New(),
+		Custom:     custom.New(),
+		Middleware: middleware.NewMiddleware(),
 	}
 	if c.CacheType == "local" {
-		svcCtx.Cache = &localcache.Cache{
-			Vals: make(map[string][]byte),
-		}
+		svcCtx.Cache = sync.New(errors.New("cache not found"))
 	} else {
 
 		singleFlights := syncx.NewSingleFlight()
-		stats := cache.NewStat("redis-cache")
-		svcCtx.Cache = cache.NewNode(&redis.Redis{
+		stats := zerocache.NewStat("redis-cache")
+		svcCtx.Cache = zerocache.NewNode(&redis.Redis{
 			Addr: svcCtx.Config.Redis.Host,
 			Type: svcCtx.Config.Redis.Type,
 			Pass: svcCtx.Config.Redis.Pass,
