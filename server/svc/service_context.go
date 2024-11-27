@@ -25,8 +25,7 @@ type ServiceContext struct {
 	GormDB   *gorm.DB
 	Model    model.Model
 	Cache    cache.Cache
-
-	Custom *custom.Custom
+	Custom   *custom.Custom
 	middleware.Middleware
 }
 
