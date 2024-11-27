@@ -1,6 +1,7 @@
 package svc
 
 import (
+	"net/http"
 	"server/server/config"
 	"server/server/custom"
 	"server/server/middleware"
@@ -15,11 +16,13 @@ import (
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"github.com/zeromicro/go-zero/core/syncx"
+	"gorm.io/gorm"
 )
 
 type ServiceContext struct {
 	Config   config.Config
 	SqlxConn sqlx.SqlConn
+	GormDB   *gorm.DB
 	Model    model.Model
 	Cache    cache.Cache
 
@@ -27,13 +30,12 @@ type ServiceContext struct {
 	middleware.Middleware
 }
 
-func NewServiceContext(c config.Config) *ServiceContext {
+func NewServiceContext(c config.Config, route2Code func(r *http.Request) string) *ServiceContext {
 	svcCtx := &ServiceContext{
 		Config:   c,
 		SqlxConn: MustSqlConn(c),
-
-		Custom:     custom.New(),
-		Middleware: middleware.NewMiddleware(),
+		GormDB:   MustGormDB(c),
+		Custom:   custom.New(),
 	}
 	if c.CacheType == "local" {
 		svcCtx.Cache = sync.New(errors.New("cache not found"))
@@ -48,5 +50,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		}, singleFlights, stats, errors.New("no cache"))
 	}
 	svcCtx.Model = model.NewModel(svcCtx.SqlxConn, modelx.WithCachedConn(sqlc.NewConnWithCache(svcCtx.SqlxConn, svcCtx.Cache)))
+	svcCtx.Middleware = middleware.NewMiddleware(svcCtx.Cache, svcCtx.SqlxConn, svcCtx.GormDB, route2Code)
 	return svcCtx
 }

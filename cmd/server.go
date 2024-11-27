@@ -7,7 +7,7 @@ import (
 	"server/server/middleware"
 	"server/server/svc"
 
-	"github.com/common-nighthawk/go-figure"
+	figure "github.com/common-nighthawk/go-figure"
 	"github.com/spf13/cobra"
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -31,7 +31,7 @@ var serverCmd = &cobra.Command{
 			logx.AddWriter(logx.NewWriter(os.Stdout))
 		}
 
-		ctx := svc.NewServiceContext(c)
+		ctx := svc.NewServiceContext(c, handler.Route2Code)
 		run(ctx)
 	},
 }
