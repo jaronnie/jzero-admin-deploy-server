@@ -15,6 +15,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
+	gomail "gopkg.in/gomail.v2"
 )
 
 var SendVerificationError = errors.New("发送失败, 请联系管理员")
