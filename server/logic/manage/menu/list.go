@@ -9,6 +9,7 @@ import (
 	"sort"
 
 	"github.com/jzero-io/jzero-contrib/condition"
+	"github.com/jzero-io/jzero-contrib/nullx"
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -83,7 +84,7 @@ func convert(list []*manage_menu.ManageMenu) []*types.SystemMenu {
 			HideInMenu:      cast.ToBool(item.HideInMenu),
 			Href:            item.Href.String,
 			MultiTab:        cast.ToBool(item.MultiTab),
-			FixedIndexInTab: cast.ToBool(item.FixedIndexInTab),
+			FixedIndexInTab: nullx.NewInt(item.FixedIndexInTab).Ptr(),
 			Query:           query,
 			ButtonCode:      item.ButtonCode.String,
 			Permissions:     permissions,
