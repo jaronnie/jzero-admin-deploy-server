@@ -58,9 +58,9 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 
 	err = l.svcCtx.Model.ManageMenu.Update(l.ctx, nil, one)
 
-	if req.MenuType == "3" {
+	if req.MenuType == "2" || req.MenuType == "3" {
 
-		if marshal(req.Permissions) != one.Permissions.String {
+		if marshal(req.Permissions) != oldPermissionStr {
 			roleMenus, err := l.svcCtx.Model.ManageRoleMenu.FindByCondition(l.ctx, nil, condition.NewChain().
 				Equal("menu_id", req.Id).
 				Build()...)
@@ -69,8 +69,8 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 			}
 			for _, rm := range roleMenus {
 
+				Unmarshal(oldPermissionStr, &oldPermissions)
 				if len(oldPermissions) > 0 {
-					Unmarshal(oldPermissionStr, &oldPermissions)
 					for _, o := range oldPermissions {
 						_, _ = l.svcCtx.CasbinEnforcer.RemovePolicy(cast.ToString(rm.RoleId), o.Code)
 					}
