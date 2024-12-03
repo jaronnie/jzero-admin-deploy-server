@@ -49,6 +49,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: auth.SendVerificationCode(serverCtx),
 				},
 			},
+			rest.WithPrefix("/api"),
 		)
 
 		server.AddRoutes(
@@ -70,6 +71,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				},
 			},
 			rest.WithJwt(serverCtx.Config.Jwt.AccessSecret),
+			rest.WithPrefix("/api"),
 		)
 	}
 	{
@@ -110,6 +112,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				}...,
 			),
 			rest.WithJwt(serverCtx.Config.Jwt.AccessSecret),
+			rest.WithPrefix("/api"),
 		)
 	}
 	{
@@ -155,6 +158,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				}...,
 			),
 			rest.WithJwt(serverCtx.Config.Jwt.AccessSecret),
+			rest.WithPrefix("/api"),
 		)
 	}
 	{
@@ -185,6 +189,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				}...,
 			),
 			rest.WithJwt(serverCtx.Config.Jwt.AccessSecret),
+			rest.WithPrefix("/api"),
 		)
 	}
 	{
@@ -202,6 +207,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				},
 			},
 			rest.WithJwt(serverCtx.Config.Jwt.AccessSecret),
+			rest.WithPrefix("/api"),
 		)
 
 		server.AddRoutes(
@@ -212,6 +218,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: route.GetConstantRoutes(serverCtx),
 				},
 			},
+			rest.WithPrefix("/api"),
 		)
 	}
 	{
@@ -223,7 +230,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: version.Get(serverCtx),
 				},
 			},
-			rest.WithPrefix("/api/v1"),
+			rest.WithPrefix("/api"),
 		)
 	}
 

@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"fmt"
+	"net/http"
 	"os"
 	"server/server/config"
 	"server/server/handler"
@@ -37,7 +39,11 @@ var serverCmd = &cobra.Command{
 }
 
 func run(svcCtx *svc.ServiceContext) {
-	server := rest.MustNewServer(svcCtx.Config.Rest.RestConf)
+	server := rest.MustNewServer(svcCtx.Config.Rest.RestConf, rest.WithCustomCors(func(header http.Header) {
+		header.Set("Access-Control-Allow-Origin", "*")
+		header.Add("Access-Control-Allow-Headers", "X-Request-Id")
+		header.Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
+	}, nil, "*"))
 	middleware.Register(server)
 
 	handler.RegisterHandlers(server, svcCtx)
@@ -49,6 +55,9 @@ func run(svcCtx *svc.ServiceContext) {
 	group.Add(svcCtx.Custom)
 
 	printBanner(svcCtx.Config)
+	fmt.Printf("\nUsing Database: %s\n", svcCtx.Config.DatabaseType)
+	fmt.Printf("%s conf: %s\n", svcCtx.Config.DatabaseType, svc.BuildDataSource(svcCtx.Config))
+	fmt.Printf("Using Cache: %s\n", svcCtx.Config.CacheType)
 	logx.Infof("Starting rest server at %s:%d...", svcCtx.Config.Rest.Host, svcCtx.Config.Rest.Port)
 	group.Start()
 }
