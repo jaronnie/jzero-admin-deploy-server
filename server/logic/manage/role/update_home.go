@@ -26,7 +26,6 @@ func NewUpdateHome(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateHome 
 
 func (l *UpdateHome) UpdateHome(req *types.UpdateHomeRequest) (resp *types.Empty, err error) {
 	menu, err := l.svcCtx.Model.ManageMenu.FindOneByCondition(l.ctx, nil, condition.NewChain().
-		Equal("role_id", req.RoleId).
 		Equal("route_name", req.Home).
 		Build()...)
 	if err != nil {
@@ -50,11 +49,11 @@ func (l *UpdateHome) UpdateHome(req *types.UpdateHomeRequest) (resp *types.Empty
 		return nil, err
 	}
 	roleMenu.IsHome = cast.ToInt64(true)
-	err = l.svcCtx.Model.ManageRoleMenu.Update(l.ctx, nil, roleMenu)
+	err = l.svcCtx.Model.ManageRoleMenu.Update(l.ctx, nil, oldRoleMenu)
 	if err != nil {
 		return nil, err
 	}
-	err = l.svcCtx.Model.ManageRoleMenu.Update(l.ctx, nil, oldRoleMenu)
+	err = l.svcCtx.Model.ManageRoleMenu.Update(l.ctx, nil, roleMenu)
 	if err != nil {
 		return nil, err
 	}
