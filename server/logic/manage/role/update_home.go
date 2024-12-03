@@ -36,10 +36,13 @@ func (l *UpdateHome) UpdateHome(req *types.UpdateHomeRequest) (resp *types.Empty
 		Equal("role_id", req.RoleId).
 		Equal("is_home", true).
 		Build()...)
-	if err != nil {
-		return nil, err
+	if err == nil {
+		oldRoleMenu.IsHome = cast.ToInt64(false)
+		err = l.svcCtx.Model.ManageRoleMenu.Update(l.ctx, nil, oldRoleMenu)
+		if err != nil {
+			return nil, err
+		}
 	}
-	oldRoleMenu.IsHome = cast.ToInt64(false)
 
 	roleMenu, err := l.svcCtx.Model.ManageRoleMenu.FindOneByCondition(l.ctx, nil, condition.NewChain().
 		Equal("role_id", req.RoleId).
@@ -48,11 +51,9 @@ func (l *UpdateHome) UpdateHome(req *types.UpdateHomeRequest) (resp *types.Empty
 	if err != nil {
 		return nil, err
 	}
+
 	roleMenu.IsHome = cast.ToInt64(true)
-	err = l.svcCtx.Model.ManageRoleMenu.Update(l.ctx, nil, oldRoleMenu)
-	if err != nil {
-		return nil, err
-	}
+
 	err = l.svcCtx.Model.ManageRoleMenu.Update(l.ctx, nil, roleMenu)
 	if err != nil {
 		return nil, err
