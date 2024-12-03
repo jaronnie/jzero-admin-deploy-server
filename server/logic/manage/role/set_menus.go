@@ -61,6 +61,11 @@ func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusRes
 		return nil, errors.New("fail to remove filtered policy: " + err.Error())
 	}
 
+	err = l.svcCtx.CasbinEnforcer.LoadPolicy()
+	if err != nil {
+		return nil, errors.New("fail to load policy: " + err.Error())
+	}
+
 	var newPolicies [][]string
 
 	menus, err := l.svcCtx.Model.ManageMenu.FindByCondition(l.ctx, nil, condition.New(condition.Condition{
@@ -85,6 +90,8 @@ func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusRes
 		if !b {
 			return nil, errors.New("fail to add policies")
 		}
+
+		err = l.svcCtx.CasbinEnforcer.LoadPolicy()
 	}
 	return
 }
