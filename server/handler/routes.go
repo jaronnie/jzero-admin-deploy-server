@@ -155,6 +155,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Path:    "/manage/setRoleMenus",
 						Handler: managerole.SetMenus(serverCtx),
 					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/manage/updateRoleHome",
+						Handler: managerole.UpdateHome(serverCtx),
+					},
 				}...,
 			),
 			rest.WithJwt(serverCtx.Config.Jwt.AccessSecret),

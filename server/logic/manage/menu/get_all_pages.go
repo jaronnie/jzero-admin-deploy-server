@@ -33,7 +33,7 @@ func (l *GetAllPages) GetAllPages(req *types.GetAllPagesRequest) (resp []string,
 		return
 	}
 	for _, page := range pages {
-		resp = append(resp, page.RoutePath)
+		resp = append(resp, page.RouteName)
 	}
 	return
 }
