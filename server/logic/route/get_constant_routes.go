@@ -2,26 +2,27 @@ package route
 
 import (
 	"context"
-	"server/server/svc"
-	types "server/server/types/route"
 	"strings"
 
 	"github.com/jzero-io/jzero-contrib/condition"
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
+
+	"server/server/svc"
+	types "server/server/types/route"
 )
 
 type GetConstantRoutes struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
 }
 
 func NewGetConstantRoutes(ctx context.Context, svcCtx *svc.ServiceContext) *GetConstantRoutes {
 	return &GetConstantRoutes{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx,
 	}
 }
 
@@ -35,15 +36,15 @@ func (l *GetConstantRoutes) GetConstantRoutes(req *types.GetConstantRoutesReques
 	resp = make([]types.GetConstantRoutesResponseItem, 0)
 	for _, v := range menus {
 		resp = append(resp, types.GetConstantRoutesResponseItem{
-			Name:      v.RouteName,
-			Path:      v.RoutePath,
-			Component: v.Component,
-			Props:     strings.Contains(v.RoutePath, ":"),
+			Name:		v.RouteName,
+			Path:		v.RoutePath,
+			Component:	v.Component,
+			Props:		strings.Contains(v.RoutePath, ":"),
 			Meta: types.RouteMeta{
-				Title:      v.MenuName,
-				I18nKey:    v.I18nKey,
-				HideInMenu: cast.ToBool(v.HideInMenu),
-				Constant:   cast.ToBool(v.Constant),
+				Title:		v.MenuName,
+				I18nKey:	v.I18nKey,
+				HideInMenu:	cast.ToBool(v.HideInMenu),
+				Constant:	cast.ToBool(v.Constant),
 			},
 		})
 	}

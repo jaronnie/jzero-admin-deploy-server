@@ -9,14 +9,14 @@ import (
 )
 
 type AuthxMiddleware struct {
-	CasbinEnforcer *casbin.Enforcer
-	Route2CodeFunc func(r *http.Request) string
+	CasbinEnforcer	*casbin.Enforcer
+	Route2CodeFunc	func(r *http.Request) string
 }
 
 func NewAuthxMiddleware(casbinEnforcer *casbin.Enforcer, route2codeFunc func(r *http.Request) string) *AuthxMiddleware {
 	return &AuthxMiddleware{
-		CasbinEnforcer: casbinEnforcer,
-		Route2CodeFunc: route2codeFunc,
+		CasbinEnforcer:	casbinEnforcer,
+		Route2CodeFunc:	route2codeFunc,
 	}
 }
 
@@ -33,6 +33,7 @@ func (m *AuthxMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 		subs := cast.ToStringSlice(authInfo.RoleIds)
 		obj := m.Route2CodeFunc(r)
 
+		// verify casbin rule
 		if result := batchCheck(m.CasbinEnforcer, subs, obj); !result {
 			w.WriteHeader(http.StatusForbidden)
 			return

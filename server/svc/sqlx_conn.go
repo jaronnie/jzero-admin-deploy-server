@@ -11,7 +11,7 @@ import (
 )
 
 func BuildDataSource(c config.Config) string {
-
+	// set default sqlbuilder flavor and data source
 	switch c.DatabaseType {
 	case "mysql":
 		sqlbuilder.DefaultFlavor = sqlbuilder.MySQL

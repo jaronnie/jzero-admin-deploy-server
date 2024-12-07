@@ -2,25 +2,26 @@ package role
 
 import (
 	"context"
-	"server/server/svc"
-	types "server/server/types/manage/role"
 
 	"github.com/jzero-io/jzero-contrib/condition"
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
+
+	"server/server/svc"
+	types "server/server/types/manage/role"
 )
 
 type UpdateHome struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
 }
 
 func NewUpdateHome(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateHome {
 	return &UpdateHome{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx,
 	}
 }
 
@@ -32,6 +33,7 @@ func (l *UpdateHome) UpdateHome(req *types.UpdateHomeRequest) (resp *types.Empty
 		return nil, err
 	}
 
+	// 找到旧 home
 	oldRoleHomeMenu, err := l.svcCtx.Model.ManageRoleMenu.FindOneByCondition(l.ctx, nil, condition.NewChain().
 		Equal("role_id", req.RoleId).
 		Equal("is_home", true).

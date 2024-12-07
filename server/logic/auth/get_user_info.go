@@ -2,26 +2,27 @@ package auth
 
 import (
 	"context"
-	"server/server/auth"
-	"server/server/svc"
-	types "server/server/types/auth"
 
 	"github.com/jzero-io/jzero-contrib/condition"
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
+
+	"server/server/auth"
+	types "server/server/types/auth"
+	"server/server/svc"
 )
 
 type GetUserInfo struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
 }
 
 func NewGetUserInfo(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserInfo {
 	return &GetUserInfo{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx,
 	}
 }
 
@@ -59,6 +60,7 @@ func (l *GetUserInfo) GetUserInfo(req *types.GetUserInfoRequest) (resp *types.Ge
 		roleCodes = append(roleCodes, role.Code)
 	}
 
+	// get role buttons
 	roleMenus, err := l.svcCtx.Model.ManageRoleMenu.FindByCondition(l.ctx, nil, condition.NewChain().
 		In("role_id", roleIds).
 		Build()...)
@@ -83,9 +85,9 @@ func (l *GetUserInfo) GetUserInfo(req *types.GetUserInfoRequest) (resp *types.Ge
 	}
 
 	return &types.GetUserInfoResponse{
-		UserId:   cast.ToString(user.Id),
-		Username: user.Username,
-		Roles:    roleCodes,
-		Buttons:  buttons,
+		UserId:		cast.ToString(user.Id),
+		Username:	user.Username,
+		Roles:		roleCodes,
+		Buttons:	buttons,
 	}, nil
 }

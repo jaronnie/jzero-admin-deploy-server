@@ -3,35 +3,36 @@ package auth
 import (
 	"context"
 	"fmt"
-	"server/server/constant"
-	"server/server/model/manage_user"
-	"server/server/svc"
-	types "server/server/types/auth"
 	"time"
 
 	"github.com/guregu/null/v5"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
+
+	"server/server/constant"
+	types "server/server/types/auth"
+	"server/server/svc"
+	"server/server/model/manage_user"
 )
 
 var RegisterError = errors.New("注册失败")
 
 type Register struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
 }
 
 func NewRegister(ctx context.Context, svcCtx *svc.ServiceContext) *Register {
 	return &Register{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx,
 	}
 }
 
 func (l *Register) Register(req *types.RegisterRequest) (resp *types.RegisterResponse, err error) {
-
+	// check verificationUuid
 	var verificationUuidVal string
 	if err = l.svcCtx.Cache.Get(fmt.Sprintf("%s:%s", constant.CacheVerificationCodePrefix, req.VerificationUuid), &verificationUuidVal); err != nil {
 		return nil, RegisterError
@@ -46,13 +47,13 @@ func (l *Register) Register(req *types.RegisterRequest) (resp *types.RegisterRes
 	}
 
 	_, err = l.svcCtx.Model.ManageUser.Insert(l.ctx, nil, &manage_user.ManageUser{
-		Username:   req.Username,
-		Password:   req.Password,
-		CreateTime: time.Now(),
-		UpdateTime: time.Now(),
-		Email:      null.StringFrom(req.Email).NullString,
-		Gender:     "1",
-		Status:     "1",
+		Username:	req.Username,
+		Password:	req.Password,
+		CreateTime:	time.Now(),
+		UpdateTime:	time.Now(),
+		Email:		null.StringFrom(req.Email).NullString,
+		Gender:		"1",
+		Status:		"1",
 	})
 
 	return

@@ -2,27 +2,28 @@ package menu
 
 import (
 	"context"
-	"server/server/svc"
-	types "server/server/types/manage/menu"
 
 	null "github.com/guregu/null/v5"
 	"github.com/jzero-io/jzero-contrib/condition"
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
+
+	"server/server/svc"
+	types "server/server/types/manage/menu"
 )
 
 type Edit struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
 }
 
 func NewEdit(ctx context.Context, svcCtx *svc.ServiceContext) *Edit {
 	return &Edit{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx,
 	}
 }
 
@@ -59,7 +60,7 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 	err = l.svcCtx.Model.ManageMenu.Update(l.ctx, nil, one)
 
 	if req.MenuType == "2" || req.MenuType == "3" {
-
+		// 更新了权限标识
 		if marshal(req.Permissions) != oldPermissionStr {
 			roleMenus, err := l.svcCtx.Model.ManageRoleMenu.FindByCondition(l.ctx, nil, condition.NewChain().
 				Equal("menu_id", req.Id).
@@ -68,7 +69,7 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 				return nil, err
 			}
 			for _, rm := range roleMenus {
-
+				// remove old casbin_rule for menu
 				Unmarshal(oldPermissionStr, &oldPermissions)
 				if len(oldPermissions) > 0 {
 					for _, o := range oldPermissions {
@@ -76,6 +77,7 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 					}
 				}
 
+				// add casbin_rule
 				var newPolicies [][]string
 				permissions := req.Permissions
 

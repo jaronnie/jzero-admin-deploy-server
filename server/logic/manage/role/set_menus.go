@@ -2,11 +2,6 @@ package role
 
 import (
 	"context"
-	"server/server/logic/manage/menu"
-	"server/server/model/manage_role_menu"
-	"server/server/svc"
-	menu_types "server/server/types/manage/menu"
-	types "server/server/types/manage/role"
 	"time"
 
 	"github.com/jzero-io/jzero-contrib/condition"
@@ -14,25 +9,31 @@ import (
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+
+	"server/server/logic/manage/menu"
+	menu_types "server/server/types/manage/menu"
+	types "server/server/types/manage/role"
+	"server/server/svc"
+	"server/server/model/manage_role_menu"
 )
 
 type SetMenus struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
 }
 
 func NewSetMenus(ctx context.Context, svcCtx *svc.ServiceContext) *SetMenus {
 	return &SetMenus{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx,
 	}
 }
 
 func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusResponse, err error) {
 	if err = l.svcCtx.SqlxConn.TransactCtx(l.ctx, func(ctx context.Context, session sqlx.Session) error {
-
+		// 找到该角色的首页
 		roleHomeMenu, err := l.svcCtx.Model.ManageRoleMenu.FindOneByCondition(l.ctx, nil, condition.NewChain().
 			Equal("role_id", req.RoleId).
 			Equal("is_home", true).
@@ -44,10 +45,10 @@ func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusRes
 
 		for _, v := range req.MenuIds {
 			data := &manage_role_menu.ManageRoleMenu{
-				RoleId:     int64(req.RoleId),
-				MenuId:     int64(v),
-				CreateTime: time.Now(),
-				UpdateTime: time.Now(),
+				RoleId:		int64(req.RoleId),
+				MenuId:		int64(v),
+				CreateTime:	time.Now(),
+				UpdateTime:	time.Now(),
 			}
 			if data.MenuId == roleHomeMenu.MenuId {
 				data.IsHome = cast.ToInt64(true)
@@ -56,9 +57,9 @@ func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusRes
 		}
 
 		if err = l.svcCtx.Model.ManageRoleMenu.DeleteByCondition(l.ctx, session, condition.Condition{
-			Field:    "role_id",
-			Operator: condition.Equal,
-			Value:    req.RoleId,
+			Field:		"role_id",
+			Operator:	condition.Equal,
+			Value:		req.RoleId,
 		}); err != nil {
 			return err
 		}
@@ -72,22 +73,24 @@ func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusRes
 		return nil, err
 	}
 
+	// update casbin_rule
 	_, err = l.svcCtx.CasbinEnforcer.RemoveFilteredPolicy(0, cast.ToString(req.RoleId))
 	if err != nil {
 		return nil, errors.New("fail to remove filtered policy: " + err.Error())
 	}
-
+	// load policies
 	err = l.svcCtx.CasbinEnforcer.LoadPolicy()
 	if err != nil {
 		return nil, errors.New("fail to load policy: " + err.Error())
 	}
 
+	// add casbin_rule
 	var newPolicies [][]string
-
+	// get menu perms
 	menus, err := l.svcCtx.Model.ManageMenu.FindByCondition(l.ctx, nil, condition.New(condition.Condition{
-		Field:    "id",
-		Operator: condition.In,
-		Value:    req.MenuIds,
+		Field:		"id",
+		Operator:	condition.In,
+		Value:		req.MenuIds,
 	})...)
 	if err != nil {
 		return nil, err
@@ -106,7 +109,7 @@ func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusRes
 		if !b {
 			return nil, errors.New("fail to add policies")
 		}
-
+		// load policies
 		err = l.svcCtx.CasbinEnforcer.LoadPolicy()
 	}
 	return

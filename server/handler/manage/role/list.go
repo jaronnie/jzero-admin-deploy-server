@@ -2,11 +2,12 @@ package role
 
 import (
 	"net/http"
-	"server/server/logic/manage/role"
-	"server/server/svc"
-	types "server/server/types/manage/role"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
+
+	"server/server/logic/manage/role"
+	types "server/server/types/manage/role"
+	"server/server/svc"
 )
 
 func List(svcCtx *svc.ServiceContext) http.HandlerFunc {

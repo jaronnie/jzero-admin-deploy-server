@@ -2,30 +2,31 @@ package route
 
 import (
 	"context"
-	"server/server/auth"
-	"server/server/logic/manage/menu"
-	"server/server/model/manage_menu"
-	"server/server/svc"
-	types "server/server/types/route"
 
 	"github.com/jzero-io/jzero-contrib/condition"
 	"github.com/jzero-io/jzero-contrib/nullx"
 	"github.com/samber/lo"
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
+
+	"server/server/auth"
+	types "server/server/types/route"
+	"server/server/svc"
+	"server/server/model/manage_menu"
+	"server/server/logic/manage/menu"
 )
 
 type GetUserRoutes struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
 }
 
 func NewGetUserRoutes(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserRoutes {
 	return &GetUserRoutes{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx,
 	}
 }
 
@@ -70,6 +71,7 @@ func (l *GetUserRoutes) GetUserRoutes(req *types.GetUserRoutesRequest) (resp *ty
 
 	resp.Routes = list
 
+	// get home
 	for _, rm := range roleMenus {
 		if cast.ToBool(rm.IsHome) {
 			for _, m := range menus {
@@ -92,26 +94,26 @@ func convert(list []*manage_menu.ManageMenu) []*types.Route {
 		menu.Unmarshal(item.Query.String, &query)
 
 		route = types.Route{
-			Id:       int64(item.Id),
-			ParentId: item.ParentId,
-			Name:     item.RouteName,
-			Path:     item.RoutePath,
+			Id:		int64(item.Id),
+			ParentId:	item.ParentId,
+			Name:		item.RouteName,
+			Path:		item.RoutePath,
 			Meta: types.RouteMeta{
-				Title:           item.RouteName,
-				I18nKey:         item.I18nKey,
-				Icon:            item.Icon,
-				Order:           int(item.Order),
-				HideInMenu:      cast.ToBool(item.HideInMenu),
-				ActiveMenu:      item.ActiveMenu.String,
-				MultiTab:        cast.ToBool(item.MultiTab),
-				FixedIndexInTab: nullx.NewInt(item.FixedIndexInTab).Ptr(),
-				KeepAlive:       cast.ToBool(item.KeepAlive),
-				Constant:        cast.ToBool(item.Constant),
-				Href:            item.Href.String,
-				Query:           query,
+				Title:			item.RouteName,
+				I18nKey:		item.I18nKey,
+				Icon:			item.Icon,
+				Order:			int(item.Order),
+				HideInMenu:		cast.ToBool(item.HideInMenu),
+				ActiveMenu:		item.ActiveMenu.String,
+				MultiTab:		cast.ToBool(item.MultiTab),
+				FixedIndexInTab:	nullx.NewInt(item.FixedIndexInTab).Ptr(),
+				KeepAlive:		cast.ToBool(item.KeepAlive),
+				Constant:		cast.ToBool(item.Constant),
+				Href:			item.Href.String,
+				Query:			query,
 			},
-			Component: item.Component,
-			Redirect:  "",
+			Component:	item.Component,
+			Redirect:	"",
 		}
 		if item.Component == "view.iframe-page" {
 			route.Props = map[string]any{

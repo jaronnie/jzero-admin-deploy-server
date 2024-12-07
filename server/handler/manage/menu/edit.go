@@ -2,11 +2,12 @@ package menu
 
 import (
 	"net/http"
-	"server/server/logic/manage/menu"
-	"server/server/svc"
-	types "server/server/types/manage/menu"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
+
+	"server/server/logic/manage/menu"
+	types "server/server/types/manage/menu"
+	"server/server/svc"
 )
 
 func Edit(svcCtx *svc.ServiceContext) http.HandlerFunc {

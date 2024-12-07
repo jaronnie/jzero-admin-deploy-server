@@ -5,9 +5,6 @@ import (
 	"crypto/tls"
 	"fmt"
 	"math/rand"
-	"server/server/constant"
-	"server/server/svc"
-	types "server/server/types/auth"
 	"strings"
 	"time"
 
@@ -16,21 +13,25 @@ import (
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 	gomail "gopkg.in/gomail.v2"
+
+	"server/server/constant"
+	types "server/server/types/auth"
+	"server/server/svc"
 )
 
 var SendVerificationError = errors.New("发送失败, 请联系管理员")
 
 type SendVerificationCode struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
 }
 
 func NewSendVerificationCode(ctx context.Context, svcCtx *svc.ServiceContext) *SendVerificationCode {
 	return &SendVerificationCode{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx,
 	}
 }
 
@@ -45,15 +46,15 @@ func (l *SendVerificationCode) SendVerificationCode(req *types.SendVerificationC
 		verificationCode := genValidateCode(6)
 
 		m := gomail.NewMessage()
-
+		// 设置发件人
 		m.SetHeader("From", email.From)
-
+		// 设置收件人
 		m.SetHeader("To", req.Email)
-
+		// 设置邮件主题
 		m.SetHeader("Subject", "验证码")
-
+		// 设置邮件正文
 		m.SetBody("text/plain", fmt.Sprintf("JzeroAdmin 邮箱验证码: %s", verificationCode))
-
+		// 配置 SMTP 服务器信息
 		d := gomail.NewDialer(email.Host, cast.ToInt(email.Port), email.Username, email.Password)
 		d.SSL = cast.ToBool(email.EnableSsl)
 		if !cast.ToBool(email.IsVerify) {
@@ -62,7 +63,7 @@ func (l *SendVerificationCode) SendVerificationCode(req *types.SendVerificationC
 			}
 			d.TLSConfig = tlsConfig
 		}
-
+		// 发送邮件
 		if err = d.DialAndSend(m); err != nil {
 			return nil, SendVerificationError
 		}

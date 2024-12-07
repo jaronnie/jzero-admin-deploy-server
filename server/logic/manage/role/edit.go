@@ -2,23 +2,24 @@ package role
 
 import (
 	"context"
-	"server/server/svc"
-	types "server/server/types/manage/role"
 
 	"github.com/zeromicro/go-zero/core/logx"
+
+	"server/server/svc"
+	types "server/server/types/manage/role"
 )
 
 type Edit struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
 }
 
 func NewEdit(ctx context.Context, svcCtx *svc.ServiceContext) *Edit {
 	return &Edit{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx,
 	}
 }
 

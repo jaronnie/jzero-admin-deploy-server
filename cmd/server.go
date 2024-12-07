@@ -4,10 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"server/server/config"
-	"server/server/handler"
-	"server/server/middleware"
-	"server/server/svc"
 
 	figure "github.com/common-nighthawk/go-figure"
 	"github.com/spf13/cobra"
@@ -15,17 +11,24 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/service"
 	"github.com/zeromicro/go-zero/rest"
+
+	"server/server/config"
+	"server/server/svc"
+	"server/server/middleware"
+	"server/server/handler"
 )
 
+// serverCmd represents the server command
 var serverCmd = &cobra.Command{
-	Use:   "server",
-	Short: "server server",
-	Long:  "server server",
+	Use:	"server",
+	Short:	"server server",
+	Long:	"server server",
 	Run: func(cmd *cobra.Command, args []string) {
 		var c config.Config
 		conf.MustLoad(cfgFile, &c, conf.UseEnv())
 		config.C = c
 
+		// set up logger
 		if err := logx.SetUp(c.Log.LogConf); err != nil {
 			logx.Must(err)
 		}
@@ -46,8 +49,10 @@ func run(svcCtx *svc.ServiceContext) {
 	}, nil, "*"))
 	middleware.Register(server)
 
+	// server add api handlers
 	handler.RegisterHandlers(server, svcCtx)
 
+	// server add custom routes
 	svcCtx.Custom.AddRoutes(server)
 
 	group := service.NewServiceGroup()

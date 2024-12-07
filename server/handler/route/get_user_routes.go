@@ -2,11 +2,12 @@ package route
 
 import (
 	"net/http"
-	"server/server/logic/route"
-	"server/server/svc"
-	types "server/server/types/route"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
+
+	"server/server/logic/route"
+	types "server/server/types/route"
+	"server/server/svc"
 )
 
 func GetUserRoutes(svcCtx *svc.ServiceContext) http.HandlerFunc {

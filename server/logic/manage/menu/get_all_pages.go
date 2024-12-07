@@ -2,26 +2,27 @@ package menu
 
 import (
 	"context"
-	"server/server/model/manage_menu"
-	"server/server/svc"
-	types "server/server/types/manage/menu"
 
 	"github.com/jzero-io/jzero-contrib/condition"
 	"github.com/samber/lo"
 	"github.com/zeromicro/go-zero/core/logx"
+
+	"server/server/model/manage_menu"
+	types "server/server/types/manage/menu"
+	"server/server/svc"
 )
 
 type GetAllPages struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
 }
 
 func NewGetAllPages(ctx context.Context, svcCtx *svc.ServiceContext) *GetAllPages {
 	return &GetAllPages{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx,
 	}
 }
 

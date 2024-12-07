@@ -2,27 +2,28 @@ package user
 
 import (
 	"context"
-	"server/server/model/manage_user_role"
-	"server/server/svc"
-	types "server/server/types/manage/user"
 	"time"
 
 	"github.com/guregu/null/v5"
 	"github.com/jzero-io/jzero-contrib/condition"
 	"github.com/zeromicro/go-zero/core/logx"
+
+	"server/server/model/manage_user_role"
+	types "server/server/types/manage/user"
+	"server/server/svc"
 )
 
 type Edit struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
 }
 
 func NewEdit(ctx context.Context, svcCtx *svc.ServiceContext) *Edit {
 	return &Edit{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx,
 	}
 }
 
@@ -43,19 +44,20 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 		return nil, err
 	}
 
+	// 更新 system_user_role 表
 	if err = l.svcCtx.Model.ManageUserRole.DeleteByCondition(l.ctx, nil, condition.Condition{
-		Field:    "user_id",
-		Operator: condition.Equal,
-		Value:    req.Id,
+		Field:		"user_id",
+		Operator:	condition.Equal,
+		Value:		req.Id,
 	}); err != nil {
 		return nil, err
 	}
 	var bulk []*manage_user_role.ManageUserRole
 	var roleIds []uint64
 	roles, err := l.svcCtx.Model.ManageRole.FindByCondition(l.ctx, nil, condition.Condition{
-		Field:    "code",
-		Operator: condition.In,
-		Value:    req.UserRoles,
+		Field:		"code",
+		Operator:	condition.In,
+		Value:		req.UserRoles,
 	})
 	if err != nil {
 		return nil, err
@@ -65,10 +67,10 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 	}
 	for _, v := range roleIds {
 		bulk = append(bulk, &manage_user_role.ManageUserRole{
-			CreateTime: time.Now(),
-			UpdateTime: time.Now(),
-			UserId:     int64(user.Id),
-			RoleId:     int64(v),
+			CreateTime:	time.Now(),
+			UpdateTime:	time.Now(),
+			UserId:		int64(user.Id),
+			RoleId:		int64(v),
 		})
 	}
 

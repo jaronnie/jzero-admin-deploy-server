@@ -2,11 +2,12 @@ package user
 
 import (
 	"net/http"
-	"server/server/logic/manage/user"
-	"server/server/svc"
-	types "server/server/types/manage/user"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
+
+	"server/server/logic/manage/user"
+	types "server/server/types/manage/user"
+	"server/server/svc"
 )
 
 func Delete(svcCtx *svc.ServiceContext) http.HandlerFunc {

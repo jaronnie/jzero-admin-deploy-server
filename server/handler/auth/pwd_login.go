@@ -2,11 +2,12 @@ package auth
 
 import (
 	"net/http"
-	"server/server/logic/auth"
-	"server/server/svc"
-	types "server/server/types/auth"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
+
+	"server/server/logic/auth"
+	types "server/server/types/auth"
+	"server/server/svc"
 )
 
 func PwdLogin(svcCtx *svc.ServiceContext) http.HandlerFunc {

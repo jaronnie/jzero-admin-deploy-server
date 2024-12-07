@@ -3,28 +3,29 @@ package auth
 import (
 	"context"
 	"encoding/json"
-	"server/pkg/jwt"
-	"server/server/auth"
-	"server/server/svc"
-	types "server/server/types/auth"
 	"time"
 
 	"github.com/jzero-io/jzero-contrib/condition"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
+
+	"server/server/auth"
+	types "server/server/types/auth"
+	"server/server/svc"
+	"server/pkg/jwt"
 )
 
 type PwdLogin struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
 }
 
 func NewPwdLogin(ctx context.Context, svcCtx *svc.ServiceContext) *PwdLogin {
 	return &PwdLogin{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx,
 	}
 }
 
@@ -49,9 +50,9 @@ func (l *PwdLogin) PwdLogin(req *types.PwdLoginRequest) (resp *types.LoginRespon
 
 	j := jwt.NewJwt(l.svcCtx.Config.Jwt.AccessSecret)
 	marshal, err := json.Marshal(auth.Auth{
-		Id:       int(user.Id),
-		Username: user.Username,
-		RoleIds:  roleIds,
+		Id:		int(user.Id),
+		Username:	user.Username,
+		RoleIds:	roleIds,
 	})
 	if err != nil {
 		return nil, err
@@ -63,6 +64,7 @@ func (l *PwdLogin) PwdLogin(req *types.PwdLoginRequest) (resp *types.LoginRespon
 		return nil, err
 	}
 
+	// token 过期时间
 	expirationTime := time.Now().Add(time.Duration(l.svcCtx.Config.Jwt.AccessExpire) * time.Second).Unix()
 	claims["exp"] = expirationTime
 
@@ -78,7 +80,7 @@ func (l *PwdLogin) PwdLogin(req *types.PwdLoginRequest) (resp *types.LoginRespon
 	}
 
 	return &types.LoginResponse{
-		Token:        token,
-		RefreshToken: refreshToken,
+		Token:		token,
+		RefreshToken:	refreshToken,
 	}, nil
 }

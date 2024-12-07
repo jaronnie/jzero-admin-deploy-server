@@ -3,28 +3,29 @@ package menu
 import (
 	"context"
 	"encoding/json"
-	"server/server/model/manage_menu"
-	"server/server/svc"
-	types "server/server/types/manage/menu"
 	"sort"
 
 	"github.com/jzero-io/jzero-contrib/condition"
 	"github.com/jzero-io/jzero-contrib/nullx"
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
+
+	"server/server/model/manage_menu"
+	types "server/server/types/manage/menu"
+	"server/server/svc"
 )
 
 type List struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
 }
 
 func NewList(ctx context.Context, svcCtx *svc.ServiceContext) *List {
 	return &List{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx,
 	}
 }
 
@@ -40,14 +41,16 @@ func (l *List) List(req *types.ListRequest) (resp *types.ListResponse, err error
 
 	tree := buildMenuTree(convert(list), 0)
 
+	// sort by order asc
 	sort.Slice(tree, func(i, j int) bool {
 		return tree[i].Order < tree[j].Order
 	})
 
+	// page by current and size
 	resp.PageResponse = types.PageResponse{
-		Current: req.Current,
-		Size:    req.Size,
-		Total:   int64(len(tree)),
+		Current:	req.Current,
+		Size:		req.Size,
+		Total:		int64(len(tree)),
 	}
 	resp.Records = paginate(tree, req.Current, req.Size)
 
@@ -67,29 +70,29 @@ func convert(list []*manage_menu.ManageMenu) []*types.SystemMenu {
 		Unmarshal(item.Permissions.String, &permissions)
 		Unmarshal(item.Query.String, &query)
 		menu = types.SystemMenu{
-			Id:              item.Id,
-			ActiveMenu:      item.ActiveMenu.String,
-			MenuType:        item.MenuType,
-			MenuName:        item.MenuName,
-			RouteName:       item.RouteName,
-			RoutePath:       item.RoutePath,
-			Component:       item.Component,
-			Icon:            item.Icon,
-			IconType:        item.IconType,
-			ParentId:        uint64(item.ParentId),
-			Status:          item.Status,
-			KeepAlive:       cast.ToBool(item.KeepAlive),
-			Constant:        cast.ToBool(item.Constant),
-			Order:           uint64(item.Order),
-			HideInMenu:      cast.ToBool(item.HideInMenu),
-			Href:            item.Href.String,
-			MultiTab:        cast.ToBool(item.MultiTab),
-			FixedIndexInTab: nullx.NewInt(item.FixedIndexInTab).Ptr(),
-			Query:           query,
-			ButtonCode:      item.ButtonCode.String,
-			Permissions:     permissions,
-			I18nKey:         item.I18nKey,
-			Children:        nil,
+			Id:			item.Id,
+			ActiveMenu:		item.ActiveMenu.String,
+			MenuType:		item.MenuType,
+			MenuName:		item.MenuName,
+			RouteName:		item.RouteName,
+			RoutePath:		item.RoutePath,
+			Component:		item.Component,
+			Icon:			item.Icon,
+			IconType:		item.IconType,
+			ParentId:		uint64(item.ParentId),
+			Status:			item.Status,
+			KeepAlive:		cast.ToBool(item.KeepAlive),
+			Constant:		cast.ToBool(item.Constant),
+			Order:			uint64(item.Order),
+			HideInMenu:		cast.ToBool(item.HideInMenu),
+			Href:			item.Href.String,
+			MultiTab:		cast.ToBool(item.MultiTab),
+			FixedIndexInTab:	nullx.NewInt(item.FixedIndexInTab).Ptr(),
+			Query:			query,
+			ButtonCode:		item.ButtonCode.String,
+			Permissions:		permissions,
+			I18nKey:		item.I18nKey,
+			Children:		nil,
 		}
 		records = append(records, &menu)
 	}
