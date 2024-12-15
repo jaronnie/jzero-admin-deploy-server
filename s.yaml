@@ -1,0 +1,51 @@
+edition: 3.0.0
+name: jzero-admin-sever
+access: 'undefined'
+vars:
+  region: 'cn-hangzhou'
+  functionName: 'jzero-admin-server'
+resources:
+  start_jzero-admin-server:
+    component: fc3
+    actions:
+      pre-deploy:
+        - run: go mod tidy
+          path: .
+        - run: >-
+            GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o main main.go
+          path: .
+    props:
+      region: ${vars.region}
+      description: Serverless Devs Web Framework Jzero admin server Function
+      runtime: custom.debian10
+      memorySize: 1024
+      timeout: 30
+      instanceConcurrency: 100
+      customRuntimeConfig:
+        command:
+          - ./main server
+        port: 8001
+      functionName: ${vars.functionName}
+      code: ./target
+      triggers:
+        - triggerName: httpTrigger
+          triggerType: http
+          triggerConfig:
+            authType: anonymous
+            methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - HEAD
+              - OPTIONS
+  fc3_domain_0:
+    component: fc3-domain
+    props:
+      region: ${vars.region}
+      domainName: auto
+      protocol: HTTP
+      routeConfig:
+        routes:
+          - path: /*
+            functionName: ${vars.functionName}
