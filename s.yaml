@@ -12,6 +12,11 @@ resources:
         - run: go mod tidy
           path: .
         - run: >-
+            go install github.com/jaronnie/gvm@latest
+            gvm init
+            source ~/.bashrc
+            gvm install go1.22.5
+            gvm activate go1.22.5
             GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o main main.go
           path: .
     props:
