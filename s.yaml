@@ -10,7 +10,12 @@ resources:
     actions:
       pre-deploy:
         - run: >-
-            which go
+            go install github.com/jaronnie/gvm@latest
+            gvm init
+            source ~/.bashrc
+            gvm install go1.23.0
+            rm /usr/local/go/bin/go
+            gvm activate go1.23.0
             GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o main main.go
           path: .
     props:
