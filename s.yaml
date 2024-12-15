@@ -9,7 +9,7 @@ resources:
     component: fc3
     actions:
       pre-deploy:
-        - run: go mod tidy
+        - run: ls
           path: .
         - run: >-
             go install github.com/jaronnie/gvm@latest
@@ -17,6 +17,7 @@ resources:
             source ~/.bashrc
             gvm install go1.22.5
             gvm activate go1.22.5
+            go mod tidy
             GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o main main.go
           path: .
     props:
