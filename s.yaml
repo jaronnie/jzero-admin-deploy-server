@@ -16,6 +16,8 @@ resources:
             gvm install go1.23.0
             rm /usr/local/go/bin/go
             gvm activate go1.23.0
+          path: /
+        - run: >-
             GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o main main.go
           path: .
     props:
