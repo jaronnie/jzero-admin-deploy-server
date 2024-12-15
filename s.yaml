@@ -9,9 +9,8 @@ resources:
     component: fc3
     actions:
       pre-deploy:
-        - run: go mod tidy
-          path: .
         - run: >-
+            which go
             GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o main main.go
           path: .
     props:
