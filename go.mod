@@ -1,6 +1,6 @@
 module server
 
-go 1.22.3
+go 1.22
 
 require (
 	github.com/Blank-Xu/sql-adapter v1.1.1
