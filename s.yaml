@@ -20,7 +20,7 @@ resources:
     props:
       region: ${vars.region}
       description: Serverless Devs Web Framework Jzero admin server Function
-      runtime: custom.debian10
+      runtime: custom
       memorySize: 1024
       timeout: 30
       instanceConcurrency: 100
