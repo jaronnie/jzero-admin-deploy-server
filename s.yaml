@@ -9,14 +9,12 @@ resources:
     component: fc3
     actions:
       pre-deploy:
+        - run: go mod tidy
+          path: ./code
         - run: >-
-            curl -o go1.23.4.linux-amd64.tar.gz https://dl.google.com/go/go1.23.4.linux-amd64.tar.gz
-            && rm -rf /usr/local/go
-            && tar -zxvf go1.23.4.linux-amd64.tar.gz -C /usr/local
-        - run: >-
-            GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o code/target/main main.go
-            && cp -r etc code/target
-          path: .
+            GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o target/main
+            main.go
+          path: ./code
     props:
       region: ${vars.region}
       description: Serverless Devs Web Framework Jzero admin server Function
@@ -26,8 +24,8 @@ resources:
       instanceConcurrency: 100
       customRuntimeConfig:
         command:
-          - /code/main server
-        port: 8001
+          - /code/main
+        port: 8080
       functionName: ${vars.functionName}
       code: ./code/target
       triggers:
