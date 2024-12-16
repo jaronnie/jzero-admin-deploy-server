@@ -28,7 +28,7 @@ resources:
           - ./main server
         port: 8001
       functionName: ${vars.functionName}
-      code: ./target
+      code: ./
       triggers:
         - triggerName: httpTrigger
           triggerType: http
