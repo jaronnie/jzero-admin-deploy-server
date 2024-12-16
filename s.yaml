@@ -11,7 +11,7 @@ resources:
       pre-deploy:
         - run: >-
             curl -o go1.23.4.linux-amd64.tar.gz https://dl.google.com/go/go1.23.4.linux-amd64.tar.gz
-            rm -rf /usr/local/go
+            && rm -rf /usr/local/go
             && tar -zxvf go1.23.4.linux-amd64.tar.gz -C /usr/local
         - run: >-
             GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o main main.go
