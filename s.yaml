@@ -16,9 +16,9 @@ resources:
         - run: /usr/local/go1.23.4/go/bin/go mod tidy
           path: .
         - run: >-
-            GOOS=linux GOARCH=amd64 CGO_ENABLED=0 /usr/local/go1.23.4/go/bin/go build -o target/main main.go
-            && cp -r etc target
-          path: .
+            GOOS=linux GOARCH=amd64 CGO_ENABLED=0 /usr/local/go1.23.4/go/bin/go build -o code/target/main main.go
+            && cp -r etc code/target
+          path: ./
     props:
       region: ${vars.region}
       description: Serverless Devs Web Framework Jzero admin server Function
@@ -28,11 +28,11 @@ resources:
       instanceConcurrency: 100
       customRuntimeConfig:
         command:
-          - /main
+          - /code/main
           - "server"
         port: 8001
       functionName: ${vars.functionName}
-      code: ./target
+      code: ./code/target
       triggers:
         - triggerName: httpTrigger
           triggerType: http
