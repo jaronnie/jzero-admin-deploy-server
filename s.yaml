@@ -9,14 +9,14 @@ resources:
     component: fc3
     actions:
       pre-deploy:
-        - run: >-
-            curl -o go1.23.4.linux-amd64.tar.gz https://dl.google.com/go/go1.23.4.linux-amd64.tar.gz
-            && mkdir -p /usr/local/go1.23.4
-            && tar -zxvf go1.23.4.linux-amd64.tar.gz -C /usr/local/go1.23.4
-        - run: /usr/local/go1.23.4/go/bin/go mod tidy
+#        - run: >-
+#            curl -o go1.23.4.linux-amd64.tar.gz https://dl.google.com/go/go1.23.4.linux-amd64.tar.gz
+#            && mkdir -p /usr/local/go1.23.4
+#            && tar -zxvf go1.23.4.linux-amd64.tar.gz -C /usr/local/go1.23.4
+        - run: go mod tidy
           path: ./code
         - run: >-
-            GOOS=linux GOARCH=amd64 CGO_ENABLED=0 /usr/local/go1.23.4/go/bin/go build -o target/main
+            GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o target/main
             main.go
           path: ./code
     props:
