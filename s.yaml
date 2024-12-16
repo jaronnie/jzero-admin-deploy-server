@@ -29,8 +29,7 @@ resources:
       customRuntimeConfig:
         command:
           - /main
-        args:
-          - server
+          - "server"
         port: 8001
       functionName: ${vars.functionName}
       code: ./target
