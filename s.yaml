@@ -28,7 +28,9 @@ resources:
       instanceConcurrency: 100
       customRuntimeConfig:
         command:
-          - /main server
+          - /main
+        args:
+          - server
         port: 8001
       functionName: ${vars.functionName}
       code: ./target
