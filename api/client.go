@@ -25,7 +25,7 @@ type EnvConfigurator struct {
 
 func (e *EnvConfigurator) GetConfig() (config.Config, error) {
 	var c config.Config
-	if err := conf.LoadFromJsonBytes([]byte(os.Getenv("CONFIG")), &c); err == nil {
+	if err := conf.LoadFromJsonBytes([]byte(os.Getenv(e.Key)), &c); err == nil {
 		return c, nil
 	} else {
 		return config.Config{}, err
@@ -37,7 +37,7 @@ func (e *EnvConfigurator) AddListener(listener func()) {
 }
 
 func init() {
-	cc := &EnvConfigurator{}
+	cc := &EnvConfigurator{Key: "CONFIG"}
 	c, err := cc.GetConfig()
 	logx.Must(err)
 
