@@ -19,17 +19,30 @@ var (
 	server *rest.Server
 )
 
-func init() {
+type EnvConfigurator struct {
+	Key string
+}
+
+func (e *EnvConfigurator) GetConfig() (config.Config, error) {
 	var c config.Config
-
-	if err := conf.LoadFromJsonBytes([]byte(os.Getenv("CONFIG")), &c); err != nil {
-		panic(err)
+	if err := conf.LoadFromJsonBytes([]byte(os.Getenv("CONFIG")), &c); err == nil {
+		return c, nil
+	} else {
+		return config.Config{}, err
 	}
-	config.C = c
+}
 
-	if err := logx.SetUp(c.Log.LogConf); err != nil {
-		logx.Must(err)
-	}
+func (e *EnvConfigurator) AddListener(listener func()) {
+	listener()
+}
+
+func init() {
+	cc := &EnvConfigurator{}
+	c, err := cc.GetConfig()
+	logx.Must(err)
+
+	logx.Must(logx.SetUp(c.Log.LogConf))
+
 	if c.Log.LogConf.Mode != "console" {
 		logx.AddWriter(logx.NewWriter(os.Stdout))
 	}
@@ -41,7 +54,7 @@ func init() {
 	}, nil, "*"))
 	middleware.Register(server)
 
-	svcCtx := svc.NewServiceContext(c, handler.Route2Code)
+	svcCtx := svc.NewServiceContext(c, cc, handler.Route2Code)
 	handler.RegisterHandlers(server, svcCtx)
 	svcCtx.Custom.AddRoutes(server)
 
