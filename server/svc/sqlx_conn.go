@@ -7,6 +7,7 @@ import (
 	_ "github.com/glebarez/sqlite"
 	sqlbuilder "github.com/huandu/go-sqlbuilder"
 	"github.com/spf13/cast"
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
@@ -30,12 +31,7 @@ func BuildDataSource(c config.Config) string {
 func MustSqlConn(c config.Config) sqlx.SqlConn {
 	sqlConn := sqlx.NewSqlConn(c.DatabaseType, BuildDataSource(c))
 	db, err := sqlConn.RawDB()
-	if err != nil {
-		panic(err)
-	}
-	err = db.Ping()
-	if err != nil {
-		panic(err)
-	}
+	logx.Must(err)
+	logx.Must(db.Ping())
 	return sqlConn
 }
