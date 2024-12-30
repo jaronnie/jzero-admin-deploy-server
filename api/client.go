@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"os"
 
-	"server/server/config"
-	"server/server/handler"
-	"server/server/middleware"
-	"server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/server/config"
+	"github.com/jzero-io/jzero-admin/server/server/handler"
+	"github.com/jzero-io/jzero-admin/server/server/middleware"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/logx"
