@@ -4,20 +4,19 @@ import (
 	"net/http"
 
 	casbin "github.com/casbin/casbin/v2"
+	"github.com/jzero-io/jzero-admin/server/server/auth"
 	"github.com/spf13/cast"
-
-	"github.com/jzero-io/jzero-admin/server/internal/auth"
 )
 
 type AuthxMiddleware struct {
-	CasbinEnforcer *casbin.Enforcer
-	Route2CodeFunc func(r *http.Request) string
+	CasbinEnforcer	*casbin.Enforcer
+	Route2CodeFunc	func(r *http.Request) string
 }
 
 func NewAuthxMiddleware(casbinEnforcer *casbin.Enforcer, route2codeFunc func(r *http.Request) string) *AuthxMiddleware {
 	return &AuthxMiddleware{
-		CasbinEnforcer: casbinEnforcer,
-		Route2CodeFunc: route2codeFunc,
+		CasbinEnforcer:	casbinEnforcer,
+		Route2CodeFunc:	route2codeFunc,
 	}
 }
 

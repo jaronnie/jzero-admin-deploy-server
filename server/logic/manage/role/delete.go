@@ -8,22 +8,22 @@ import (
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/internal/svc"
-	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/role"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
+	types "github.com/jzero-io/jzero-admin/server/server/types/manage/role"
 )
 
 type Delete struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
-	r      *http.Request
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
+	r	*http.Request
 }
 
 func NewDelete(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *Delete {
 	return &Delete{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx, r: r,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx, r: r,
 	}
 }
 
@@ -33,9 +33,9 @@ func (l *Delete) Delete(req *types.DeleteRequest) (resp *types.DeleteResponse, e
 	}
 
 	userRoles, err := l.svcCtx.Model.ManageUserRole.FindByCondition(l.ctx, nil, condition.Condition{
-		Field:    "role_id",
-		Operator: condition.In,
-		Value:    req.Ids,
+		Field:		"role_id",
+		Operator:	condition.In,
+		Value:		req.Ids,
 	})
 	if err != nil {
 		return nil, err
@@ -45,9 +45,9 @@ func (l *Delete) Delete(req *types.DeleteRequest) (resp *types.DeleteResponse, e
 	}
 
 	err = l.svcCtx.Model.ManageRole.DeleteByCondition(l.ctx, nil, condition.Condition{
-		Field:    "id",
-		Operator: condition.In,
-		Value:    req.Ids,
+		Field:		"id",
+		Operator:	condition.In,
+		Value:		req.Ids,
 	})
 	return
 }

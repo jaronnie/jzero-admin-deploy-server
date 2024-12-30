@@ -4,12 +4,11 @@ import (
 	"fmt"
 
 	_ "github.com/glebarez/sqlite"
+	"github.com/jzero-io/jzero-admin/server/server/config"
 	sqlbuilder "github.com/huandu/go-sqlbuilder"
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
-
-	"github.com/jzero-io/jzero-admin/server/internal/config"
 )
 
 func BuildDataSource(c config.Config) string {

@@ -1,6 +1,6 @@
 package custom
 
-import "github.com/jzero-io/jzero-admin/server/internal/errcodes"
+import "github.com/jzero-io/jzero-admin/server/server/errcodes"
 
 type Custom struct {
 }
@@ -15,4 +15,4 @@ func (c *Custom) Start() {
 }
 
 // Stop Please add shut down logic here.
-func (c *Custom) Stop() {}
+func (c *Custom) Stop()	{}

@@ -10,22 +10,22 @@ import (
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/internal/svc"
-	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/menu"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
+	types "github.com/jzero-io/jzero-admin/server/server/types/manage/menu"
 )
 
 type Edit struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
-	r      *http.Request
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
+	r	*http.Request
 }
 
 func NewEdit(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *Edit {
 	return &Edit{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx, r: r,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx, r: r,
 	}
 }
 

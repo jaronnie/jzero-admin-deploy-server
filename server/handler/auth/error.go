@@ -5,9 +5,9 @@ import (
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 
-	"github.com/jzero-io/jzero-admin/server/internal/logic/auth"
-	"github.com/jzero-io/jzero-admin/server/internal/svc"
-	types "github.com/jzero-io/jzero-admin/server/internal/types/auth"
+	"github.com/jzero-io/jzero-admin/server/server/logic/auth"
+	types "github.com/jzero-io/jzero-admin/server/server/types/auth"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
 )
 
 func Error(svcCtx *svc.ServiceContext) http.HandlerFunc {

@@ -6,22 +6,22 @@ import (
 
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/internal/svc"
-	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/role"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
+	types "github.com/jzero-io/jzero-admin/server/server/types/manage/role"
 )
 
 type GetAll struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
-	r      *http.Request
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
+	r	*http.Request
 }
 
 func NewGetAll(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *GetAll {
 	return &GetAll{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx, r: r,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx, r: r,
 	}
 }
 
@@ -35,9 +35,9 @@ func (l *GetAll) GetAll(req *types.GetAllRequest) (resp []types.GetAllResponse, 
 	for _, role := range roles {
 		if role.Status == "1" {
 			list = append(list, types.GetAllResponse{
-				Id:       role.Id,
-				RoleCode: role.Code,
-				RoleName: role.Name,
+				Id:		role.Id,
+				RoleCode:	role.Code,
+				RoleName:	role.Name,
 			})
 		}
 	}

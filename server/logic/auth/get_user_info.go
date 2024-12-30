@@ -8,23 +8,23 @@ import (
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/internal/auth"
-	"github.com/jzero-io/jzero-admin/server/internal/svc"
-	types "github.com/jzero-io/jzero-admin/server/internal/types/auth"
+	"github.com/jzero-io/jzero-admin/server/server/auth"
+	types "github.com/jzero-io/jzero-admin/server/server/types/auth"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
 )
 
 type GetUserInfo struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
-	r      *http.Request
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
+	r	*http.Request
 }
 
 func NewGetUserInfo(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *GetUserInfo {
 	return &GetUserInfo{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx, r: r,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx, r: r,
 	}
 }
 
@@ -87,9 +87,9 @@ func (l *GetUserInfo) GetUserInfo(req *types.GetUserInfoRequest) (resp *types.Ge
 	}
 
 	return &types.GetUserInfoResponse{
-		UserId:   cast.ToString(user.Id),
-		Username: user.Username,
-		Roles:    roleCodes,
-		Buttons:  buttons,
+		UserId:		cast.ToString(user.Id),
+		Username:	user.Username,
+		Roles:		roleCodes,
+		Buttons:	buttons,
 	}, nil
 }

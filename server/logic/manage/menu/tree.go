@@ -8,22 +8,22 @@ import (
 	"github.com/jzero-io/jzero-contrib/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/internal/svc"
-	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/menu"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
+	types "github.com/jzero-io/jzero-admin/server/server/types/manage/menu"
 )
 
 type Tree struct {
 	logx.Logger
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
-	r      *http.Request
+	ctx	context.Context
+	svcCtx	*svc.ServiceContext
+	r	*http.Request
 }
 
 func NewTree(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *Tree {
 	return &Tree{
-		Logger: logx.WithContext(ctx),
-		ctx:    ctx,
-		svcCtx: svcCtx, r: r,
+		Logger:	logx.WithContext(ctx),
+		ctx:	ctx,
+		svcCtx:	svcCtx, r: r,
 	}
 }
 
@@ -52,10 +52,10 @@ func buildSimpleMenuTree(menus []*types.SystemMenu, parentId uint64) []types.Tre
 	for _, menu := range menus {
 		if menu.ParentId == parentId {
 			subMenu := types.TreeResponse{
-				Id:    menu.Id,
-				Label: menu.MenuName,
-				PId:   menu.ParentId,
-				Order: menu.Order,
+				Id:	menu.Id,
+				Label:	menu.MenuName,
+				PId:	menu.ParentId,
+				Order:	menu.Order,
 			}
 			subMenu.Children = buildSimpleMenuTree(menus, menu.Id)
 			sort.Slice(subMenu.Children, func(i, j int) bool {

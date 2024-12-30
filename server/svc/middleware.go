@@ -4,8 +4,7 @@ import (
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest"
-
-	"github.com/jzero-io/jzero-admin/server/internal/middleware"
+	"github.com/jzero-io/jzero-admin/server/server/middleware"
 )
 
 type Middleware struct {

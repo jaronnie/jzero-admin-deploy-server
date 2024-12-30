@@ -5,9 +5,9 @@ import (
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 
-	"github.com/jzero-io/jzero-admin/server/internal/logic/route"
-	"github.com/jzero-io/jzero-admin/server/internal/svc"
-	types "github.com/jzero-io/jzero-admin/server/internal/types/route"
+	"github.com/jzero-io/jzero-admin/server/server/logic/route"
+	types "github.com/jzero-io/jzero-admin/server/server/types/route"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
 )
 
 func IsRouteExist(svcCtx *svc.ServiceContext) http.HandlerFunc {

@@ -3,8 +3,8 @@ package plugins
 
 import (
 	hello "github.com/jzero-io/jzero-admin-plugins/hello/serverless"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
 
-	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	"github.com/zeromicro/go-zero/rest"
 )
 

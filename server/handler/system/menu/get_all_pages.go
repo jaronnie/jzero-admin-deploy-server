@@ -5,9 +5,9 @@ import (
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 
-	"github.com/jzero-io/jzero-admin/server/internal/logic/manage/menu"
-	"github.com/jzero-io/jzero-admin/server/internal/svc"
-	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/menu"
+	"github.com/jzero-io/jzero-admin/server/server/logic/manage/menu"
+	types "github.com/jzero-io/jzero-admin/server/server/types/manage/menu"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
 )
 
 func GetAllPages(svcCtx *svc.ServiceContext) http.HandlerFunc {

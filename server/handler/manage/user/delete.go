@@ -5,9 +5,9 @@ import (
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 
-	"github.com/jzero-io/jzero-admin/server/internal/logic/manage/user"
-	"github.com/jzero-io/jzero-admin/server/internal/svc"
-	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/user"
+	"github.com/jzero-io/jzero-admin/server/server/logic/manage/user"
+	types "github.com/jzero-io/jzero-admin/server/server/types/manage/user"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
 )
 
 func Delete(svcCtx *svc.ServiceContext) http.HandlerFunc {
