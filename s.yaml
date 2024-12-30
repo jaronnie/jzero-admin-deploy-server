@@ -18,6 +18,7 @@ resources:
         - run: >-
             GOOS=linux GOARCH=amd64 CGO_ENABLED=0 /usr/local/go1.23.4/go/bin/go build -o code/target/main main.go
             && cp -r etc code/target
+            && cp -r plugins code/target && rm -rf code/target/plugins/plugins.go
           path: ./
     props:
       region: ${vars.region}
