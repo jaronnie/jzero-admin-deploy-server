@@ -13,17 +13,17 @@ import (
 	"github.com/zeromicro/go-zero/core/service"
 	"github.com/zeromicro/go-zero/rest"
 
-	"server/server/config"
-	"server/server/svc"
-	"server/server/middleware"
-	"server/server/handler"
+	"github.com/jzero-io/jzero-admin/server/internal/config"
+	"github.com/jzero-io/jzero-admin/server/internal/handler"
+	"github.com/jzero-io/jzero-admin/server/internal/middleware"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
 )
 
 // serverCmd represents the server command
 var serverCmd = &cobra.Command{
-	Use:	"server",
-	Short:	"server server",
-	Long:	"server server",
+	Use:   "server",
+	Short: "server server",
+	Long:  "server server",
 	Run: func(cmd *cobra.Command, args []string) {
 		ss, err := dynamic_conf.NewFsNotify(cfgFile, dynamic_conf.WithUseEnv(true))
 		logx.Must(err)

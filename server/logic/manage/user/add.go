@@ -9,38 +9,38 @@ import (
 	"github.com/jzero-io/jzero-contrib/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"server/server/model/manage_user"
-	types "server/server/types/manage/user"
-	"server/server/svc"
-	"server/server/model/manage_user_role"
+	"github.com/jzero-io/jzero-admin/server/internal/model/manage_user"
+	"github.com/jzero-io/jzero-admin/server/internal/model/manage_user_role"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/user"
 )
 
 type Add struct {
 	logx.Logger
-	ctx	context.Context
-	svcCtx	*svc.ServiceContext
-	r	*http.Request
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	r      *http.Request
 }
 
 func NewAdd(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *Add {
 	return &Add{
-		Logger:	logx.WithContext(ctx),
-		ctx:	ctx,
-		svcCtx:	svcCtx, r: r,
+		Logger: logx.WithContext(ctx),
+		ctx:    ctx,
+		svcCtx: svcCtx, r: r,
 	}
 }
 
 func (l *Add) Add(req *types.AddRequest) (resp *types.AddResponse, err error) {
 	if _, err = l.svcCtx.Model.ManageUser.Insert(l.ctx, nil, &manage_user.ManageUser{
-		CreateTime:	time.Now(),
-		UpdateTime:	time.Now(),
-		Username:	req.Username,
-		Password:	req.Password,
-		Nickname:	req.NickName,
-		Gender:		req.UserGender,
-		Phone:		null.StringFrom(req.UserPhone).NullString,
-		Status:		req.Status,
-		Email:		null.StringFrom(req.UserEmail).NullString,
+		CreateTime: time.Now(),
+		UpdateTime: time.Now(),
+		Username:   req.Username,
+		Password:   req.Password,
+		Nickname:   req.NickName,
+		Gender:     req.UserGender,
+		Phone:      null.StringFrom(req.UserPhone).NullString,
+		Status:     req.Status,
+		Email:      null.StringFrom(req.UserEmail).NullString,
 	}); err != nil {
 		return nil, err
 	}
@@ -52,9 +52,9 @@ func (l *Add) Add(req *types.AddRequest) (resp *types.AddResponse, err error) {
 	var bulk []*manage_user_role.ManageUserRole
 	var roleIds []uint64
 	roles, err := l.svcCtx.Model.ManageRole.FindByCondition(l.ctx, nil, condition.Condition{
-		Field:		"code",
-		Operator:	condition.In,
-		Value:		req.UserRoles,
+		Field:    "code",
+		Operator: condition.In,
+		Value:    req.UserRoles,
 	})
 	if err != nil {
 		return nil, err
@@ -66,10 +66,10 @@ func (l *Add) Add(req *types.AddRequest) (resp *types.AddResponse, err error) {
 
 	for _, v := range roleIds {
 		bulk = append(bulk, &manage_user_role.ManageUserRole{
-			CreateTime:	time.Now(),
-			UpdateTime:	time.Now(),
-			UserId:		int64(user.Id),
-			RoleId:		int64(v),
+			CreateTime: time.Now(),
+			UpdateTime: time.Now(),
+			UserId:     int64(user.Id),
+			RoleId:     int64(v),
 		})
 	}
 

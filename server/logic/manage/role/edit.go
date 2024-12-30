@@ -6,22 +6,22 @@ import (
 
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"server/server/svc"
-	types "server/server/types/manage/role"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/role"
 )
 
 type Edit struct {
 	logx.Logger
-	ctx	context.Context
-	svcCtx	*svc.ServiceContext
-	r	*http.Request
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	r      *http.Request
 }
 
 func NewEdit(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *Edit {
 	return &Edit{
-		Logger:	logx.WithContext(ctx),
-		ctx:	ctx,
-		svcCtx:	svcCtx, r: r,
+		Logger: logx.WithContext(ctx),
+		ctx:    ctx,
+		svcCtx: svcCtx, r: r,
 	}
 }
 

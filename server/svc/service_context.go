@@ -14,28 +14,28 @@ import (
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
-	"server/server/config"
-	"server/server/model"
-	"server/server/i18n"
-	"server/server/custom"
+	"github.com/jzero-io/jzero-admin/server/internal/config"
+	"github.com/jzero-io/jzero-admin/server/internal/custom"
+	"github.com/jzero-io/jzero-admin/server/internal/i18n"
+	"github.com/jzero-io/jzero-admin/server/internal/model"
 )
 
 type ServiceContext struct {
-	Config		configurator.Configurator[config.Config]
-	SqlxConn	sqlx.SqlConn
-	Model		model.Model
-	Cache		cache.Cache
-	CasbinEnforcer	*casbin.Enforcer
-	Trans		*i18n.Translator
+	Config         configurator.Configurator[config.Config]
+	SqlxConn       sqlx.SqlConn
+	Model          model.Model
+	Cache          cache.Cache
+	CasbinEnforcer *casbin.Enforcer
+	Trans          *i18n.Translator
 	Middleware
 
-	Custom	*custom.Custom
+	Custom *custom.Custom
 }
 
 func NewServiceContext(cc configurator.Configurator[config.Config], route2Code func(r *http.Request) string) *ServiceContext {
 	svcCtx := &ServiceContext{
-		Config:	cc,
-		Custom:	custom.New(),
+		Config: cc,
+		Custom: custom.New(),
 	}
 	svcCtx.SetConfigListener()
 	svcCtx.SqlxConn = MustSqlConn(svcCtx.MustGetConfig())

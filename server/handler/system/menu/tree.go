@@ -5,9 +5,9 @@ import (
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 
-	"server/server/logic/manage/menu"
-	types "server/server/types/manage/menu"
-	"server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/logic/manage/menu"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/menu"
 )
 
 func Tree(svcCtx *svc.ServiceContext) http.HandlerFunc {

@@ -11,23 +11,23 @@ import (
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"server/server/model/manage_menu"
-	types "server/server/types/manage/menu"
-	"server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/model/manage_menu"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/menu"
 )
 
 type List struct {
 	logx.Logger
-	ctx	context.Context
-	svcCtx	*svc.ServiceContext
-	r	*http.Request
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	r      *http.Request
 }
 
 func NewList(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *List {
 	return &List{
-		Logger:	logx.WithContext(ctx),
-		ctx:	ctx,
-		svcCtx:	svcCtx, r: r,
+		Logger: logx.WithContext(ctx),
+		ctx:    ctx,
+		svcCtx: svcCtx, r: r,
 	}
 }
 
@@ -50,9 +50,9 @@ func (l *List) List(req *types.ListRequest) (resp *types.ListResponse, err error
 
 	// page by current and size
 	resp.PageResponse = types.PageResponse{
-		Current:	req.Current,
-		Size:		req.Size,
-		Total:		int64(len(tree)),
+		Current: req.Current,
+		Size:    req.Size,
+		Total:   int64(len(tree)),
 	}
 	resp.Records = paginate(tree, req.Current, req.Size)
 
@@ -72,29 +72,29 @@ func convert(list []*manage_menu.ManageMenu) []*types.SystemMenu {
 		Unmarshal(item.Permissions.String, &permissions)
 		Unmarshal(item.Query.String, &query)
 		menu = types.SystemMenu{
-			Id:			item.Id,
-			ActiveMenu:		item.ActiveMenu.String,
-			MenuType:		item.MenuType,
-			MenuName:		item.MenuName,
-			RouteName:		item.RouteName,
-			RoutePath:		item.RoutePath,
-			Component:		item.Component,
-			Icon:			item.Icon,
-			IconType:		item.IconType,
-			ParentId:		uint64(item.ParentId),
-			Status:			item.Status,
-			KeepAlive:		cast.ToBool(item.KeepAlive),
-			Constant:		cast.ToBool(item.Constant),
-			Order:			uint64(item.Order),
-			HideInMenu:		cast.ToBool(item.HideInMenu),
-			Href:			item.Href.String,
-			MultiTab:		cast.ToBool(item.MultiTab),
-			FixedIndexInTab:	nullx.NewInt(item.FixedIndexInTab).Ptr(),
-			Query:			query,
-			ButtonCode:		item.ButtonCode.String,
-			Permissions:		permissions,
-			I18nKey:		item.I18nKey,
-			Children:		nil,
+			Id:              item.Id,
+			ActiveMenu:      item.ActiveMenu.String,
+			MenuType:        item.MenuType,
+			MenuName:        item.MenuName,
+			RouteName:       item.RouteName,
+			RoutePath:       item.RoutePath,
+			Component:       item.Component,
+			Icon:            item.Icon,
+			IconType:        item.IconType,
+			ParentId:        uint64(item.ParentId),
+			Status:          item.Status,
+			KeepAlive:       cast.ToBool(item.KeepAlive),
+			Constant:        cast.ToBool(item.Constant),
+			Order:           uint64(item.Order),
+			HideInMenu:      cast.ToBool(item.HideInMenu),
+			Href:            item.Href.String,
+			MultiTab:        cast.ToBool(item.MultiTab),
+			FixedIndexInTab: nullx.NewInt(item.FixedIndexInTab).Ptr(),
+			Query:           query,
+			ButtonCode:      item.ButtonCode.String,
+			Permissions:     permissions,
+			I18nKey:         item.I18nKey,
+			Children:        nil,
 		}
 		records = append(records, &menu)
 	}

@@ -8,23 +8,23 @@ import (
 	"github.com/samber/lo"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"server/server/model/manage_menu"
-	types "server/server/types/manage/menu"
-	"server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/model/manage_menu"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/menu"
 )
 
 type GetAllPages struct {
 	logx.Logger
-	ctx	context.Context
-	svcCtx	*svc.ServiceContext
-	r	*http.Request
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	r      *http.Request
 }
 
 func NewGetAllPages(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *GetAllPages {
 	return &GetAllPages{
-		Logger:	logx.WithContext(ctx),
-		ctx:	ctx,
-		svcCtx:	svcCtx, r: r,
+		Logger: logx.WithContext(ctx),
+		ctx:    ctx,
+		svcCtx: svcCtx, r: r,
 	}
 }
 

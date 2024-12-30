@@ -2,9 +2,10 @@ package svc
 
 import (
 	"net/http"
-	"server/server/middleware"
 
 	"github.com/zeromicro/go-zero/rest"
+
+	"github.com/jzero-io/jzero-admin/server/internal/middleware"
 )
 
 type Middleware struct {

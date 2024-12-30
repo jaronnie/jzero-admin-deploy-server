@@ -10,24 +10,24 @@ import (
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"server/server/auth"
-	types "server/server/types/auth"
-	"server/server/svc"
-	"server/pkg/jwt"
+	"github.com/jzero-io/jzero-admin/server/internal/auth"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/auth"
+	"github.com/jzero-io/jzero-admin/server/pkg/jwt"
 )
 
 type PwdLogin struct {
 	logx.Logger
-	ctx	context.Context
-	svcCtx	*svc.ServiceContext
-	r	*http.Request
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	r      *http.Request
 }
 
 func NewPwdLogin(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *PwdLogin {
 	return &PwdLogin{
-		Logger:	logx.WithContext(ctx),
-		ctx:	ctx,
-		svcCtx:	svcCtx, r: r,
+		Logger: logx.WithContext(ctx),
+		ctx:    ctx,
+		svcCtx: svcCtx, r: r,
 	}
 }
 
@@ -57,9 +57,9 @@ func (l *PwdLogin) PwdLogin(req *types.PwdLoginRequest) (resp *types.LoginRespon
 
 	j := jwt.NewJwt(config.Jwt.AccessSecret)
 	marshal, err := json.Marshal(auth.Auth{
-		Id:		int(user.Id),
-		Username:	user.Username,
-		RoleIds:	roleIds,
+		Id:       int(user.Id),
+		Username: user.Username,
+		RoleIds:  roleIds,
 	})
 	if err != nil {
 		return nil, err
@@ -87,7 +87,7 @@ func (l *PwdLogin) PwdLogin(req *types.PwdLoginRequest) (resp *types.LoginRespon
 	}
 
 	return &types.LoginResponse{
-		Token:		token,
-		RefreshToken:	refreshToken,
+		Token:        token,
+		RefreshToken: refreshToken,
 	}, nil
 }

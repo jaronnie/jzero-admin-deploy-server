@@ -11,25 +11,25 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
-	"server/server/logic/manage/menu"
-	menu_types "server/server/types/manage/menu"
-	types "server/server/types/manage/role"
-	"server/server/svc"
-	"server/server/model/manage_role_menu"
+	"github.com/jzero-io/jzero-admin/server/internal/logic/manage/menu"
+	"github.com/jzero-io/jzero-admin/server/internal/model/manage_role_menu"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	menu_types "github.com/jzero-io/jzero-admin/server/internal/types/manage/menu"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/role"
 )
 
 type SetMenus struct {
 	logx.Logger
-	ctx	context.Context
-	svcCtx	*svc.ServiceContext
-	r	*http.Request
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	r      *http.Request
 }
 
 func NewSetMenus(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *SetMenus {
 	return &SetMenus{
-		Logger:	logx.WithContext(ctx),
-		ctx:	ctx,
-		svcCtx:	svcCtx, r: r,
+		Logger: logx.WithContext(ctx),
+		ctx:    ctx,
+		svcCtx: svcCtx, r: r,
 	}
 }
 
@@ -47,10 +47,10 @@ func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusRes
 
 		for _, v := range req.MenuIds {
 			data := &manage_role_menu.ManageRoleMenu{
-				RoleId:		int64(req.RoleId),
-				MenuId:		int64(v),
-				CreateTime:	time.Now(),
-				UpdateTime:	time.Now(),
+				RoleId:     int64(req.RoleId),
+				MenuId:     int64(v),
+				CreateTime: time.Now(),
+				UpdateTime: time.Now(),
 			}
 			if data.MenuId == roleHomeMenu.MenuId {
 				data.IsHome = cast.ToInt64(true)
@@ -59,9 +59,9 @@ func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusRes
 		}
 
 		if err = l.svcCtx.Model.ManageRoleMenu.DeleteByCondition(l.ctx, session, condition.Condition{
-			Field:		"role_id",
-			Operator:	condition.Equal,
-			Value:		req.RoleId,
+			Field:    "role_id",
+			Operator: condition.Equal,
+			Value:    req.RoleId,
 		}); err != nil {
 			return err
 		}
@@ -90,9 +90,9 @@ func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusRes
 	var newPolicies [][]string
 	// get menu perms
 	menus, err := l.svcCtx.Model.ManageMenu.FindByCondition(l.ctx, nil, condition.New(condition.Condition{
-		Field:		"id",
-		Operator:	condition.In,
-		Value:		req.MenuIds,
+		Field:    "id",
+		Operator: condition.In,
+		Value:    req.MenuIds,
 	})...)
 	if err != nil {
 		return nil, err

@@ -15,25 +15,25 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	gomail "gopkg.in/gomail.v2"
 
-	"server/server/constant"
-	types "server/server/types/auth"
-	"server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/constant"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/auth"
 )
 
 var SendVerificationError = errors.New("发送失败, 请联系管理员")
 
 type SendVerificationCode struct {
 	logx.Logger
-	ctx	context.Context
-	svcCtx	*svc.ServiceContext
-	r	*http.Request
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	r      *http.Request
 }
 
 func NewSendVerificationCode(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *SendVerificationCode {
 	return &SendVerificationCode{
-		Logger:	logx.WithContext(ctx),
-		ctx:	ctx,
-		svcCtx:	svcCtx, r: r,
+		Logger: logx.WithContext(ctx),
+		ctx:    ctx,
+		svcCtx: svcCtx, r: r,
 	}
 }
 

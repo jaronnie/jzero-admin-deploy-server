@@ -2,13 +2,14 @@ package svc
 
 import (
 	"fmt"
-	"server/server/config"
 
 	_ "github.com/glebarez/sqlite"
 	sqlbuilder "github.com/huandu/go-sqlbuilder"
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+
+	"github.com/jzero-io/jzero-admin/server/internal/config"
 )
 
 func BuildDataSource(c config.Config) string {

@@ -9,23 +9,23 @@ import (
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"server/server/errcodes/manage"
-	types "server/server/types/manage/menu"
-	"server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/errcodes/manage"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/menu"
 )
 
 type Delete struct {
 	logx.Logger
-	ctx	context.Context
-	svcCtx	*svc.ServiceContext
-	r	*http.Request
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	r      *http.Request
 }
 
 func NewDelete(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *Delete {
 	return &Delete{
-		Logger:	logx.WithContext(ctx),
-		ctx:	ctx,
-		svcCtx:	svcCtx, r: r,
+		Logger: logx.WithContext(ctx),
+		ctx:    ctx,
+		svcCtx: svcCtx, r: r,
 	}
 }
 
@@ -35,18 +35,18 @@ func (l *Delete) Delete(req *types.DeleteRequest) (resp *types.DeleteResponse, e
 	}
 	// whether it has submenu
 	subMenus, err := l.svcCtx.Model.ManageMenu.FindByCondition(l.ctx, nil, condition.Condition{
-		Field:		"parent_id",
-		Operator:	condition.In,
-		Value:		req.Ids,
+		Field:    "parent_id",
+		Operator: condition.In,
+		Value:    req.Ids,
 	})
 	if err == nil && len(subMenus) > 0 {
 		return nil, status.ErrorMessage(manage.ExistSubMenuCode, l.svcCtx.Trans.Trans(l.ctx, "manage.menu.existSubMenu"))
 	}
 	// remove permissions
 	menus, err := l.svcCtx.Model.ManageMenu.FindByCondition(l.ctx, nil, condition.Condition{
-		Field:		"id",
-		Operator:	condition.In,
-		Value:		req.Ids,
+		Field:    "id",
+		Operator: condition.In,
+		Value:    req.Ids,
 	})
 	if err == nil {
 		for _, menu := range menus {
@@ -54,9 +54,9 @@ func (l *Delete) Delete(req *types.DeleteRequest) (resp *types.DeleteResponse, e
 			Unmarshal(menu.Permissions.String, &permissions)
 			if len(permissions) > 0 {
 				roles, err := l.svcCtx.Model.ManageRoleMenu.FindByCondition(l.ctx, nil, condition.Condition{
-					Field:		"menu_id",
-					Operator:	condition.Equal,
-					Value:		menu.Id,
+					Field:    "menu_id",
+					Operator: condition.Equal,
+					Value:    menu.Id,
 				})
 				if err != nil {
 					return nil, err
@@ -70,9 +70,9 @@ func (l *Delete) Delete(req *types.DeleteRequest) (resp *types.DeleteResponse, e
 		}
 	}
 	err = l.svcCtx.Model.ManageMenu.DeleteByCondition(l.ctx, nil, condition.Condition{
-		Field:		"id",
-		Operator:	condition.In,
-		Value:		req.Ids,
+		Field:    "id",
+		Operator: condition.In,
+		Value:    req.Ids,
 	})
 	return
 }

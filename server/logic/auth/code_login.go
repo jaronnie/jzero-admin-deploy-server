@@ -11,25 +11,25 @@ import (
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"server/server/auth"
-	types "server/server/types/auth"
-	"server/server/svc"
-	"server/server/constant"
-	"server/pkg/jwt"
+	"github.com/jzero-io/jzero-admin/server/internal/auth"
+	"github.com/jzero-io/jzero-admin/server/internal/constant"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/auth"
+	"github.com/jzero-io/jzero-admin/server/pkg/jwt"
 )
 
 type CodeLogin struct {
 	logx.Logger
-	ctx	context.Context
-	svcCtx	*svc.ServiceContext
-	r	*http.Request
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	r      *http.Request
 }
 
 func NewCodeLogin(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *CodeLogin {
 	return &CodeLogin{
-		Logger:	logx.WithContext(ctx),
-		ctx:	ctx,
-		svcCtx:	svcCtx, r: r,
+		Logger: logx.WithContext(ctx),
+		ctx:    ctx,
+		svcCtx: svcCtx, r: r,
 	}
 }
 
@@ -49,9 +49,9 @@ func (l *CodeLogin) CodeLogin(req *types.CodeLoginRequest) (resp *types.LoginRes
 	}
 
 	user, err := l.svcCtx.Model.ManageUser.FindOneByCondition(l.ctx, nil, condition.Condition{
-		Field:		"email",
-		Operator:	condition.Equal,
-		Value:		req.Email,
+		Field:    "email",
+		Operator: condition.Equal,
+		Value:    req.Email,
 	})
 	if err != nil {
 		return nil, errors.New("用户名/密码错误")
@@ -70,9 +70,9 @@ func (l *CodeLogin) CodeLogin(req *types.CodeLoginRequest) (resp *types.LoginRes
 
 	j := jwt.NewJwt(config.Jwt.AccessSecret)
 	marshal, err := json.Marshal(auth.Auth{
-		Id:		int(user.Id),
-		Username:	user.Username,
-		RoleIds:	roleIds,
+		Id:       int(user.Id),
+		Username: user.Username,
+		RoleIds:  roleIds,
 	})
 	if err != nil {
 		return nil, err
@@ -100,7 +100,7 @@ func (l *CodeLogin) CodeLogin(req *types.CodeLoginRequest) (resp *types.LoginRes
 	}
 
 	return &types.LoginResponse{
-		Token:		token,
-		RefreshToken:	refreshToken,
+		Token:        token,
+		RefreshToken: refreshToken,
 	}, nil
 }

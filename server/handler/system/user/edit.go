@@ -5,9 +5,9 @@ import (
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 
-	"server/server/logic/manage/user"
-	types "server/server/types/manage/user"
-	"server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/logic/manage/user"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/manage/user"
 )
 
 func Edit(svcCtx *svc.ServiceContext) http.HandlerFunc {
