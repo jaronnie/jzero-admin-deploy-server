@@ -37,6 +37,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				},
 				{
 					Method:		http.MethodPost,
+					Path:		"/auth/refreshToken",
+					Handler:	auth.RefreshToken(serverCtx),
+				},
+				{
+					Method:		http.MethodPost,
 					Path:		"/auth/register",
 					Handler:	auth.Register(serverCtx),
 				},
@@ -65,11 +70,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Method:		http.MethodGet,
 					Path:		"/auth/getUserInfo",
 					Handler:	auth.GetUserInfo(serverCtx),
-				},
-				{
-					Method:		http.MethodPost,
-					Path:		"/auth/refreshToken",
-					Handler:	auth.RefreshToken(serverCtx),
 				},
 			},
 			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
