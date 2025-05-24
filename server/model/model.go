@@ -3,6 +3,7 @@
 package model
 
 import (
+	"github.com/eddieowens/opts"
 	"github.com/jzero-io/jzero-admin/server/server/model/casbin_rule"
 	"github.com/jzero-io/jzero-admin/server/server/model/manage_user_role"
 	"github.com/jzero-io/jzero-admin/server/server/model/manage_user"
@@ -10,8 +11,6 @@ import (
 	"github.com/jzero-io/jzero-admin/server/server/model/manage_role"
 	"github.com/jzero-io/jzero-admin/server/server/model/manage_menu"
 	"github.com/jzero-io/jzero-admin/server/server/model/manage_email"
-
-	"github.com/eddieowens/opts"
 	"github.com/jzero-io/jzero-contrib/modelx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
