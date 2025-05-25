@@ -126,5 +126,5 @@ require (
 )
 
 replace (
-	github.com/zeromicro/go-zero => github.com/kevwan/go-zero v0.0.0-20240504155947-527de1c50e66
+	github.com/zeromicro/go-zero => github.com/kevwan/go-zero v0.0.0-20250525082407-0d5bcc60fb34
 )
