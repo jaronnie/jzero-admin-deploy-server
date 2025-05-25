@@ -122,5 +122,9 @@ require (
 	modernc.org/libc v1.22.5 // indirect
 	modernc.org/mathutil v1.5.0 // indirect
 	modernc.org/memory v1.5.0 // indirect
-	modernc.org/sqlite v1.23.1 // indirect
+	modernc.org/sqlite v1.23.1 // indirecthttps://github.com/kevwan/go-zero/tree/rest/feat-servehttp
+)
+
+replace (
+	github.com/zeromicro/go-zero => github.com/kevwan/go-zero@rest/feat-servehttp
 )
