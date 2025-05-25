@@ -126,5 +126,5 @@ require (
 )
 
 replace (
-	github.com/zeromicro/go-zero => github.com/kevwan/go-zero@rest/feat-servehttp
+	github.com/zeromicro/go-zero => github.com/kevwan/go-zero rest/feat-servehttp
 )
