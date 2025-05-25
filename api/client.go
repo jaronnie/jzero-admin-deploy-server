@@ -64,5 +64,5 @@ func init() {
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	server.ServeHTTP(w, r)
+	server.Serve(w, r)
 }
