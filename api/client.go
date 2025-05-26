@@ -57,10 +57,10 @@ func init() {
 	svcCtx := svc.NewServiceContext(cc, handler.Route2Code)
 	handler.RegisterHandlers(server, svcCtx)
 	svcCtx.Custom.AddRoutes(server)
+	logx.Must(server.BindRoutes())
 
 	group := service.NewServiceGroup()
 	group.Add(svcCtx.Custom)
-	group.Add(server)
 	group.Start()
 }
 

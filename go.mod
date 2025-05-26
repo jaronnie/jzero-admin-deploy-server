@@ -125,6 +125,4 @@ require (
 	modernc.org/sqlite v1.23.1 // indirect
 )
 
-replace (
-	github.com/zeromicro/go-zero => github.com/kevwan/go-zero v0.0.0-20250525142615-ff5bb211633c
-)
+replace github.com/zeromicro/go-zero => github.com/jzero-io/go-zero v0.0.0-20250526044911-afb5ad80bad0
