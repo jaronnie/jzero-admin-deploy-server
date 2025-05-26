@@ -60,6 +60,7 @@ func init() {
 
 	group := service.NewServiceGroup()
 	group.Add(svcCtx.Custom)
+	group.Add(server)
 	group.Start()
 }
 
