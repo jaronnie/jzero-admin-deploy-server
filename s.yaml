@@ -34,6 +34,15 @@ resources:
         port: 8001
       functionName: ${vars.functionName}
       code: ./code/target
+      environmentVariables:
+        CACHE_TYPE: local
+        DATABASE_TYPE: mysql
+        MYSQL_DATABASE: jzeroadmin
+        MYSQL_HOST: mysql.sqlpub.com
+        MYSQL_PASSWORD: ySuYm0IMeMNc3zQQ
+        MYSQL_PORT: 3306
+        MYSQL_USER: jaronnie
+
       triggers:
         - triggerName: httpTrigger
           triggerType: http
