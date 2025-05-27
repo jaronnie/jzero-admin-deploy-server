@@ -35,8 +35,8 @@ resources:
       functionName: ${vars.functionName}
       code: ./code/target
       environmentVariables:
-        DATABASE_TYPE: postgres
-        DATABASE_URL: postgres://neondb_owner:npg_le3oEzmNMr9u@ep-nameless-bar-a4xuvs05-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require
+        DATABASE_TYPE: mysql
+        DATABASE_URL: jaronnie:ySuYm0IMeMNc3zQQ@tcp(mysql.sqlpub.com:3306)/jzeroadmin?charset=utf8mb4&parseTime=True&loc=Local
         CACHE_TYPE: local
       triggers:
         - triggerName: httpTrigger
