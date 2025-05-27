@@ -136,8 +136,6 @@ github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD
 github.com/jinzhu/inflection v1.0.0/go.mod h1:h+uFLlag+Qp1Va5pdKtLDYj+kHp5pxUVkryuEj+Srlc=
 github.com/jinzhu/now v1.1.5 h1:/o9tlHleP7gOFmsnYNz3RGnqzefHA47wQpKrrdTIwXQ=
 github.com/jinzhu/now v1.1.5/go.mod h1:d3SSVoowX0Lcu0IBviAWJpolVfI5UJVZZ7cO71lE/z8=
-github.com/jzero-io/go-zero v0.0.0-20250526044911-afb5ad80bad0 h1:DKiCKTCkS57RnKpZdiyK9qMi1BLv0CH8HWpC73/K2CY=
-github.com/jzero-io/go-zero v0.0.0-20250526044911-afb5ad80bad0/go.mod h1:Y9D/USKjjzXGXW7T1EuRxeIBqGTAiSVyHqrzsDtb8Nw=
 github.com/jzero-io/jzero-admin-plugins/hello v0.0.0-20241230101851-46b94d1fec86 h1:XI+Vh4JWhtWMLRNuq+QPL/HZ30b23nr/ssdqkN18JUI=
 github.com/jzero-io/jzero-admin-plugins/hello v0.0.0-20241230101851-46b94d1fec86/go.mod h1:cgOyUBUm7rso5A4w57qTIQgaSGgbEFw4fBwoQGi+WIk=
 github.com/jzero-io/jzero-contrib v0.25.2 h1:hGFdECBPAYtA5r49OfPc87uKOJy6huL4oBK7wvnkV00=
@@ -239,6 +237,8 @@ github.com/yuin/goldmark v1.3.5/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
 github.com/yuin/gopher-lua v1.1.1 h1:kYKnWBjvbNP4XLT3+bPEwAXJx262OhaHDWDVOPjL46M=
 github.com/yuin/gopher-lua v1.1.1/go.mod h1:GBR0iDaNXjAgGg9zfCvksxSRnQx76gclCIb7kdAd1Pw=
+github.com/zeromicro/go-zero v1.8.3 h1:AwpBJQLAsZAt4OOnK0eR8UU1Ja2RFBIXfKkHdnXQKfc=
+github.com/zeromicro/go-zero v1.8.3/go.mod h1:EnuEA3XdIQvAvc4WWTskRTO0jM2/aQi7OXv1gKWRNJ0=
 github.com/zeromicro/go-zero/tools/goctl v1.8.3 h1:7kqT21Uc/z/qpjuF/kL9YG6G6KHNHbtlUXSZEhYnpos=
 github.com/zeromicro/go-zero/tools/goctl v1.8.3/go.mod h1:x3uJXTb26j1HKwBEfa94l+D+qMRrk5QaM1HsD/fyLaA=
 go.etcd.io/etcd/api/v3 v3.5.15 h1:3KpLJir1ZEBrYuV2v+Twaa/e2MdDCEZ/70H+lzEiwsk=
