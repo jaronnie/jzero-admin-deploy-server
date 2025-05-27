@@ -124,3 +124,5 @@ require (
 	modernc.org/memory v1.5.0 // indirect
 	modernc.org/sqlite v1.23.1 // indirect
 )
+
+replace github.com/zeromicro/go-zero => github.com/jzero-io/go-zero v0.0.0-20250526044911-afb5ad80bad0
