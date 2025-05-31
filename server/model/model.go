@@ -11,7 +11,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/server/model/manage_role"
 	"github.com/jzero-io/jzero-admin/server/server/model/manage_menu"
 	"github.com/jzero-io/jzero-admin/server/server/model/manage_email"
-	"github.com/jzero-io/jzero-contrib/modelx"
+	"github.com/jzero-io/jzero/core/stores/modelx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
