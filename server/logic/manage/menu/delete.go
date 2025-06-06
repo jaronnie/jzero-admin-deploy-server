@@ -12,6 +12,8 @@ import (
 	"github.com/jzero-io/jzero-admin/server/server/errcodes/manage"
 	types "github.com/jzero-io/jzero-admin/server/server/types/manage/menu"
 	"github.com/jzero-io/jzero-admin/server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/server/model/manage_menu"
+	"github.com/jzero-io/jzero-admin/server/server/model/manage_role_menu"
 )
 
 type Delete struct {
@@ -35,7 +37,7 @@ func (l *Delete) Delete(req *types.DeleteRequest) (resp *types.DeleteResponse, e
 	}
 	// whether it has submenu
 	subMenus, err := l.svcCtx.Model.ManageMenu.FindByCondition(l.ctx, nil, condition.Condition{
-		Field:		"parent_id",
+		Field:		manage_menu.ParentId,
 		Operator:	condition.In,
 		Value:		req.Ids,
 	})
@@ -44,7 +46,7 @@ func (l *Delete) Delete(req *types.DeleteRequest) (resp *types.DeleteResponse, e
 	}
 	// remove permissions
 	menus, err := l.svcCtx.Model.ManageMenu.FindByCondition(l.ctx, nil, condition.Condition{
-		Field:		"id",
+		Field:		manage_menu.Id,
 		Operator:	condition.In,
 		Value:		req.Ids,
 	})
@@ -54,7 +56,7 @@ func (l *Delete) Delete(req *types.DeleteRequest) (resp *types.DeleteResponse, e
 			Unmarshal(menu.Permissions.String, &permissions)
 			if len(permissions) > 0 {
 				roles, err := l.svcCtx.Model.ManageRoleMenu.FindByCondition(l.ctx, nil, condition.Condition{
-					Field:		"menu_id",
+					Field:		manage_role_menu.MenuId,
 					Operator:	condition.Equal,
 					Value:		menu.Id,
 				})
@@ -70,7 +72,7 @@ func (l *Delete) Delete(req *types.DeleteRequest) (resp *types.DeleteResponse, e
 		}
 	}
 	err = l.svcCtx.Model.ManageMenu.DeleteByCondition(l.ctx, nil, condition.Condition{
-		Field:		"id",
+		Field:		manage_menu.Id,
 		Operator:	condition.In,
 		Value:		req.Ids,
 	})

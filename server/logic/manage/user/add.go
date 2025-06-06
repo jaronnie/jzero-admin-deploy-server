@@ -9,10 +9,11 @@ import (
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_user"
+	"github.com/jzero-io/jzero-admin/server/server/model/manage_role"
 	types "github.com/jzero-io/jzero-admin/server/server/types/manage/user"
 	"github.com/jzero-io/jzero-admin/server/server/svc"
 	"github.com/jzero-io/jzero-admin/server/server/model/manage_user_role"
+	"github.com/jzero-io/jzero-admin/server/server/model/manage_user"
 )
 
 type Add struct {
@@ -52,7 +53,7 @@ func (l *Add) Add(req *types.AddRequest) (resp *types.AddResponse, err error) {
 	var bulk []*manage_user_role.ManageUserRole
 	var roleIds []uint64
 	roles, err := l.svcCtx.Model.ManageRole.FindByCondition(l.ctx, nil, condition.Condition{
-		Field:		"code",
+		Field:		manage_role.Code,
 		Operator:	condition.In,
 		Value:		req.UserRoles,
 	})

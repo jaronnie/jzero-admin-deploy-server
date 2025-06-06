@@ -7,8 +7,9 @@ import (
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/server/model/manage_role_menu"
 	types "github.com/jzero-io/jzero-admin/server/server/types/manage/role"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
 )
 
 type GetMenus struct {
@@ -28,7 +29,7 @@ func NewGetMenus(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Reques
 
 func (l *GetMenus) GetMenus(req *types.GetMenusRequest) (resp []uint64, err error) {
 	menus, err := l.svcCtx.Model.ManageRoleMenu.FindByCondition(l.ctx, nil, condition.Condition{
-		Field:		"role_id",
+		Field:		manage_role_menu.RoleId,
 		Operator:	condition.Equal,
 		Value:		req.RoleId,
 	})

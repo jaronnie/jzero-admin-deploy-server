@@ -13,6 +13,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/server/auth"
 	types "github.com/jzero-io/jzero-admin/server/server/types/auth"
 	"github.com/jzero-io/jzero-admin/server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/server/model/manage_user_role"
 	"github.com/jzero-io/jzero-admin/server/pkg/jwt"
 )
 
@@ -45,7 +46,7 @@ func (l *PwdLogin) PwdLogin(req *types.PwdLoginRequest) (resp *types.LoginRespon
 		return nil, errors.New("用户名或密码错误")
 	}
 	userRoles, err := l.svcCtx.Model.ManageUserRole.FindByCondition(l.ctx, nil, condition.NewChain().
-		Equal("user_id", user.Id).
+		Equal(manage_user_role.UserId, user.Id).
 		Build()...)
 	if err != nil {
 		return nil, err

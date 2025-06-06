@@ -15,6 +15,7 @@ import (
 	menu_types "github.com/jzero-io/jzero-admin/server/server/types/manage/menu"
 	types "github.com/jzero-io/jzero-admin/server/server/types/manage/role"
 	"github.com/jzero-io/jzero-admin/server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/server/model/manage_menu"
 	"github.com/jzero-io/jzero-admin/server/server/model/manage_role_menu"
 )
 
@@ -37,8 +38,8 @@ func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusRes
 	if err = l.svcCtx.SqlxConn.TransactCtx(l.ctx, func(ctx context.Context, session sqlx.Session) error {
 		// 找到该角色的首页
 		roleHomeMenu, err := l.svcCtx.Model.ManageRoleMenu.FindOneByCondition(l.ctx, nil, condition.NewChain().
-			Equal("role_id", req.RoleId).
-			Equal("is_home", cast.ToInt(true)).
+			Equal(manage_role_menu.RoleId, req.RoleId).
+			Equal(manage_role_menu.IsHome, cast.ToInt(true)).
 			Build()...)
 		if err != nil {
 			return errors.New("该角色无首页路由")
@@ -59,7 +60,7 @@ func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusRes
 		}
 
 		if err = l.svcCtx.Model.ManageRoleMenu.DeleteByCondition(l.ctx, session, condition.Condition{
-			Field:		"role_id",
+			Field:		manage_role_menu.RoleId,
 			Operator:	condition.Equal,
 			Value:		req.RoleId,
 		}); err != nil {
@@ -90,7 +91,7 @@ func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusRes
 	var newPolicies [][]string
 	// get menu perms
 	menus, err := l.svcCtx.Model.ManageMenu.FindByCondition(l.ctx, nil, condition.New(condition.Condition{
-		Field:		"id",
+		Field:		manage_menu.Id,
 		Operator:	condition.In,
 		Value:		req.MenuIds,
 	})...)

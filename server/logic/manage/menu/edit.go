@@ -10,8 +10,9 @@ import (
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/server/model/manage_role_menu"
 	types "github.com/jzero-io/jzero-admin/server/server/types/manage/menu"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
 )
 
 type Edit struct {
@@ -65,7 +66,7 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 		// 更新了权限标识
 		if marshal(req.Permissions) != oldPermissionStr {
 			roleMenus, err := l.svcCtx.Model.ManageRoleMenu.FindByCondition(l.ctx, nil, condition.NewChain().
-				Equal("menu_id", req.Id).
+				Equal(manage_role_menu.MenuId, req.Id).
 				Build()...)
 			if err != nil {
 				return nil, err

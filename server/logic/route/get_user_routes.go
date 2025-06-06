@@ -14,6 +14,7 @@ import (
 	types "github.com/jzero-io/jzero-admin/server/server/types/route"
 	"github.com/jzero-io/jzero-admin/server/server/svc"
 	"github.com/jzero-io/jzero-admin/server/server/model/manage_menu"
+	"github.com/jzero-io/jzero-admin/server/server/model/manage_role_menu"
 	"github.com/jzero-io/jzero-admin/server/server/logic/manage/menu"
 )
 
@@ -46,7 +47,7 @@ func (l *GetUserRoutes) GetUserRoutes(req *types.GetUserRoutesRequest) (resp *ty
 	}
 
 	roleMenus, err := l.svcCtx.Model.ManageRoleMenu.FindByCondition(l.ctx, nil, condition.NewChain().
-		In("role_id", info.RoleIds).
+		In(manage_role_menu.RoleId, info.RoleIds).
 		Build()...)
 	if err != nil {
 		return nil, err
@@ -63,8 +64,8 @@ func (l *GetUserRoutes) GetUserRoutes(req *types.GetUserRoutesRequest) (resp *ty
 	}
 
 	menus, err := l.svcCtx.Model.ManageMenu.FindByCondition(l.ctx, nil, condition.NewChain().
-		In("id", uniqMenuIds).
-		NotEqual("menu_type", "3").
+		In(manage_menu.Id, uniqMenuIds).
+		NotEqual(manage_menu.MenuType, "3").
 		Build()...)
 	if err != nil {
 		return nil, err

@@ -12,6 +12,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/server/constant"
 	types "github.com/jzero-io/jzero-admin/server/server/types/auth"
 	"github.com/jzero-io/jzero-admin/server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/server/model/manage_user"
 )
 
 type ResetPassword struct {
@@ -40,7 +41,7 @@ func (l *ResetPassword) ResetPassword(req *types.ResetPasswordRequest) (resp *ty
 	}
 
 	user, err := l.svcCtx.Model.ManageUser.FindOneByCondition(l.ctx, nil, condition.Condition{
-		Field:		"email",
+		Field:		manage_user.Email,
 		Operator:	condition.Equal,
 		Value:		req.Email,
 	})

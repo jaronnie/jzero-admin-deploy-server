@@ -9,9 +9,10 @@ import (
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_user_role"
+	"github.com/jzero-io/jzero-admin/server/server/model/manage_role"
 	types "github.com/jzero-io/jzero-admin/server/server/types/manage/user"
 	"github.com/jzero-io/jzero-admin/server/server/svc"
+	"github.com/jzero-io/jzero-admin/server/server/model/manage_user_role"
 )
 
 type Edit struct {
@@ -48,7 +49,7 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 
 	// 更新 system_user_role 表
 	if err = l.svcCtx.Model.ManageUserRole.DeleteByCondition(l.ctx, nil, condition.Condition{
-		Field:		"user_id",
+		Field:		manage_user_role.UserId,
 		Operator:	condition.Equal,
 		Value:		req.Id,
 	}); err != nil {
@@ -57,7 +58,7 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 	var bulk []*manage_user_role.ManageUserRole
 	var roleIds []uint64
 	roles, err := l.svcCtx.Model.ManageRole.FindByCondition(l.ctx, nil, condition.Condition{
-		Field:		"code",
+		Field:		manage_role.Id,
 		Operator:	condition.In,
 		Value:		req.UserRoles,
 	})
