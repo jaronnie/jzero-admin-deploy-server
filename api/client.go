@@ -16,7 +16,7 @@ import (
 )
 
 var (
-	server *rest.Server
+	Serverless *rest.Serverless
 )
 
 type EnvConfigurator struct {
@@ -47,7 +47,7 @@ func init() {
 		logx.AddWriter(logx.NewWriter(os.Stdout))
 	}
 
-	server = rest.MustNewServer(c.Rest.RestConf, rest.WithCustomCors(func(header http.Header) {
+	server := rest.MustNewServer(c.Rest.RestConf, rest.WithCustomCors(func(header http.Header) {
 		header.Set("Access-Control-Allow-Origin", "*")
 		header.Add("Access-Control-Allow-Headers", "X-Request-Id")
 		header.Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
@@ -58,13 +58,14 @@ func init() {
 	handler.RegisterHandlers(server, svcCtx)
 	svcCtx.Custom.AddRoutes(server)
 
+	Serverless, err = rest.NewServerless(server)
+	logx.Must(err)
+
 	group := service.NewServiceGroup()
 	group.Add(svcCtx.Custom)
 	group.Start()
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	serverless, err := rest.NewServerless(server)
-	logx.Must(err)
-	serverless.Serve(w, r)
+	Serverless.Serve(w, r)
 }
