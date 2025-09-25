@@ -1,11 +1,13 @@
 package route
 
 import (
+	"net/http"
+
+	"github.com/zeromicro/go-zero/rest/httpx"
+
 	"github.com/jzero-io/jzero-admin/server/server/logic/route"
 	types "github.com/jzero-io/jzero-admin/server/server/types/route"
 	"github.com/jzero-io/jzero-admin/server/server/svc"
-	"github.com/zeromicro/go-zero/rest/httpx"
-	"net/http"
 )
 
 func GetUserRoutes(svcCtx *svc.ServiceContext) http.HandlerFunc {

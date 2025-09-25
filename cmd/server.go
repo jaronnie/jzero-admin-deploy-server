@@ -17,6 +17,8 @@ import (
 	"github.com/jzero-io/jzero-admin/server/server/svc"
 	"github.com/jzero-io/jzero-admin/server/server/middleware"
 	"github.com/jzero-io/jzero-admin/server/server/handler"
+	"github.com/jzero-io/jzero-admin/server/server/global"
+	"github.com/jzero-io/jzero-admin/server/server/custom"
 	"github.com/jzero-io/jzero-admin/server/plugins"
 )
 
@@ -44,6 +46,7 @@ var serverCmd = &cobra.Command{
 		logx.Infof("Starting rest server at %s:%d...", c.Rest.Host, c.Rest.Port)
 
 		svcCtx := svc.NewServiceContext(cc, handler.Route2Code)
+		global.ServiceContext = *svcCtx
 		run(svcCtx)
 	},
 }
@@ -56,19 +59,20 @@ func run(svcCtx *svc.ServiceContext) {
 		header.Add("Access-Control-Allow-Headers", "X-Request-Id")
 		header.Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
 	}, nil, "*"))
+
+	ctm := custom.New(server)
+	ctm.Init()
+
 	middleware.Register(server)
 
 	// server add api handlers
 	handler.RegisterHandlers(server, svcCtx)
 
-	// server add custom routes
-	svcCtx.Custom.AddRoutes(server)
-
 	plugins.LoadPlugins(server, *svcCtx)
 
 	group := service.NewServiceGroup()
 	group.Add(server)
-	group.Add(svcCtx.Custom)
+	group.Add(ctm)
 	group.Start()
 }
 

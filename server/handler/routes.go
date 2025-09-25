@@ -7,8 +7,8 @@ import (
 
 	"github.com/zeromicro/go-zero/rest"
 
-	"github.com/jzero-io/jzero-admin/server/server/svc"
 	auth "github.com/jzero-io/jzero-admin/server/server/handler/auth"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
 	version "github.com/jzero-io/jzero-admin/server/server/handler/version"
 	route "github.com/jzero-io/jzero-admin/server/server/handler/route"
 	managemenu "github.com/jzero-io/jzero-admin/server/server/handler/manage/menu"

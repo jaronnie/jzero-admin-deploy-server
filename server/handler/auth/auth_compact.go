@@ -1,11 +1,13 @@
 package auth
 
 import (
+	"net/http"
+
+	"github.com/zeromicro/go-zero/rest/httpx"
+
 	"github.com/jzero-io/jzero-admin/server/server/logic/auth"
 	types "github.com/jzero-io/jzero-admin/server/server/types/auth"
 	"github.com/jzero-io/jzero-admin/server/server/svc"
-	"github.com/zeromicro/go-zero/rest/httpx"
-	"net/http"
 )
 
 func CodeLogin(svcCtx *svc.ServiceContext) http.HandlerFunc {
