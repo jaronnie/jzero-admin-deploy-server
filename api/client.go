@@ -25,6 +25,8 @@ type EnvConfigurator struct {
 }
 
 func (e *EnvConfigurator) GetConfig() (config.Config, error) {
+	logx.Infof("get config from env: %s", os.Getenv(e.Key))
+
 	var c config.Config
 	if err := conf.LoadFromJsonBytes([]byte(os.Getenv(e.Key)), &c); err == nil {
 		return c, nil
