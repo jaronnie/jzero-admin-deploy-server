@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/jzero-io/jzero-admin/server/server/custom"
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/service"
@@ -52,17 +53,20 @@ func init() {
 		header.Add("Access-Control-Allow-Headers", "X-Request-Id")
 		header.Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
 	}, nil, "*"))
+
+	ctm := custom.New(server)
+	ctm.Init()
+
 	middleware.Register(server)
 
 	svcCtx := svc.NewServiceContext(cc, handler.Route2Code)
 	handler.RegisterHandlers(server, svcCtx)
-	svcCtx.Custom.AddRoutes(server)
 
 	Serverless, err = rest.NewServerless(server)
 	logx.Must(err)
 
 	group := service.NewServiceGroup()
-	group.Add(svcCtx.Custom)
+	group.Add(ctm)
 	group.Start()
 }
 
