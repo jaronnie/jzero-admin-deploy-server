@@ -42,7 +42,8 @@ func NewServiceContext(cc configurator.Configurator[config.Config], route2Code f
 		miniRedis, err := miniredis.Run()
 		logx.Must(err)
 		svcCtx.Redis = redis.MustNewRedis(redis.RedisConf{
-			Host: miniRedis.Addr(),
+			Type:	redis.NodeType,
+			Host:	miniRedis.Addr(),
 		})
 	}
 	svcCtx.Cache = cache.NewRedisNode(svcCtx.Redis, errors.New("cache not found"), cache.WithExpiry(time.Duration(5)*time.Second))
