@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest"
+	"github.com/jzero-io/jzero-admin/server/server/svc"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
@@ -25,4 +26,10 @@ func Register(server *rest.Server) {
 			next(writer, request.WithContext(rctx))
 		}
 	})
+}
+
+func NewMiddleware(svcCtx *svc.ServiceContext, route2Code func(r *http.Request) string) svc.Middleware {
+	return svc.Middleware{
+		Authx: NewAuthxMiddleware(svcCtx.CasbinEnforcer, route2Code).Handle,
+	}
 }
