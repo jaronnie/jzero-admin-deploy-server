@@ -2,9 +2,12 @@ package custom
 
 import (
 	"context"
+	"os"
 
 	"github.com/jzero-io/jzero/core/stores/migrate"
+	"github.com/pkg/errors"
 	configurator "github.com/zeromicro/go-zero/core/configcenter"
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest"
 
 	"github.com/jzero-io/jzero-admin/server/server/config"
@@ -32,7 +35,11 @@ func (c *Custom) Init(cc configurator.Configurator[config.Config]) error {
 	errcodes.Register()
 
 	// migrate database
-	if err := migrate.Migrate(context.Background(), cfg.Sqlx.SqlConf); err != nil {
+	if err = migrate.Migrate(context.Background(), cfg.Sqlx.SqlConf); err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			logx.Infof("migration source not exist, skip migration")
+			return nil
+		}
 		return err
 	}
 
