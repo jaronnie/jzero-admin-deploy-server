@@ -61,7 +61,6 @@ func init() {
 	logx.Must(s.Custom.Init(cc))
 
 	svcCtx := svc.NewServiceContext(cc, handler.Route2Code)
-	svcCtx.Middleware = middleware.NewMiddleware(svcCtx, handler.Route2Code)
 	global.ServiceContext = *svcCtx
 	middleware.Register(s.Rest)
 	handler.RegisterHandlers(s.Rest, svcCtx)
