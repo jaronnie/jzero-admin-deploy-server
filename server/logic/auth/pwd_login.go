@@ -7,14 +7,14 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/jzero-io/jzero-admin/core-engine/helper/auth"
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/auth"
+	"github.com/jzero-io/jzero-admin/server/server/model/manage_user_role"
 	types "github.com/jzero-io/jzero-admin/server/server/types/auth"
 	"github.com/jzero-io/jzero-admin/server/server/svc"
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_user_role"
 )
 
 func CreateToken(secret string, claims jwt.MapClaims) (string, error) {
