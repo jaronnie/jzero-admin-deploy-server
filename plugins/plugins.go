@@ -11,11 +11,9 @@ import (
 )
 
 func LoadPlugins(server *rest.Server, svcCtx *svc.ServiceContext) {
-
 	{
 		serverless := helloworld.New(svcCtx.ServiceContext)
 		serverless.HandlerFunc(server, serverless.SvcCtx)
 		handler.RegisterRoute2Code(serverless.RouteCodesMap)
 	}
-
 }
