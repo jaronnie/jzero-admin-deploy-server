@@ -2,10 +2,20 @@
 package plugins
 
 import (
+	helloworld "helloworld/serverless"
+
 	"github.com/zeromicro/go-zero/rest"
+
+	"github.com/jzero-io/jzero-admin/server/server/handler"
 	"github.com/jzero-io/jzero-admin/server/server/svc"
 )
 
-type CoreSvcCtx = svc.ServiceContext
+func LoadPlugins(server *rest.Server, svcCtx *svc.ServiceContext) {
 
-func LoadPlugins(server *rest.Server, svcCtx CoreSvcCtx)	{}
+	{
+		serverless := helloworld.New(svcCtx.ServiceContext)
+		serverless.HandlerFunc(server, serverless.SvcCtx)
+		handler.RegisterRoute2Code(serverless.RouteCodesMap)
+	}
+
+}

@@ -10,6 +10,7 @@ import (
 	auth "github.com/jzero-io/jzero-admin/server/server/handler/auth"
 	"github.com/jzero-io/jzero-admin/server/server/svc"
 	version "github.com/jzero-io/jzero-admin/server/server/handler/version"
+	swagger "github.com/jzero-io/jzero-admin/server/server/handler/swagger"
 	route "github.com/jzero-io/jzero-admin/server/server/handler/route"
 	managemenu "github.com/jzero-io/jzero-admin/server/server/handler/manage/menu"
 	manageuser "github.com/jzero-io/jzero-admin/server/server/handler/manage/user"
@@ -231,6 +232,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				},
 			},
 			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			[]rest.Route{
+				{
+					Method:		http.MethodGet,
+					Path:		"/swagger",
+					Handler:	swagger.Swagger(serverCtx),
+				},
+			},
 		)
 	}
 	{
