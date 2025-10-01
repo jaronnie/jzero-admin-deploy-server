@@ -4,12 +4,13 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/jzero-io/jzero-admin/server/server/custom"
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/service"
 	"github.com/zeromicro/go-zero/rest"
+	"github.com/zeromicro/go-zero/rest/httpx"
 
-	"github.com/jzero-io/jzero-admin/server/cmd"
 	"github.com/jzero-io/jzero-admin/server/plugins"
 	"github.com/jzero-io/jzero-admin/server/server/config"
 	"github.com/jzero-io/jzero-admin/server/server/global"
@@ -57,21 +58,29 @@ func init() {
 		logx.AddWriter(logx.NewWriter(os.Stdout))
 	}
 
-	s := cmd.NewServer(c.Rest.RestConf)
-	logx.Must(s.Custom.Init(cc))
+	customServer := custom.New(c)
+	logx.Must(customServer.Init())
+
+	restServer := rest.MustNewServer(c.Rest.RestConf, rest.WithUnauthorizedCallback(func(w http.ResponseWriter, r *http.Request, err error) {
+		httpx.ErrorCtx(r.Context(), w, err)
+	}), rest.WithCustomCors(func(header http.Header) {
+		header.Set("Access-Control-Allow-Origin", "*")
+		header.Add("Access-Control-Allow-Headers", "X-Request-Id")
+		header.Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
+	}, nil, "*"))
 
 	svcCtx := svc.NewServiceContext(cc, handler.Route2Code)
 	global.ServiceContext = *svcCtx
-	middleware.Register(s.Rest)
-	handler.RegisterHandlers(s.Rest, svcCtx)
+	middleware.Register(restServer)
+	handler.RegisterHandlers(restServer, svcCtx)
 
-	plugins.LoadPlugins(s.Rest, *svcCtx)
+	plugins.LoadPlugins(restServer, svcCtx)
 
-	Serverless, err = rest.NewServerless(s.Rest)
+	Serverless, err = rest.NewServerless(restServer)
 	logx.Must(err)
 
 	group := service.NewServiceGroup()
-	group.Add(s.Custom)
+	group.Add(customServer)
 	group.Start()
 }
 
