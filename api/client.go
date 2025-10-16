@@ -27,6 +27,12 @@ type EnvConfigurator struct {
 	Key string
 }
 
+func (e *EnvConfigurator) MustGetConfig() config.Config {
+	c, err := e.GetConfig()
+	logx.Must(err)
+	return c
+}
+
 func (e *EnvConfigurator) GetConfig() (config.Config, error) {
 	logx.Infof("get config from env: key: %s, value: %s", e.Key, os.Getenv(e.Key))
 
@@ -58,7 +64,7 @@ func init() {
 		logx.AddWriter(logx.NewWriter(os.Stdout))
 	}
 
-	customServer := custom.New(c)
+	customServer := custom.New()
 	logx.Must(customServer.Init())
 
 	restServer := rest.MustNewServer(c.Rest.RestConf, rest.WithUnauthorizedCallback(func(w http.ResponseWriter, r *http.Request, err error) {
