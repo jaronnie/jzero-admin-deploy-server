@@ -35,8 +35,8 @@ resources:
       functionName: ${vars.functionName}
       code: ./code/target
       environmentVariables:
-        DRIVER_NAME: mysql
-        DATASOURCE: jaronnie:ySuYm0IMeMNc3zQQ@tcp(mysql.sqlpub.com:3306)/jzeroadmin?charset=utf8mb4&parseTime=True&loc=Local
+        DRIVER_NAME: sqlite
+        DATASOURCE: jzero-admin.db
         CACHE_TYPE: local
       triggers:
         - triggerName: httpTrigger
