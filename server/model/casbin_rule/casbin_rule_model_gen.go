@@ -35,7 +35,7 @@ const (
 func initVars() {
 	casbinRuleFieldNames = condition.RawFieldNames(&CasbinRule{})
 	casbinRuleRows = strings.Join(casbinRuleFieldNames, ",")
-	casbinRuleRowsExpectAutoSet = strings.Join(condition.RemoveIgnoreColumns(casbinRuleFieldNames, "`id`"), ",")
+	casbinRuleRowsExpectAutoSet = strings.Join(condition.RemoveIgnoreColumns(casbinRuleFieldNames, "id"), ",")
 }
 
 type (
@@ -67,14 +67,14 @@ type (
 	}
 
 	CasbinRule struct {
-		Id    int64          `db:"id"`
-		PType sql.NullString `db:"p_type"`
-		V0    sql.NullString `db:"v0"`
-		V1    sql.NullString `db:"v1"`
-		V2    sql.NullString `db:"v2"`
-		V3    sql.NullString `db:"v3"`
-		V4    sql.NullString `db:"v4"`
-		V5    sql.NullString `db:"v5"`
+		Id    int64  `db:"id"`
+		PType string `db:"p_type"`
+		V0    string `db:"v0"`
+		V1    string `db:"v1"`
+		V2    string `db:"v2"`
+		V3    string `db:"v3"`
+		V4    string `db:"v4"`
+		V5    string `db:"v5"`
 	}
 )
 
@@ -93,7 +93,7 @@ func newCasbinRuleModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) *de
 	return &defaultCasbinRuleModel{
 		cachedConn: cachedConn,
 		conn:       conn,
-		table:      condition.AdaptTable("`casbin_rule`"),
+		table:      condition.AdaptTable(`"public"."casbin_rule"`),
 	}
 }
 
@@ -107,7 +107,7 @@ func (m *defaultCasbinRuleModel) clone() *defaultCasbinRuleModel {
 
 func (m *defaultCasbinRuleModel) Delete(ctx context.Context, session sqlx.Session, id int64) error {
 	sb := sqlbuilder.DeleteFrom(m.table)
-	sb.Where(sb.EQ(condition.AdaptField("`id`"), id))
+	sb.Where(sb.EQ(condition.AdaptField("id"), id))
 	statement, args := sb.Build()
 	var err error
 	if session != nil {
@@ -120,7 +120,7 @@ func (m *defaultCasbinRuleModel) Delete(ctx context.Context, session sqlx.Sessio
 
 func (m *defaultCasbinRuleModel) FindOne(ctx context.Context, session sqlx.Session, id int64) (*CasbinRule, error) {
 	sb := sqlbuilder.Select(casbinRuleRows).From(m.table)
-	sb.Where(sb.EQ(condition.AdaptField("`id`"), id))
+	sb.Where(sb.EQ(condition.AdaptField("id"), id))
 	sb.Limit(1)
 	sql, args := sb.Build()
 	var resp CasbinRule
@@ -208,20 +208,20 @@ func (m *defaultCasbinRuleModel) Update(ctx context.Context, session sqlx.Sessio
 	split := strings.Split(casbinRuleRowsExpectAutoSet, ",")
 	var assigns []string
 	for _, s := range split {
-		if condition.Unquote(s) == condition.Unquote("`id`") {
+		if condition.Unquote(s) == condition.Unquote("id") {
 			continue
 		}
 		assigns = append(assigns, sb.Assign(s, nil))
 	}
 	sb.Set(assigns...)
-	sb.Where(sb.EQ(condition.AdaptField("`id`"), nil))
+	sb.Where(sb.EQ(condition.AdaptField("id"), nil))
 	statement, _ := sb.Build()
 
 	var err error
 	if session != nil {
-		_, err = session.ExecCtx(ctx, statement, data.PType, data.V0, data.V1, data.V2, data.V3, data.V4, data.V5, data.Id)
+		_, err = session.ExecCtx(ctx, statement, data.Id, data.PType, data.V0, data.V1, data.V2, data.V3, data.V4, data.V5)
 	} else {
-		_, err = m.conn.ExecCtx(ctx, statement, data.PType, data.V0, data.V1, data.V2, data.V3, data.V4, data.V5, data.Id)
+		_, err = m.conn.ExecCtx(ctx, statement, data.Id, data.PType, data.V0, data.V1, data.V2, data.V3, data.V4, data.V5)
 	}
 	return err
 }

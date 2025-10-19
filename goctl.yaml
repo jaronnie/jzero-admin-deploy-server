@@ -1,0 +1,160 @@
+model:
+  types_map:
+    bigint:
+      null_type: int64
+      type: int64
+      unsigned_type: uint64
+    dec:
+      null_type: float64
+      type: float64
+    decimal:
+      null_type: float64
+      type: float64
+    numeric:
+      null_type: float64
+      type: float64
+    double:
+      null_type: float64
+      type: float64
+    float:
+      null_type: float64
+      type: float64
+    float4:
+      null_type: float64
+      type: float64
+    float8:
+      null_type: float64
+      type: float64
+    int:
+      null_type: int64
+      type: int64
+      unsigned_type: uint64
+    int1:
+      null_type: int64
+      type: int64
+      unsigned_type: uint64
+    int2:
+      null_type: int64
+      type: int64
+      unsigned_type: uint64
+    int3:
+      null_type: int64
+      type: int64
+      unsigned_type: uint64
+    int4:
+      null_type: int64
+      type: int64
+      unsigned_type: uint64
+    int8:
+      null_type: int64
+      type: int64
+      unsigned_type: uint64
+    integer:
+      null_type: int64
+      type: int64
+      unsigned_type: uint64
+    mediumint:
+      null_type: int64
+      type: int64
+      unsigned_type: uint64
+    middleint:
+      null_type: int64
+      type: int64
+      unsigned_type: uint64
+    smallint:
+      null_type: int64
+      type: int64
+      unsigned_type: uint64
+    tinyint:
+      null_type: int64
+      type: int64
+      unsigned_type: uint64
+    date:
+      null_type: time.Time
+      type: time.Time
+    datetime:
+      null_type: time.Time
+      type: time.Time
+    timestamp:
+      null_type: time.Time
+      type: time.Time
+    time:
+      null_type: string
+      type: string
+    year:
+      null_type: int64
+      type: int64
+      unsigned_type: uint64
+    bit:
+      null_type: byte
+      type: byte
+      unsigned_type: byte
+    bool:
+      null_type: bool
+      type: bool
+    boolean:
+      null_type: bool
+      type: bool
+    char:
+      null_type: string
+      type: string
+    varchar:
+      null_type: string
+      type: string
+    nvarchar:
+      null_type: string
+      type: string
+    nchar:
+      null_type: string
+      type: string
+    character:
+      null_type: string
+      type: string
+    longvarchar:
+      null_type: string
+      type: string
+    linestring:
+      null_type: string
+      type: string
+    multilinestring:
+      null_type: string
+      type: string
+    binary:
+      null_type: string
+      type: string
+    varbinary:
+      null_type: string
+      type: string
+    tinytext:
+      null_type: string
+      type: string
+    text:
+      null_type: string
+      type: string
+    mediumtext:
+      null_type: string
+      type: string
+    longtext:
+      null_type: string
+      type: string
+    enum:
+      null_type: string
+      type: string
+    set:
+      null_type: string
+      type: string
+    json:
+      null_type: string
+      type: string
+    blob:
+      null_type: string
+      type: string
+    longblob:
+      null_type: string
+      type: string
+    mediumblob:
+      null_type: string
+      type: string
+    tinyblob:
+      null_type: string
+      type: string
