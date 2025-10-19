@@ -54,7 +54,7 @@ const (
 func initVars() {
 	manageMenuFieldNames = condition.RawFieldNames(&ManageMenu{})
 	manageMenuRows = strings.Join(manageMenuFieldNames, ",")
-	manageMenuRowsExpectAutoSet = strings.Join(condition.RemoveIgnoreColumns(manageMenuFieldNames, "id"), ",")
+	manageMenuRowsExpectAutoSet = strings.Join(condition.RemoveIgnoreColumns(manageMenuFieldNames, "`id`"), ",")
 }
 
 type (
@@ -130,7 +130,7 @@ func newManageMenuModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) *de
 	return &defaultManageMenuModel{
 		cachedConn: cachedConn,
 		conn:       conn,
-		table:      condition.AdaptTable(`"public"."manage_menu"`),
+		table:      condition.AdaptTable("`manage_menu`"),
 	}
 }
 
@@ -144,7 +144,7 @@ func (m *defaultManageMenuModel) clone() *defaultManageMenuModel {
 
 func (m *defaultManageMenuModel) Delete(ctx context.Context, session sqlx.Session, id int64) error {
 	sb := sqlbuilder.DeleteFrom(m.table)
-	sb.Where(sb.EQ(condition.AdaptField("id"), id))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), id))
 	statement, args := sb.Build()
 	var err error
 	if session != nil {
@@ -157,7 +157,7 @@ func (m *defaultManageMenuModel) Delete(ctx context.Context, session sqlx.Sessio
 
 func (m *defaultManageMenuModel) FindOne(ctx context.Context, session sqlx.Session, id int64) (*ManageMenu, error) {
 	sb := sqlbuilder.Select(manageMenuRows).From(m.table)
-	sb.Where(sb.EQ(condition.AdaptField("id"), id))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), id))
 	sb.Limit(1)
 	sql, args := sb.Build()
 	var resp ManageMenu
@@ -245,20 +245,20 @@ func (m *defaultManageMenuModel) Update(ctx context.Context, session sqlx.Sessio
 	split := strings.Split(manageMenuRowsExpectAutoSet, ",")
 	var assigns []string
 	for _, s := range split {
-		if condition.Unquote(s) == condition.Unquote("id") {
+		if condition.Unquote(s) == condition.Unquote("`id`") {
 			continue
 		}
 		assigns = append(assigns, sb.Assign(s, nil))
 	}
 	sb.Set(assigns...)
-	sb.Where(sb.EQ(condition.AdaptField("id"), nil))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), nil))
 	statement, _ := sb.Build()
 
 	var err error
 	if session != nil {
-		_, err = session.ExecCtx(ctx, statement, data.Id, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.Status, data.ParentId, data.MenuType, data.MenuName, data.HideInMenu, data.ActiveMenu, data.Order, data.RouteName, data.RoutePath, data.Component, data.Icon, data.IconType, data.I18nKey, data.KeepAlive, data.Href, data.MultiTab, data.FixedIndexInTab, data.Query, data.Permissions, data.Constant, data.ButtonCode)
+		_, err = session.ExecCtx(ctx, statement, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.Status, data.ParentId, data.MenuType, data.MenuName, data.HideInMenu, data.ActiveMenu, data.Order, data.RouteName, data.RoutePath, data.Component, data.Icon, data.IconType, data.I18nKey, data.KeepAlive, data.Href, data.MultiTab, data.FixedIndexInTab, data.Query, data.Permissions, data.Constant, data.ButtonCode, data.Id)
 	} else {
-		_, err = m.conn.ExecCtx(ctx, statement, data.Id, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.Status, data.ParentId, data.MenuType, data.MenuName, data.HideInMenu, data.ActiveMenu, data.Order, data.RouteName, data.RoutePath, data.Component, data.Icon, data.IconType, data.I18nKey, data.KeepAlive, data.Href, data.MultiTab, data.FixedIndexInTab, data.Query, data.Permissions, data.Constant, data.ButtonCode)
+		_, err = m.conn.ExecCtx(ctx, statement, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.Status, data.ParentId, data.MenuType, data.MenuName, data.HideInMenu, data.ActiveMenu, data.Order, data.RouteName, data.RoutePath, data.Component, data.Icon, data.IconType, data.I18nKey, data.KeepAlive, data.Href, data.MultiTab, data.FixedIndexInTab, data.Query, data.Permissions, data.Constant, data.ButtonCode, data.Id)
 	}
 	return err
 }

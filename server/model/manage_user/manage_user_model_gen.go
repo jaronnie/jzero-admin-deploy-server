@@ -40,7 +40,7 @@ const (
 func initVars() {
 	manageUserFieldNames = condition.RawFieldNames(&ManageUser{})
 	manageUserRows = strings.Join(manageUserFieldNames, ",")
-	manageUserRowsExpectAutoSet = strings.Join(condition.RemoveIgnoreColumns(manageUserFieldNames, "id"), ",")
+	manageUserRowsExpectAutoSet = strings.Join(condition.RemoveIgnoreColumns(manageUserFieldNames, "`id`"), ",")
 }
 
 type (
@@ -103,7 +103,7 @@ func newManageUserModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) *de
 	return &defaultManageUserModel{
 		cachedConn: cachedConn,
 		conn:       conn,
-		table:      condition.AdaptTable(`"public"."manage_user"`),
+		table:      condition.AdaptTable("`manage_user`"),
 	}
 }
 
@@ -117,7 +117,7 @@ func (m *defaultManageUserModel) clone() *defaultManageUserModel {
 
 func (m *defaultManageUserModel) Delete(ctx context.Context, session sqlx.Session, id int64) error {
 	sb := sqlbuilder.DeleteFrom(m.table)
-	sb.Where(sb.EQ(condition.AdaptField("id"), id))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), id))
 	statement, args := sb.Build()
 	var err error
 	if session != nil {
@@ -130,7 +130,7 @@ func (m *defaultManageUserModel) Delete(ctx context.Context, session sqlx.Sessio
 
 func (m *defaultManageUserModel) FindOne(ctx context.Context, session sqlx.Session, id int64) (*ManageUser, error) {
 	sb := sqlbuilder.Select(manageUserRows).From(m.table)
-	sb.Where(sb.EQ(condition.AdaptField("id"), id))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), id))
 	sb.Limit(1)
 	sql, args := sb.Build()
 	var resp ManageUser
@@ -155,7 +155,7 @@ func (m *defaultManageUserModel) FindOneByUsername(ctx context.Context, session 
 	var err error
 
 	sb := sqlbuilder.Select(manageUserRows).From(m.table)
-	condition.SelectByWhereRawSql(sb, "username = $1", username)
+	condition.SelectByWhereRawSql(sb, "`username` = ?", username)
 	sb.Limit(1)
 
 	sql, args := sb.Build()
@@ -244,20 +244,20 @@ func (m *defaultManageUserModel) Update(ctx context.Context, session sqlx.Sessio
 	split := strings.Split(manageUserRowsExpectAutoSet, ",")
 	var assigns []string
 	for _, s := range split {
-		if condition.Unquote(s) == condition.Unquote("id") {
+		if condition.Unquote(s) == condition.Unquote("`id`") {
 			continue
 		}
 		assigns = append(assigns, sb.Assign(s, nil))
 	}
 	sb.Set(assigns...)
-	sb.Where(sb.EQ(condition.AdaptField("id"), nil))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), nil))
 	statement, _ := sb.Build()
 
 	var err error
 	if session != nil {
-		_, err = session.ExecCtx(ctx, statement, newData.Id, newData.CreateTime, newData.UpdateTime, newData.CreateBy, newData.UpdateBy, newData.Username, newData.Password, newData.Nickname, newData.Gender, newData.Phone, newData.Status, newData.Email)
+		_, err = session.ExecCtx(ctx, statement, newData.CreateTime, newData.UpdateTime, newData.CreateBy, newData.UpdateBy, newData.Username, newData.Password, newData.Nickname, newData.Gender, newData.Phone, newData.Status, newData.Email, newData.Id)
 	} else {
-		_, err = m.conn.ExecCtx(ctx, statement, newData.Id, newData.CreateTime, newData.UpdateTime, newData.CreateBy, newData.UpdateBy, newData.Username, newData.Password, newData.Nickname, newData.Gender, newData.Phone, newData.Status, newData.Email)
+		_, err = m.conn.ExecCtx(ctx, statement, newData.CreateTime, newData.UpdateTime, newData.CreateBy, newData.UpdateBy, newData.Username, newData.Password, newData.Nickname, newData.Gender, newData.Phone, newData.Status, newData.Email, newData.Id)
 	}
 	return err
 }

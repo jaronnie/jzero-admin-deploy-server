@@ -40,7 +40,7 @@ const (
 func initVars() {
 	manageEmailFieldNames = condition.RawFieldNames(&ManageEmail{})
 	manageEmailRows = strings.Join(manageEmailFieldNames, ",")
-	manageEmailRowsExpectAutoSet = strings.Join(condition.RemoveIgnoreColumns(manageEmailFieldNames, "id"), ",")
+	manageEmailRowsExpectAutoSet = strings.Join(condition.RemoveIgnoreColumns(manageEmailFieldNames, "`id`"), ",")
 }
 
 type (
@@ -82,8 +82,8 @@ type (
 		Port       int64     `db:"port"`
 		Username   string    `db:"username"`
 		Password   string    `db:"password"`
-		EnableSsl  bool      `db:"enable_ssl"`
-		IsVerify   bool      `db:"is_verify"`
+		EnableSsl  int64     `db:"enable_ssl"`
+		IsVerify   int64     `db:"is_verify"`
 	}
 )
 
@@ -102,7 +102,7 @@ func newManageEmailModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) *d
 	return &defaultManageEmailModel{
 		cachedConn: cachedConn,
 		conn:       conn,
-		table:      condition.AdaptTable(`"public"."manage_email"`),
+		table:      condition.AdaptTable("`manage_email`"),
 	}
 }
 
@@ -116,7 +116,7 @@ func (m *defaultManageEmailModel) clone() *defaultManageEmailModel {
 
 func (m *defaultManageEmailModel) Delete(ctx context.Context, session sqlx.Session, id int64) error {
 	sb := sqlbuilder.DeleteFrom(m.table)
-	sb.Where(sb.EQ(condition.AdaptField("id"), id))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), id))
 	statement, args := sb.Build()
 	var err error
 	if session != nil {
@@ -129,7 +129,7 @@ func (m *defaultManageEmailModel) Delete(ctx context.Context, session sqlx.Sessi
 
 func (m *defaultManageEmailModel) FindOne(ctx context.Context, session sqlx.Session, id int64) (*ManageEmail, error) {
 	sb := sqlbuilder.Select(manageEmailRows).From(m.table)
-	sb.Where(sb.EQ(condition.AdaptField("id"), id))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), id))
 	sb.Limit(1)
 	sql, args := sb.Build()
 	var resp ManageEmail
@@ -217,20 +217,20 @@ func (m *defaultManageEmailModel) Update(ctx context.Context, session sqlx.Sessi
 	split := strings.Split(manageEmailRowsExpectAutoSet, ",")
 	var assigns []string
 	for _, s := range split {
-		if condition.Unquote(s) == condition.Unquote("id") {
+		if condition.Unquote(s) == condition.Unquote("`id`") {
 			continue
 		}
 		assigns = append(assigns, sb.Assign(s, nil))
 	}
 	sb.Set(assigns...)
-	sb.Where(sb.EQ(condition.AdaptField("id"), nil))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), nil))
 	statement, _ := sb.Build()
 
 	var err error
 	if session != nil {
-		_, err = session.ExecCtx(ctx, statement, data.Id, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.From, data.Host, data.Port, data.Username, data.Password, data.EnableSsl, data.IsVerify)
+		_, err = session.ExecCtx(ctx, statement, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.From, data.Host, data.Port, data.Username, data.Password, data.EnableSsl, data.IsVerify, data.Id)
 	} else {
-		_, err = m.conn.ExecCtx(ctx, statement, data.Id, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.From, data.Host, data.Port, data.Username, data.Password, data.EnableSsl, data.IsVerify)
+		_, err = m.conn.ExecCtx(ctx, statement, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.From, data.Host, data.Port, data.Username, data.Password, data.EnableSsl, data.IsVerify, data.Id)
 	}
 	return err
 }

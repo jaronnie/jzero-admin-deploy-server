@@ -35,7 +35,7 @@ const (
 func initVars() {
 	manageUserRoleFieldNames = condition.RawFieldNames(&ManageUserRole{})
 	manageUserRoleRows = strings.Join(manageUserRoleFieldNames, ",")
-	manageUserRoleRowsExpectAutoSet = strings.Join(condition.RemoveIgnoreColumns(manageUserRoleFieldNames, "id"), ",")
+	manageUserRoleRowsExpectAutoSet = strings.Join(condition.RemoveIgnoreColumns(manageUserRoleFieldNames, "`id`"), ",")
 }
 
 type (
@@ -92,7 +92,7 @@ func newManageUserRoleModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts])
 	return &defaultManageUserRoleModel{
 		cachedConn: cachedConn,
 		conn:       conn,
-		table:      condition.AdaptTable(`"public"."manage_user_role"`),
+		table:      condition.AdaptTable("`manage_user_role`"),
 	}
 }
 
@@ -106,7 +106,7 @@ func (m *defaultManageUserRoleModel) clone() *defaultManageUserRoleModel {
 
 func (m *defaultManageUserRoleModel) Delete(ctx context.Context, session sqlx.Session, id int64) error {
 	sb := sqlbuilder.DeleteFrom(m.table)
-	sb.Where(sb.EQ(condition.AdaptField("id"), id))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), id))
 	statement, args := sb.Build()
 	var err error
 	if session != nil {
@@ -119,7 +119,7 @@ func (m *defaultManageUserRoleModel) Delete(ctx context.Context, session sqlx.Se
 
 func (m *defaultManageUserRoleModel) FindOne(ctx context.Context, session sqlx.Session, id int64) (*ManageUserRole, error) {
 	sb := sqlbuilder.Select(manageUserRoleRows).From(m.table)
-	sb.Where(sb.EQ(condition.AdaptField("id"), id))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), id))
 	sb.Limit(1)
 	sql, args := sb.Build()
 	var resp ManageUserRole
@@ -207,20 +207,20 @@ func (m *defaultManageUserRoleModel) Update(ctx context.Context, session sqlx.Se
 	split := strings.Split(manageUserRoleRowsExpectAutoSet, ",")
 	var assigns []string
 	for _, s := range split {
-		if condition.Unquote(s) == condition.Unquote("id") {
+		if condition.Unquote(s) == condition.Unquote("`id`") {
 			continue
 		}
 		assigns = append(assigns, sb.Assign(s, nil))
 	}
 	sb.Set(assigns...)
-	sb.Where(sb.EQ(condition.AdaptField("id"), nil))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), nil))
 	statement, _ := sb.Build()
 
 	var err error
 	if session != nil {
-		_, err = session.ExecCtx(ctx, statement, data.Id, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.UserId, data.RoleId)
+		_, err = session.ExecCtx(ctx, statement, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.UserId, data.RoleId, data.Id)
 	} else {
-		_, err = m.conn.ExecCtx(ctx, statement, data.Id, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.UserId, data.RoleId)
+		_, err = m.conn.ExecCtx(ctx, statement, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.UserId, data.RoleId, data.Id)
 	}
 	return err
 }

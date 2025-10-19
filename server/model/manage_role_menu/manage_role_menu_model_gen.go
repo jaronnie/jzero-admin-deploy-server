@@ -36,7 +36,7 @@ const (
 func initVars() {
 	manageRoleMenuFieldNames = condition.RawFieldNames(&ManageRoleMenu{})
 	manageRoleMenuRows = strings.Join(manageRoleMenuFieldNames, ",")
-	manageRoleMenuRowsExpectAutoSet = strings.Join(condition.RemoveIgnoreColumns(manageRoleMenuFieldNames, "id"), ",")
+	manageRoleMenuRowsExpectAutoSet = strings.Join(condition.RemoveIgnoreColumns(manageRoleMenuFieldNames, "`id`"), ",")
 }
 
 type (
@@ -94,7 +94,7 @@ func newManageRoleMenuModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts])
 	return &defaultManageRoleMenuModel{
 		cachedConn: cachedConn,
 		conn:       conn,
-		table:      condition.AdaptTable(`"public"."manage_role_menu"`),
+		table:      condition.AdaptTable("`manage_role_menu`"),
 	}
 }
 
@@ -108,7 +108,7 @@ func (m *defaultManageRoleMenuModel) clone() *defaultManageRoleMenuModel {
 
 func (m *defaultManageRoleMenuModel) Delete(ctx context.Context, session sqlx.Session, id int64) error {
 	sb := sqlbuilder.DeleteFrom(m.table)
-	sb.Where(sb.EQ(condition.AdaptField("id"), id))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), id))
 	statement, args := sb.Build()
 	var err error
 	if session != nil {
@@ -121,7 +121,7 @@ func (m *defaultManageRoleMenuModel) Delete(ctx context.Context, session sqlx.Se
 
 func (m *defaultManageRoleMenuModel) FindOne(ctx context.Context, session sqlx.Session, id int64) (*ManageRoleMenu, error) {
 	sb := sqlbuilder.Select(manageRoleMenuRows).From(m.table)
-	sb.Where(sb.EQ(condition.AdaptField("id"), id))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), id))
 	sb.Limit(1)
 	sql, args := sb.Build()
 	var resp ManageRoleMenu
@@ -209,20 +209,20 @@ func (m *defaultManageRoleMenuModel) Update(ctx context.Context, session sqlx.Se
 	split := strings.Split(manageRoleMenuRowsExpectAutoSet, ",")
 	var assigns []string
 	for _, s := range split {
-		if condition.Unquote(s) == condition.Unquote("id") {
+		if condition.Unquote(s) == condition.Unquote("`id`") {
 			continue
 		}
 		assigns = append(assigns, sb.Assign(s, nil))
 	}
 	sb.Set(assigns...)
-	sb.Where(sb.EQ(condition.AdaptField("id"), nil))
+	sb.Where(sb.EQ(condition.AdaptField("`id`"), nil))
 	statement, _ := sb.Build()
 
 	var err error
 	if session != nil {
-		_, err = session.ExecCtx(ctx, statement, data.Id, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.RoleId, data.MenuId, data.IsHome)
+		_, err = session.ExecCtx(ctx, statement, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.RoleId, data.MenuId, data.IsHome, data.Id)
 	} else {
-		_, err = m.conn.ExecCtx(ctx, statement, data.Id, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.RoleId, data.MenuId, data.IsHome)
+		_, err = m.conn.ExecCtx(ctx, statement, data.CreateTime, data.UpdateTime, data.CreateBy, data.UpdateBy, data.RoleId, data.MenuId, data.IsHome, data.Id)
 	}
 	return err
 }
