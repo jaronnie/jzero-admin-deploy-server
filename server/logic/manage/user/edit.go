@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/guregu/null/v5"
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 
@@ -36,8 +37,8 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 	}
 	user.Username = req.Username
 	user.Nickname = req.NickName
-	user.Email = req.UserEmail
-	user.Phone = req.UserPhone
+	user.Email = null.StringFrom(req.UserEmail).NullString
+	user.Phone = null.StringFrom(req.UserPhone).NullString
 	user.Gender = req.UserGender
 	user.Status = req.Status
 	user.UpdateTime = time.Now()
@@ -55,7 +56,7 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 		return nil, err
 	}
 	var bulk []*manage_user_role.ManageUserRole
-	var roleIds []int64
+	var roleIds []uint64
 	roles, err := l.svcCtx.Model.ManageRole.FindByCondition(l.ctx, nil, condition.Condition{
 		Field:		manage_role.Code,
 		Operator:	condition.In,
@@ -71,8 +72,8 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 		bulk = append(bulk, &manage_user_role.ManageUserRole{
 			CreateTime:	time.Now(),
 			UpdateTime:	time.Now(),
-			UserId:		user.Id,
-			RoleId:		v,
+			UserId:		int64(user.Id),
+			RoleId:		int64(v),
 		})
 	}
 

@@ -18,11 +18,11 @@ type AddRequest {
 	Component       string       `json:"component"`
 	Icon            string       `json:"icon"`
 	IconType        string       `json:"iconType"`
-	ParentId        int64        `json:"parentId"`
+	ParentId        uint64       `json:"parentId"`
 	Status          string       `json:"status"`
 	KeepAlive       bool         `json:"keepAlive"`
 	Constant        bool         `json:"constant"`
-	Order           int64        `json:"order"`
+	Order           uint64       `json:"order"`
 	HideInMenu      bool         `json:"hideInMenu"`
 	Href            string       `json:"href,optional"`
 	MultiTab        bool         `json:"multiTab,optional"`
@@ -55,7 +55,7 @@ type ListRequest {
 }
 
 type SystemMenu {
-	Id              int64        `json:"id"`
+	Id              uint64       `json:"id"`
 	ActiveMenu      string       `json:"activeMenu,optional"`
 	MenuType        string       `json:"menuType"`
 	MenuName        string       `json:"menuName"`
@@ -64,11 +64,11 @@ type SystemMenu {
 	Component       string       `json:"component"`
 	Icon            string       `json:"icon"`
 	IconType        string       `json:"iconType"`
-	ParentId        int64        `json:"parentId"`
+	ParentId        uint64       `json:"parentId"`
 	Status          string       `json:"status"`
 	KeepAlive       bool         `json:"keepAlive"`
 	Constant        bool         `json:"constant"`
-	Order           int64        `json:"order"`
+	Order           uint64       `json:"order"`
 	HideInMenu      bool         `json:"hideInMenu"`
 	Href            string       `json:"href,optional"`
 	MultiTab        bool         `json:"multiTab,optional"`
@@ -88,25 +88,25 @@ type ListResponse {
 type TreeRequest {}
 
 type TreeResponse {
-	Id       int64          `json:"id"`
+	Id       uint64         `json:"id"`
 	Label    string         `json:"label"`
-	PId      int64          `json:"pId"`
-	Order    int64          `json:"-"`
+	PId      uint64         `json:"pId"`
+	Order    uint64         `json:"-"`
 	Children []TreeResponse `json:"children"`
 }
 
 type GetAllPagesRequest {
-	RoleId int64 `form:"roleId,optional"`
+	RoleId uint64 `form:"roleId,optional"`
 }
 
 type DeleteRequest {
-	Ids []int64 `json:"ids"`
+	Ids []uint64 `json:"ids"`
 }
 
 type DeleteResponse {}
 
 type EditRequest {
-	Id              int64        `json:"id"`
+	Id              uint64       `json:"id"`
 	ActiveMenu      string       `json:"activeMenu,optional"`
 	MenuType        string       `json:"menuType"`
 	MenuName        string       `json:"menuName"`
@@ -115,11 +115,11 @@ type EditRequest {
 	Component       string       `json:"component"`
 	Icon            string       `json:"icon"`
 	IconType        string       `json:"iconType"`
-	ParentId        int64        `json:"parentId"`
+	ParentId        uint64       `json:"parentId"`
 	Status          string       `json:"status"`
 	KeepAlive       bool         `json:"keepAlive"`
 	Constant        bool         `json:"constant"`
-	Order           int64        `json:"order"`
+	Order           uint64       `json:"order"`
 	HideInMenu      bool         `json:"hideInMenu"`
 	Href            string       `json:"href,optional"`
 	MutiTab         bool         `json:"mutiTab,optional"`

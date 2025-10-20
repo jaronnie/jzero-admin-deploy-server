@@ -100,7 +100,7 @@ func (l *SetMenus) SetMenus(req *types.SetMenusRequest) (resp *types.SetMenusRes
 	}
 	for _, v := range menus {
 		var permissions []menu_types.Permission
-		menu.Unmarshal(v.Permissions, &permissions)
+		menu.Unmarshal(v.Permissions.String, &permissions)
 		for _, perm := range permissions {
 			newPolicies = append(newPolicies, []string{cast.ToString(req.RoleId), perm.Code})
 		}

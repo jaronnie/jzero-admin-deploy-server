@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/guregu/null/v5"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 
@@ -52,7 +53,7 @@ func (l *Register) Register(req *types.RegisterRequest) (resp *types.RegisterRes
 		Password:	req.Password,
 		CreateTime:	time.Now(),
 		UpdateTime:	time.Now(),
-		Email:		req.Email,
+		Email:		null.StringFrom(req.Email).NullString,
 		Gender:		"1",
 		Status:		"1",
 	})

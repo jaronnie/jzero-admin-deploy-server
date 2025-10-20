@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 
+	null "github.com/guregu/null/v5"
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
@@ -35,14 +36,14 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 		return nil, err
 	}
 	var oldPermissions []types.Permission
-	oldPermissionStr := one.Permissions
+	oldPermissionStr := one.Permissions.String
 
 	one.Status = req.Status
 	one.ParentId = int64(req.ParentId)
 	one.MenuType = req.MenuType
 	one.MenuName = req.MenuName
 	one.HideInMenu = cast.ToInt64(req.HideInMenu)
-	one.ActiveMenu = req.ActiveMenu
+	one.ActiveMenu = null.StringFrom(req.ActiveMenu).NullString
 	one.Order = int64(req.Order)
 	one.RouteName = req.RouteName
 	one.RoutePath = req.RoutePath
@@ -51,12 +52,12 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 	one.IconType = req.IconType
 	one.I18nKey = req.I18nKey
 	one.KeepAlive = cast.ToInt64(req.KeepAlive)
-	one.Href = req.Href
-	one.MultiTab = cast.ToInt64(req.MutiTab)
-	one.FixedIndexInTab = cast.ToInt64(req.FixedIndexInTab)
-	one.Query = marshal(req.Query)
-	one.ButtonCode = req.ButtonCode
-	one.Permissions = marshal(req.Permissions)
+	one.Href = null.StringFrom(req.Href).NullString
+	one.MultiTab = null.IntFrom(cast.ToInt64(req.MutiTab)).NullInt64
+	one.FixedIndexInTab = null.IntFromPtr(req.FixedIndexInTab).NullInt64
+	one.Query = null.StringFrom(marshal(req.Query)).NullString
+	one.ButtonCode = null.StringFrom(req.ButtonCode).NullString
+	one.Permissions = null.StringFrom(marshal(req.Permissions)).NullString
 	one.Constant = cast.ToInt64(req.Constant)
 
 	err = l.svcCtx.Model.ManageMenu.Update(l.ctx, nil, one)

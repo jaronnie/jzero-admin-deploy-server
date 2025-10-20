@@ -41,7 +41,7 @@ VALUES
 DROP TABLE IF EXISTS `manage_email`;
 
 CREATE TABLE `manage_email` (
-                                `id` bigint NOT NULL AUTO_INCREMENT,
+                                `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                                 `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                 `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                 `create_by` bigint DEFAULT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE `manage_email` (
 DROP TABLE IF EXISTS `manage_menu`;
 
 CREATE TABLE `manage_menu` (
-                               `id` bigint NOT NULL AUTO_INCREMENT,
+                               `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                                `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                `create_by` bigint DEFAULT NULL,
@@ -125,7 +125,7 @@ VALUES
 DROP TABLE IF EXISTS `manage_role`;
 
 CREATE TABLE `manage_role` (
-                               `id` bigint NOT NULL AUTO_INCREMENT,
+                               `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                                `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                `create_by` bigint DEFAULT NULL,
@@ -148,7 +148,7 @@ VALUES
 DROP TABLE IF EXISTS `manage_role_menu`;
 
 CREATE TABLE `manage_role_menu` (
-                                    `id` bigint NOT NULL AUTO_INCREMENT,
+                                    `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                                     `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                     `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                     `create_by` bigint DEFAULT NULL,
@@ -200,7 +200,7 @@ VALUES
 DROP TABLE IF EXISTS `manage_user`;
 
 CREATE TABLE `manage_user` (
-                               `id` bigint NOT NULL AUTO_INCREMENT,
+                               `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                                `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                `create_by` bigint DEFAULT NULL,
@@ -226,7 +226,7 @@ VALUES
 DROP TABLE IF EXISTS `manage_user_role`;
 
 CREATE TABLE `manage_user_role` (
-                                    `id` bigint NOT NULL AUTO_INCREMENT,
+                                    `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                                     `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                     `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                     `create_by` bigint DEFAULT NULL,

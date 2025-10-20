@@ -1,5 +1,5 @@
 CREATE TABLE `manage_role_menu` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `create_by` bigint DEFAULT NULL,

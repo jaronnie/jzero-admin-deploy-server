@@ -78,7 +78,7 @@ func (l *GetUserRoutes) GetUserRoutes(req *types.GetUserRoutesRequest) (resp *ty
 	for _, rm := range roleMenus {
 		if cast.ToBool(rm.IsHome) {
 			for _, m := range menus {
-				if m.Id == rm.MenuId {
+				if m.Id == uint64(rm.MenuId) {
 					resp.Home = m.RouteName
 				}
 			}
@@ -94,7 +94,7 @@ func convert(list []*manage_menu.ManageMenu) []*types.Route {
 		var route types.Route
 		var query []types.Query
 
-		menu.Unmarshal(item.Query, &query)
+		menu.Unmarshal(item.Query.String, &query)
 
 		route = types.Route{
 			Id:		int64(item.Id),
@@ -107,12 +107,12 @@ func convert(list []*manage_menu.ManageMenu) []*types.Route {
 				Icon:			item.Icon,
 				Order:			int(item.Order),
 				HideInMenu:		cast.ToBool(item.HideInMenu),
-				ActiveMenu:		item.ActiveMenu,
+				ActiveMenu:		item.ActiveMenu.String,
 				MultiTab:		cast.ToBool(item.MultiTab),
-				FixedIndexInTab:	null.NewInt(item.FixedIndexInTab, item.FixedIndexInTab != 0).Ptr(),
+				FixedIndexInTab:	null.NewInt(item.FixedIndexInTab.Int64, item.FixedIndexInTab.Valid).Ptr(),
 				KeepAlive:		cast.ToBool(item.KeepAlive),
 				Constant:		cast.ToBool(item.Constant),
-				Href:			item.Href,
+				Href:			item.Href.String,
 				Query:			query,
 			},
 			Component:	item.Component,
@@ -120,7 +120,7 @@ func convert(list []*manage_menu.ManageMenu) []*types.Route {
 		}
 		if item.Component == "view.iframe-page" {
 			route.Props = map[string]any{
-				"url": item.Href,
+				"url": item.Href.String,
 			}
 			route.Meta.Href = ""
 		}

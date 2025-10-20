@@ -32,7 +32,7 @@ const (
 	V5    condition.Field = "v5"
 )
 
-func initVars() {
+func initCasbinRuleVars() {
 	casbinRuleFieldNames = condition.RawFieldNames(&CasbinRule{})
 	casbinRuleRows = strings.Join(casbinRuleFieldNames, ",")
 	casbinRuleRowsExpectAutoSet = strings.Join(condition.RemoveIgnoreColumns(casbinRuleFieldNames, "`id`"), ",")
@@ -67,14 +67,14 @@ type (
 	}
 
 	CasbinRule struct {
-		Id    int64  `db:"id"`
-		PType string `db:"p_type"`
-		V0    string `db:"v0"`
-		V1    string `db:"v1"`
-		V2    string `db:"v2"`
-		V3    string `db:"v3"`
-		V4    string `db:"v4"`
-		V5    string `db:"v5"`
+		Id    int64          `db:"id"`
+		PType sql.NullString `db:"p_type"`
+		V0    sql.NullString `db:"v0"`
+		V1    sql.NullString `db:"v1"`
+		V2    sql.NullString `db:"v2"`
+		V3    sql.NullString `db:"v3"`
+		V4    sql.NullString `db:"v4"`
+		V5    sql.NullString `db:"v5"`
 	}
 )
 
@@ -88,7 +88,7 @@ func newCasbinRuleModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) *de
 		cachedConn = *o.CachedConn
 	}
 
-	initVars()
+	initCasbinRuleVars()
 
 	return &defaultCasbinRuleModel{
 		cachedConn: cachedConn,

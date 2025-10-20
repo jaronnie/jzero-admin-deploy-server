@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/samber/lo"
+	null "github.com/guregu/null/v5"
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
@@ -41,7 +41,7 @@ func (l *Add) Add(req *types.AddRequest) (resp *types.AddResponse, err error) {
 			MenuType:		req.MenuType,
 			MenuName:		req.MenuName,
 			HideInMenu:		cast.ToInt64(req.HideInMenu),
-			ActiveMenu:		req.ActiveMenu,
+			ActiveMenu:		null.StringFrom(req.ActiveMenu).NullString,
 			Order:			int64(req.Order),
 			RouteName:		req.RouteName,
 			RoutePath:		req.RoutePath,
@@ -50,12 +50,12 @@ func (l *Add) Add(req *types.AddRequest) (resp *types.AddResponse, err error) {
 			IconType:		req.IconType,
 			I18nKey:		req.I18nKey,
 			KeepAlive:		cast.ToInt64(req.KeepAlive),
-			Href:			req.Href,
-			MultiTab:		cast.ToInt64(req.MultiTab),
-			FixedIndexInTab:	lo.FromPtr(req.FixedIndexInTab),
-			Query:			marshal(req.Query),
-			ButtonCode:		req.ButtonCode,
-			Permissions:		marshal(req.Permissions),
+			Href:			null.StringFrom(req.Href).NullString,
+			MultiTab:		null.IntFrom(cast.ToInt64(req.MultiTab)).NullInt64,
+			FixedIndexInTab:	null.IntFromPtr(req.FixedIndexInTab).NullInt64,
+			Query:			null.StringFrom(marshal(req.Query)).NullString,
+			ButtonCode:		null.StringFrom(req.ButtonCode).NullString,
+			Permissions:		null.StringFrom(marshal(req.Permissions)).NullString,
 			Constant:		cast.ToInt64(req.Constant),
 		}); err != nil {
 			return err
