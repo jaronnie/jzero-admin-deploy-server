@@ -1,47 +1,11 @@
-DROP TABLE IF EXISTS casbin_rule;
-
-CREATE TABLE casbin_rule (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    p_type TEXT DEFAULT NULL,
-    v0 TEXT DEFAULT NULL,
-    v1 TEXT DEFAULT NULL,
-    v2 TEXT DEFAULT NULL,
-    v3 TEXT DEFAULT NULL,
-    v4 TEXT DEFAULT NULL,
-    v5 TEXT DEFAULT NULL
-);
-
-INSERT INTO casbin_rule (id, p_type, v0, v1, v2, v3, v4, v5)
-VALUES
-    (406,'p','1','manage:user:list','','','',''),
-    (407,'p','1','manage:role:list','','','',''),
-    (408,'p','1','manage:menu:list','','','',''),
-    (409,'p','1','manage:user:add','','','',''),
-    (410,'p','1','manage:role:getAll','','','',''),
-    (411,'p','1','manage:user:delete','','','',''),
-    (412,'p','1','manage:user:edit','','','',''),
-    (413,'p','1','manage:role:getAll','','','',''),
-    (414,'p','1','manage:role:add','','','',''),
-    (421,'p','1','manage:role:delete','','','',''),
-    (422,'p','1','manage:menu:add','','','',''),
-    (423,'p','1','manage:menu:edit','','','',''),
-    (424,'p','1','manage:menu:delete','','','',''),
-    (425,'p','1','manage:role:edit','','','',''),
-    (426,'p','1','manage:role:getMenus','','','',''),
-    (427,'p','1','manage:role:setMenus','','','',''),
-    (428,'p','1','manage:menu:getAllPages','','','',''),
-    (429,'p','1','manage:menu:tree','','','',''),
-    (430,'p','1','manage:role:updateHome','','','',''),
-    (431,'p','1','manage:role:getHome','','','','');
-
 DROP TABLE IF EXISTS manage_email;
 
 CREATE TABLE manage_email (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    create_by INTEGER DEFAULT NULL,
-    update_by INTEGER DEFAULT NULL,
+    create_by INTEGER NOT NULL,
+    update_by INTEGER NOT NULL,
     "from" TEXT NOT NULL,
     host TEXT NOT NULL,
     port INTEGER NOT NULL,
@@ -57,14 +21,14 @@ CREATE TABLE manage_menu (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    create_by INTEGER DEFAULT NULL,
-    update_by INTEGER DEFAULT NULL,
+    create_by INTEGER NOT NULL,
+    update_by INTEGER NOT NULL,
     status TEXT NOT NULL,
     parent_id INTEGER NOT NULL,
     menu_type TEXT NOT NULL,
     menu_name TEXT NOT NULL,
     hide_in_menu INTEGER NOT NULL,
-    active_menu TEXT DEFAULT NULL,
+    active_menu TEXT NOT NULL,
     "order" INTEGER NOT NULL,
     route_name TEXT NOT NULL,
     route_path TEXT NOT NULL,
@@ -73,13 +37,13 @@ CREATE TABLE manage_menu (
     icon_type TEXT NOT NULL,
     i18n_key TEXT NOT NULL,
     keep_alive INTEGER NOT NULL,
-    href TEXT,
-    multi_tab INTEGER DEFAULT NULL,
-    fixed_index_in_tab INTEGER DEFAULT NULL,
-    query TEXT,
-    permissions TEXT,
+    href TEXT NOT NULL,
+    multi_tab INTEGER NOT NULL,
+    fixed_index_in_tab INTEGER NOT NULL,
+    query TEXT NOT NULL,
+    permissions TEXT NOT NULL,
     constant INTEGER NOT NULL,
-    button_code TEXT
+    button_code TEXT NOT NULL
 );
 
 INSERT INTO manage_menu (id, create_time, update_time, create_by, update_by, status, parent_id, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
@@ -114,8 +78,8 @@ CREATE TABLE manage_role (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    create_by INTEGER DEFAULT NULL,
-    update_by INTEGER DEFAULT NULL,
+    create_by INTEGER NOT NULL,
+    update_by INTEGER NOT NULL,
     name TEXT NOT NULL,
     status TEXT NOT NULL,
     code TEXT NOT NULL,
@@ -132,8 +96,8 @@ CREATE TABLE manage_role_menu (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    create_by INTEGER DEFAULT NULL,
-    update_by INTEGER DEFAULT NULL,
+    create_by INTEGER NOT NULL,
+    update_by INTEGER NOT NULL,
     role_id INTEGER NOT NULL,
     menu_id INTEGER NOT NULL,
     is_home INTEGER NOT NULL
@@ -180,15 +144,15 @@ CREATE TABLE manage_user (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    create_by INTEGER DEFAULT NULL,
-    update_by INTEGER DEFAULT NULL,
+    create_by INTEGER NOT NULL,
+    update_by INTEGER NOT NULL,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     nickname TEXT NOT NULL,
     gender TEXT NOT NULL,
-    phone TEXT DEFAULT NULL,
+    phone TEXT NOT NULL,
     status TEXT NOT NULL,
-    email TEXT DEFAULT NULL
+    email TEXT NOT NULL
 );
 
 INSERT INTO manage_user (id, create_time, update_time, create_by, update_by, username, password, nickname, gender, phone, status, email)
@@ -201,8 +165,8 @@ CREATE TABLE manage_user_role (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    create_by INTEGER DEFAULT NULL,
-    update_by INTEGER DEFAULT NULL,
+    create_by INTEGER NOT NULL,
+    update_by INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
     role_id INTEGER NOT NULL
 );

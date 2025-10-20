@@ -1,50 +1,11 @@
-DROP TABLE IF EXISTS casbin_rule;
-
-CREATE TABLE casbin_rule (
-    id serial NOT NULL,
-    p_type varchar(100) DEFAULT NULL,
-    v0 varchar(100) DEFAULT NULL,
-    v1 varchar(100) DEFAULT NULL,
-    v2 varchar(100) DEFAULT NULL,
-    v3 varchar(100) DEFAULT NULL,
-    v4 varchar(100) DEFAULT NULL,
-    v5 varchar(100) DEFAULT NULL,
-    PRIMARY KEY (id)
-);
-
-INSERT INTO casbin_rule (id, p_type, v0, v1, v2, v3, v4, v5)
-VALUES
-    (406,'p','1','manage:user:list','','','',''),
-    (407,'p','1','manage:role:list','','','',''),
-    (408,'p','1','manage:menu:list','','','',''),
-    (409,'p','1','manage:user:add','','','',''),
-    (410,'p','1','manage:role:getAll','','','',''),
-    (411,'p','1','manage:user:delete','','','',''),
-    (412,'p','1','manage:user:edit','','','',''),
-    (413,'p','1','manage:role:getAll','','','',''),
-    (414,'p','1','manage:role:add','','','',''),
-    (421,'p','1','manage:role:delete','','','',''),
-    (422,'p','1','manage:menu:add','','','',''),
-    (423,'p','1','manage:menu:edit','','','',''),
-    (424,'p','1','manage:menu:delete','','','',''),
-    (425,'p','1','manage:role:edit','','','',''),
-    (426,'p','1','manage:role:getMenus','','','',''),
-    (427,'p','1','manage:role:setMenus','','','',''),
-    (428,'p','1','manage:menu:getAllPages','','','',''),
-    (429,'p','1','manage:menu:tree','','','',''),
-    (430,'p','1','manage:role:updateHome','','','',''),
-    (431,'p','1','manage:role:getHome','','','','');
-
-SELECT setval('casbin_rule_id_seq', COALESCE((SELECT MAX(id)+1 FROM casbin_rule), 1));
-
 DROP TABLE IF EXISTS manage_email;
 
 CREATE TABLE manage_email (
     id serial NOT NULL,
     create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    create_by bigint DEFAULT NULL,
-    update_by bigint DEFAULT NULL,
+    create_by bigint NOT NULL,
+    update_by bigint NOT NULL,
     "from" text NOT NULL,
     host text NOT NULL,
     port bigint NOT NULL,
@@ -61,14 +22,14 @@ CREATE TABLE manage_menu (
     id serial NOT NULL,
     create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    create_by bigint DEFAULT NULL,
-    update_by bigint DEFAULT NULL,
+    create_by bigint NOT NULL,
+    update_by bigint NOT NULL,
     status varchar(1) NOT NULL,
     parent_id bigint NOT NULL,
     menu_type varchar(1) NOT NULL,
     menu_name varchar(50) NOT NULL,
     hide_in_menu smallint NOT NULL,
-    active_menu varchar(50) DEFAULT NULL,
+    active_menu varchar(50) NOT NULL,
     "order" bigint NOT NULL,
     route_name varchar(255) NOT NULL,
     route_path varchar(255) NOT NULL,
@@ -77,13 +38,13 @@ CREATE TABLE manage_menu (
     icon_type varchar(1) NOT NULL,
     i18n_key varchar(255) NOT NULL,
     keep_alive smallint NOT NULL,
-    href text,
-    multi_tab smallint DEFAULT NULL,
-    fixed_index_in_tab bigint DEFAULT NULL,
-    query text,
-    permissions text,
+    href text NOT NULL,
+    multi_tab smallint NOT NULL,
+    fixed_index_in_tab bigint NOT NULL,
+    query text NOT NULL,
+    permissions text NOT NULL,
     constant smallint NOT NULL,
-    button_code text,
+    button_code text NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -121,8 +82,8 @@ CREATE TABLE manage_role (
     id serial NOT NULL,
     create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    create_by bigint DEFAULT NULL,
-    update_by bigint DEFAULT NULL,
+    create_by bigint NOT NULL,
+    update_by bigint NOT NULL,
     name varchar(50) NOT NULL,
     status varchar(1) NOT NULL,
     code varchar(255) NOT NULL,
@@ -142,8 +103,8 @@ CREATE TABLE manage_role_menu (
     id serial NOT NULL,
     create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    create_by bigint DEFAULT NULL,
-    update_by bigint DEFAULT NULL,
+    create_by bigint NOT NULL,
+    update_by bigint NOT NULL,
     role_id bigint NOT NULL,
     menu_id bigint NOT NULL,
     is_home smallint NOT NULL,
@@ -193,15 +154,15 @@ CREATE TABLE manage_user (
     id serial NOT NULL,
     create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    create_by bigint DEFAULT NULL,
-    update_by bigint DEFAULT NULL,
+    create_by bigint NOT NULL,
+    update_by bigint NOT NULL,
     username varchar(30) NOT NULL UNIQUE,
     password varchar(100) NOT NULL,
     nickname varchar(30) NOT NULL,
     gender varchar(1) NOT NULL,
-    phone varchar(20) DEFAULT NULL,
+    phone varchar(20) NOT NULL,
     status varchar(1) NOT NULL,
-    email varchar(100) DEFAULT NULL,
+    email varchar(100) NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -217,8 +178,8 @@ CREATE TABLE manage_user_role (
     id serial NOT NULL,
     create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    create_by bigint DEFAULT NULL,
-    update_by bigint DEFAULT NULL,
+    create_by bigint NOT NULL,
+    update_by bigint NOT NULL,
     user_id bigint NOT NULL,
     role_id bigint NOT NULL,
     PRIMARY KEY (id)

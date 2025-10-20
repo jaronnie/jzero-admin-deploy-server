@@ -1,51 +1,14 @@
-DROP TABLE IF EXISTS `casbin_rule`;
-
-CREATE TABLE `casbin_rule` (
-                               `id` bigint NOT NULL AUTO_INCREMENT,
-                               `p_type` varchar(100) DEFAULT NULL,
-                               `v0` varchar(100) DEFAULT NULL,
-                               `v1` varchar(100) DEFAULT NULL,
-                               `v2` varchar(100) DEFAULT NULL,
-                               `v3` varchar(100) DEFAULT NULL,
-                               `v4` varchar(100) DEFAULT NULL,
-                               `v5` varchar(100) DEFAULT NULL,
-                               PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `casbin_rule` (`id`, `p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`)
-VALUES
-    (406,'p','1','manage:user:list','','','',''),
-    (407,'p','1','manage:role:list','','','',''),
-    (408,'p','1','manage:menu:list','','','',''),
-    (409,'p','1','manage:user:add','','','',''),
-    (410,'p','1','manage:role:getAll','','','',''),
-    (411,'p','1','manage:user:delete','','','',''),
-    (412,'p','1','manage:user:edit','','','',''),
-    (413,'p','1','manage:role:getAll','','','',''),
-    (414,'p','1','manage:role:add','','','',''),
-    (421,'p','1','manage:role:delete','','','',''),
-    (422,'p','1','manage:menu:add','','','',''),
-    (423,'p','1','manage:menu:edit','','','',''),
-    (424,'p','1','manage:menu:delete','','','',''),
-    (425,'p','1','manage:role:edit','','','',''),
-    (426,'p','1','manage:role:getMenus','','','',''),
-    (427,'p','1','manage:role:setMenus','','','',''),
-    (428,'p','1','manage:menu:getAllPages','','','',''),
-    (429,'p','1','manage:menu:tree','','','',''),
-    (430,'p','1','manage:role:updateHome','','','',''),
-    (431,'p','1','manage:role:getHome','','','','');
-
 # 转储表 manage_email
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `manage_email`;
 
 CREATE TABLE `manage_email` (
-                                `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+                                `id` bigint NOT NULL AUTO_INCREMENT,
                                 `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                 `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                `create_by` bigint DEFAULT NULL,
-                                `update_by` bigint DEFAULT NULL,
+                                `create_by` bigint NOT NULL,
+                                `update_by` bigint NOT NULL,
                                 `from` longtext NOT NULL,
                                 `host` longtext NOT NULL,
                                 `port` bigint NOT NULL,
@@ -64,17 +27,17 @@ CREATE TABLE `manage_email` (
 DROP TABLE IF EXISTS `manage_menu`;
 
 CREATE TABLE `manage_menu` (
-                               `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+                               `id` bigint NOT NULL AUTO_INCREMENT,
                                `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                               `create_by` bigint DEFAULT NULL,
-                               `update_by` bigint DEFAULT NULL,
+                               `create_by` bigint NOT NULL,
+                               `update_by` bigint NOT NULL,
                                `status` varchar(1) NOT NULL,
                                `parent_id` bigint NOT NULL,
                                `menu_type` varchar(1) NOT NULL,
                                `menu_name` varchar(50) NOT NULL,
                                `hide_in_menu` tinyint(1) NOT NULL,
-                               `active_menu` varchar(50) DEFAULT NULL,
+                               `active_menu` varchar(50) NOT NULL,
                                `order` bigint NOT NULL,
                                `route_name` varchar(255) NOT NULL,
                                `route_path` varchar(255) NOT NULL,
@@ -83,13 +46,13 @@ CREATE TABLE `manage_menu` (
                                `icon_type` varchar(1) NOT NULL,
                                `i18n_key` varchar(255) NOT NULL,
                                `keep_alive` tinyint(1) NOT NULL,
-                               `href` longtext,
-                               `multi_tab` tinyint(1) DEFAULT NULL,
-                               `fixed_index_in_tab` bigint DEFAULT NULL,
-                               `query` longtext,
-                               `permissions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+                               `href` longtext NOT NULL,
+                               `multi_tab` tinyint(1) NOT NULL,
+                               `fixed_index_in_tab` bigint NOT NULL,
+                               `query` longtext NOT NULL,
+                               `permissions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                                `constant` tinyint(1) NOT NULL,
-                               `button_code` longtext,
+                               `button_code` longtext NOT NULL,
                                PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -125,11 +88,11 @@ VALUES
 DROP TABLE IF EXISTS `manage_role`;
 
 CREATE TABLE `manage_role` (
-                               `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+                               `id` bigint NOT NULL AUTO_INCREMENT,
                                `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                               `create_by` bigint DEFAULT NULL,
-                               `update_by` bigint DEFAULT NULL,
+                               `create_by` bigint NOT NULL,
+                               `update_by` bigint NOT NULL,
                                `name` varchar(50) NOT NULL,
                                `status` varchar(1) NOT NULL,
                                `code` varchar(255) NOT NULL,
@@ -148,11 +111,11 @@ VALUES
 DROP TABLE IF EXISTS `manage_role_menu`;
 
 CREATE TABLE `manage_role_menu` (
-                                    `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+                                    `id` bigint NOT NULL AUTO_INCREMENT,
                                     `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                     `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                    `create_by` bigint DEFAULT NULL,
-                                    `update_by` bigint DEFAULT NULL,
+                                    `create_by` bigint NOT NULL,
+                                    `update_by` bigint NOT NULL,
                                     `role_id` bigint NOT NULL,
                                     `menu_id` bigint NOT NULL,
                                     `is_home` tinyint(1) NOT NULL,
@@ -200,18 +163,18 @@ VALUES
 DROP TABLE IF EXISTS `manage_user`;
 
 CREATE TABLE `manage_user` (
-                               `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+                               `id` bigint NOT NULL AUTO_INCREMENT,
                                `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                               `create_by` bigint DEFAULT NULL,
-                               `update_by` bigint DEFAULT NULL,
+                               `create_by` bigint NOT NULL,
+                               `update_by` bigint NOT NULL,
                                `username` varchar(30) NOT NULL,
                                `password` varchar(100) NOT NULL,
                                `nickname` varchar(30) NOT NULL,
                                `gender` varchar(1) NOT NULL,
-                               `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                               `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                                `status` varchar(1) NOT NULL,
-                               `email` varchar(100) DEFAULT NULL,
+                               `email` varchar(100) NOT NULL,
                                PRIMARY KEY (`id`),
                                UNIQUE KEY `uni_manage_user_username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -226,11 +189,11 @@ VALUES
 DROP TABLE IF EXISTS `manage_user_role`;
 
 CREATE TABLE `manage_user_role` (
-                                    `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+                                    `id` bigint NOT NULL AUTO_INCREMENT,
                                     `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                     `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                    `create_by` bigint DEFAULT NULL,
-                                    `update_by` bigint DEFAULT NULL,
+                                    `create_by` bigint NOT NULL,
+                                    `update_by` bigint NOT NULL,
                                     `user_id` bigint NOT NULL,
                                     `role_id` bigint NOT NULL,
                                     PRIMARY KEY (`id`)
