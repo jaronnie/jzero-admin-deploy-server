@@ -11,8 +11,8 @@ CREATE TABLE manage_email (
     port bigint NOT NULL,
     username text NOT NULL,
     password text NOT NULL,
-    enable_ssl boolean NOT NULL,
-    is_verify boolean NOT NULL,
+    enable_ssl smallint NOT NULL,
+    is_verify smallint NOT NULL,
     PRIMARY KEY (id)
 );
 
