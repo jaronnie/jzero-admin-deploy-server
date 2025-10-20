@@ -9,7 +9,7 @@ WORKDIR /app
 
 COPY ./ ./
 
-RUN jzero serverless build && cat go.work
+RUN jzero serverless build
 
 RUN --mount=type=cache,target=/go/pkg CGO_ENABLED=0 GOOS=linux GOARCH=$TARGETARCH go build -a -ldflags="$LDFLAGS" -o /dist/app main.go \
     && cp -r etc /dist \
