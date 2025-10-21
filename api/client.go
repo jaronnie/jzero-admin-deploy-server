@@ -64,9 +64,6 @@ func init() {
 		logx.AddWriter(logx.NewWriter(os.Stdout))
 	}
 
-	customServer := custom.New()
-	logx.Must(customServer.Init())
-
 	restServer := rest.MustNewServer(c.Rest.RestConf, rest.WithUnauthorizedCallback(func(w http.ResponseWriter, r *http.Request, err error) {
 		httpx.ErrorCtx(r.Context(), w, err)
 	}), rest.WithCustomCors(func(header http.Header) {
@@ -84,6 +81,9 @@ func init() {
 
 	Serverless, err = rest.NewServerless(restServer)
 	logx.Must(err)
+
+	customServer := custom.New()
+	logx.Must(customServer.Init())
 
 	group := service.NewServiceGroup()
 	group.Add(customServer)
