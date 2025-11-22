@@ -2,9 +2,9 @@ package route
 
 import (
 	"context"
-	"github.com/jzero-io/jzero/core/stores/condition"
 	"net/http"
 
+	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 
 	"github.com/jzero-io/jzero-admin/server/server/model/manage_menu"
@@ -29,7 +29,7 @@ func NewIsRouteExist(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Re
 
 func (l *IsRouteExist) IsRouteExist(req *types.IsRouteExistRequest) (resp bool, err error) {
 	manageMenu, err := l.svcCtx.Model.ManageMenu.FindOneByCondition(l.ctx, nil, condition.NewChain().
-		Equal(manage_menu.ManageMenuField.RouteName, req.RouteName).
+		Equal(manage_menu.RouteName, req.RouteName).
 		Build()...)
 
 	return manageMenu != nil, err
