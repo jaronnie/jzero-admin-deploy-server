@@ -9,7 +9,7 @@ import (
 	"github.com/jzero-io/jzero/core/stores/migrate"
 
 	"github.com/jzero-io/jzero-admin/server/server/errcodes"
-	menutypes "github.com/jzero-io/jzero-admin/server/server/types/manage/menu"
+	menutypes "github.com/jzero-io/jzero-admin/server/server/types/v1/manage/menu"
 	"github.com/jzero-io/jzero-admin/server/server/model"
 	"github.com/jzero-io/jzero-admin/server/server/global"
 )
