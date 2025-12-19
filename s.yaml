@@ -38,7 +38,7 @@ resources:
       environmentVariables:
         DRIVER_NAME: sqlite
         DATASOURCE: jzero-admin.db
-        CACHE_TYPE: local
+        REDIS_MINI_REDIS: true
       triggers:
         - triggerName: httpTrigger
           triggerType: http
