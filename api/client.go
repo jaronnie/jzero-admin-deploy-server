@@ -51,7 +51,24 @@ func (e *EnvConfigurator) AddListener(listener func()) {
 func init() {
 	key := "CONFIG"
 	if os.Getenv(key) == "" {
-		_ = os.Setenv(key, `{"log":{"encoding":"plain"},"rest":{"host":"0.0.0.0","name":"server-api","port":8001,"timeout": 10000}, "sqlx":{"driverName":"pgx","dataSource": "postgres://neondb_owner:npg_le3oEzmNMr9u@ep-nameless-bar-a4xuvs05-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"},"cacheType":"local"}`)
+		_ = os.Setenv(key, `{
+    "log": {
+        "encoding": "plain"
+    },
+    "rest": {
+        "host": "0.0.0.0",
+        "name": "server-api",
+        "port": 8001,
+        "timeout": 10000
+    },
+    "sqlx": {
+        "driverName": "pgx",
+        "dataSource": "postgres://neondb_owner:npg_le3oEzmNMr9u@ep-nameless-bar-a4xuvs05-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+    },
+    "redis": {
+        "miniRedis": true
+    }
+}`)
 	}
 
 	cc := &EnvConfigurator{Key: key}
