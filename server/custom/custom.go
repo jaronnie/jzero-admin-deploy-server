@@ -8,10 +8,9 @@ import (
 	"github.com/casbin/casbin/v2"
 	"github.com/jzero-io/jzero/core/stores/migrate"
 
-	"github.com/jzero-io/jzero-admin/server/server/errcodes"
+	"github.com/jzero-io/jzero-admin/server/server/global"
 	menutypes "github.com/jzero-io/jzero-admin/server/server/types/v1/manage/menu"
 	"github.com/jzero-io/jzero-admin/server/server/model"
-	"github.com/jzero-io/jzero-admin/server/server/global"
 )
 
 type Custom struct{}
@@ -25,7 +24,6 @@ func (c *Custom) Init() error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 
-	// migrate sql
 	m, err := migrate.NewMigrate(global.ServiceContext.ConfigCenter.MustGetConfig().Sqlx.SqlConf, migrate.WithSourceAppendDriver(true))
 	if err != nil {
 		return err
@@ -34,14 +32,13 @@ func (c *Custom) Init() error {
 	if err = m.Up(); err != nil {
 		return err
 	}
+	defer m.Close()
 
 	// auto gen casbin rules
 	if err = InitCasbinRule(ctx, global.ServiceContext.Model, global.ServiceContext.CasbinEnforcer); err != nil {
 		return err
 	}
 
-	// register errcodes
-	errcodes.Register()
 	return nil
 }
 

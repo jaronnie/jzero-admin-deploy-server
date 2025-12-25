@@ -8,7 +8,7 @@ import (
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/errcodes/manage"
+	"github.com/jzero-io/jzero-admin/server/server/errcodes"
 	types "github.com/jzero-io/jzero-admin/server/server/types/v1/manage/menu"
 	"github.com/jzero-io/jzero-admin/server/server/svc"
 	"github.com/jzero-io/jzero-admin/server/server/model/manage_menu"
@@ -41,7 +41,7 @@ func (l *Delete) Delete(req *types.DeleteRequest) (resp *types.DeleteResponse, e
 		Value:		req.Uuids,
 	})
 	if err == nil && len(subMenus) > 0 {
-		return nil, status.ErrorMessage(manage.ExistSubMenuCode, l.svcCtx.Trans.Trans(l.ctx, "manage.menu.existSubMenu"))
+		return nil, status.ErrorMessage(errcodes.ExistSubMenuCode, l.svcCtx.Trans.Trans(l.ctx, "manage.menu.existSubMenu"))
 	}
 	// remove permissions
 	menus, err := l.svcCtx.Model.ManageMenu.FindByCondition(l.ctx, nil, condition.Condition{
