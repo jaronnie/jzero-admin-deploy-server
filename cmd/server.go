@@ -51,7 +51,7 @@ var serverCmd = &cobra.Command{
 			header.Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
 		}, nil, "*"))
 
-		m, err := migrate.NewMigrate(global.ServiceContext.ConfigCenter.MustGetConfig().Sqlx.SqlConf, migrate.WithSourceAppendDriver(true))
+		m, err := migrate.NewMigrate(cc.MustGetConfig().Sqlx.SqlConf, migrate.WithSourceAppendDriver(true))
 		logx.Must(err)
 		logx.Must(m.Up())
 		defer m.Close()
