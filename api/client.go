@@ -66,7 +66,8 @@ func init() {
         "dataSource": "postgres://neondb_owner:npg_le3oEzmNMr9u@ep-nameless-bar-a4xuvs05-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
     },
     "redis": {
-        "miniRedis": true
+        "miniRedis": true,
+		"host": "127.0.0.1:6379"
     }
 }`)
 	}
