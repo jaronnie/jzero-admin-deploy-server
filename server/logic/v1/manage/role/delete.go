@@ -8,10 +8,10 @@ import (
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_role"
-	types "github.com/jzero-io/jzero-admin/server/server/types/v1/manage/role"
-	"github.com/jzero-io/jzero-admin/server/server/svc"
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_user_role"
+	"github.com/jzero-io/agentrazor/server/server/model/manage_role"
+	types "github.com/jzero-io/agentrazor/server/server/types/v1/manage/role"
+	"github.com/jzero-io/agentrazor/server/server/svc"
+	"github.com/jzero-io/agentrazor/server/server/model/manage_user_role"
 )
 
 type Delete struct {

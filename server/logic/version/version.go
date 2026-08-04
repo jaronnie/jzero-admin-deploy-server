@@ -8,8 +8,8 @@ import (
 
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/svc"
-	types "github.com/jzero-io/jzero-admin/server/server/types/version"
+	"github.com/jzero-io/agentrazor/server/server/svc"
+	types "github.com/jzero-io/agentrazor/server/server/types/version"
 )
 
 type Version struct {

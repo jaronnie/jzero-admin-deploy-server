@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/zeromicro/go-zero/rest"
-	"github.com/jzero-io/jzero-admin/server/server/global"
+	"github.com/jzero-io/agentrazor/server/server/global"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 

@@ -5,9 +5,9 @@ import (
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 
-	"github.com/jzero-io/jzero-admin/server/server/logic/v1/auth"
-	types "github.com/jzero-io/jzero-admin/server/server/types/v1/auth"
-	"github.com/jzero-io/jzero-admin/server/server/svc"
+	"github.com/jzero-io/agentrazor/server/server/logic/v1/auth"
+	types "github.com/jzero-io/agentrazor/server/server/types/v1/auth"
+	"github.com/jzero-io/agentrazor/server/server/svc"
 )
 
 func CodeLogin(svcCtx *svc.ServiceContext) http.HandlerFunc {

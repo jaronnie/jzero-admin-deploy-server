@@ -7,9 +7,9 @@ import (
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_role_menu"
-	types "github.com/jzero-io/jzero-admin/server/server/types/v1/manage/role"
-	"github.com/jzero-io/jzero-admin/server/server/svc"
+	"github.com/jzero-io/agentrazor/server/server/model/manage_role_menu"
+	types "github.com/jzero-io/agentrazor/server/server/types/v1/manage/role"
+	"github.com/jzero-io/agentrazor/server/server/svc"
 )
 
 type GetMenus struct {

@@ -7,8 +7,8 @@ import (
 	"github.com/samber/lo"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/svc"
-	types "github.com/jzero-io/jzero-admin/server/server/types/v1/manage/role"
+	"github.com/jzero-io/agentrazor/server/server/svc"
+	types "github.com/jzero-io/agentrazor/server/server/types/v1/manage/role"
 )
 
 type Edit struct {

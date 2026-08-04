@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/jzero-io/jzero/core/swaggerv2"
-	"github.com/jzero-io/jzero-admin/server/server/svc"
+	"github.com/jzero-io/agentrazor/server/server/svc"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 

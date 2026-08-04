@@ -12,9 +12,9 @@ import (
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_user_role"
-	types "github.com/jzero-io/jzero-admin/server/server/types/v1/auth"
-	"github.com/jzero-io/jzero-admin/server/server/svc"
+	"github.com/jzero-io/agentrazor/server/server/model/manage_user_role"
+	types "github.com/jzero-io/agentrazor/server/server/types/v1/auth"
+	"github.com/jzero-io/agentrazor/server/server/svc"
 )
 
 func CreateToken(secret string, claims jwt.MapClaims) (string, error) {

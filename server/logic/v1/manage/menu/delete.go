@@ -8,11 +8,11 @@ import (
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/errcodes"
-	types "github.com/jzero-io/jzero-admin/server/server/types/v1/manage/menu"
-	"github.com/jzero-io/jzero-admin/server/server/svc"
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_menu"
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_role_menu"
+	"github.com/jzero-io/agentrazor/server/server/errcodes"
+	types "github.com/jzero-io/agentrazor/server/server/types/v1/manage/menu"
+	"github.com/jzero-io/agentrazor/server/server/svc"
+	"github.com/jzero-io/agentrazor/server/server/model/manage_menu"
+	"github.com/jzero-io/agentrazor/server/server/model/manage_role_menu"
 )
 
 type Delete struct {

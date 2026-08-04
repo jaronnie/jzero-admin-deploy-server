@@ -1,6 +1,6 @@
 package global
 
-import "github.com/jzero-io/jzero-admin/server/server/svc"
+import "github.com/jzero-io/agentrazor/server/server/svc"
 
 var (
 	ServiceContext svc.ServiceContext

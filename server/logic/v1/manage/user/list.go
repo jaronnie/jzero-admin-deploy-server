@@ -9,11 +9,11 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/mr"
 
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_role"
-	types "github.com/jzero-io/jzero-admin/server/server/types/v1/manage/user"
-	"github.com/jzero-io/jzero-admin/server/server/svc"
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_user_role"
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_user"
+	"github.com/jzero-io/agentrazor/server/server/model/manage_role"
+	types "github.com/jzero-io/agentrazor/server/server/types/v1/manage/user"
+	"github.com/jzero-io/agentrazor/server/server/svc"
+	"github.com/jzero-io/agentrazor/server/server/model/manage_user_role"
+	"github.com/jzero-io/agentrazor/server/server/model/manage_user"
 )
 
 type List struct {

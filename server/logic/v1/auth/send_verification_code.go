@@ -15,9 +15,9 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	gomail "gopkg.in/gomail.v2"
 
-	"github.com/jzero-io/jzero-admin/server/server/constant"
-	types "github.com/jzero-io/jzero-admin/server/server/types/v1/auth"
-	"github.com/jzero-io/jzero-admin/server/server/svc"
+	"github.com/jzero-io/agentrazor/server/server/constant"
+	types "github.com/jzero-io/agentrazor/server/server/types/v1/auth"
+	"github.com/jzero-io/agentrazor/server/server/svc"
 )
 
 var SendVerificationError = errors.New("发送失败, 请联系管理员")

@@ -9,9 +9,9 @@ import (
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_menu"
-	types "github.com/jzero-io/jzero-admin/server/server/types/v1/manage/menu"
-	"github.com/jzero-io/jzero-admin/server/server/svc"
+	"github.com/jzero-io/agentrazor/server/server/model/manage_menu"
+	types "github.com/jzero-io/agentrazor/server/server/types/v1/manage/menu"
+	"github.com/jzero-io/agentrazor/server/server/svc"
 )
 
 type Tree struct {

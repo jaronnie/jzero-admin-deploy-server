@@ -11,11 +11,11 @@ import (
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"github.com/jzero-io/jzero-admin/server/server/logic/v1/manage/menu"
-	types "github.com/jzero-io/jzero-admin/server/server/types/v1/route"
-	"github.com/jzero-io/jzero-admin/server/server/svc"
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_menu"
-	"github.com/jzero-io/jzero-admin/server/server/model/manage_role_menu"
+	"github.com/jzero-io/agentrazor/server/server/logic/v1/manage/menu"
+	types "github.com/jzero-io/agentrazor/server/server/types/v1/route"
+	"github.com/jzero-io/agentrazor/server/server/svc"
+	"github.com/jzero-io/agentrazor/server/server/model/manage_menu"
+	"github.com/jzero-io/agentrazor/server/server/model/manage_role_menu"
 )
 
 type GetUserRoutes struct {
